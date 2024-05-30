@@ -1,0 +1,536 @@
+/* latin */
+@font-face {
+	font-family: 'Fredoka One';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(./fonts/k3kUo8kEI-tA1RRcTZGmTlHGCac.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+label,
+fieldset,
+p,
+blockquote,
+input {
+	margin: 0;
+	padding: 0
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+	display: block;
+	margin: 0;
+	padding: 0
+}
+
+html {
+	background: #FFF;
+	color: #333;
+	font: .875em/1.5 "Helvetica Neue", Arial, sans-serif;
+	text-align: center
+}
+
+body {
+	max-width: 40em;
+	margin: 0 auto;
+	padding: .5em
+}
+
+h1 {
+	font-weight: 700;
+	font-size: 2em;
+	margin: 0
+}
+
+h2 {
+	font-weight: 400;
+	color: #666;
+	font-size: 1.25em;
+	font-style: italic;
+	font-family: Georgia, serif;
+	margin: .25em 0 .5em
+}
+
+h1.pokemon-title {
+	font-family: 'Fredoka One', sans-serif;
+	color: #ffcb05;
+	text-shadow: 1.5px 1.5px #3b4cca, -1.5px 1.5px #3b4cca, 1.5px -1.5px #3b4cca, -1.5px -1.5px 2px #3b4cca;
+	/* margin-bottom: 20px; */
+	font-size: 2em;
+}
+
+/* 提示图标 */
+.info-icon {
+	position: relative;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	color: rgb(213, 213, 213);
+	text-align: center;
+	line-height: 30px;
+	font-size: 10px;
+	cursor: pointer;
+	margin-left: 5px;
+	/* 将图标与标签内容分开 */
+}
+
+.info-icon::after {
+	content: "i";
+}
+
+.info-tooltip {
+	position: absolute;
+	top: 0;
+	left: calc(100% + 10px);
+	/* 相对于图标的位置 */
+	background-color: #333;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	white-space: nowrap;
+	display: none;
+	/* 初始隐藏提示信息 */
+}
+
+.container {
+	display: flex;
+	/* flex-wrap: wrap; */
+}
+
+/* #n {
+	display: inline-block;
+	clear: both;
+} */
+
+/* 提示图标 */
+
+p,
+ul,
+ol {
+	margin: 0 0 1em
+}
+
+article,
+section {
+	margin: 1em 0
+}
+
+a,
+button.text {
+	color: #000;
+	text-decoration: none;
+	border-bottom: 1px solid #AAA
+}
+
+a:hover,
+button.text:hover {
+	color: #666
+}
+
+fieldset {
+	border: 0;
+	cursor: default;
+	line-height: 2;
+	margin: 0.5em 0
+}
+
+label {
+	white-space: nowrap
+}
+
+label,
+select {
+	margin-right: 1em
+}
+
+label select {
+	margin: 0
+}
+
+input[type="checkbox"] {
+	vertical-align: baseline;
+	margin-right: .25em
+}
+
+button,
+input[type="button"],
+input[type="submit"] {
+	cursor: pointer
+}
+
+#controls input[type="submit"] {
+	font-size: 1em;
+	padding: .125em .25em
+}
+
+
+abbr {
+	cursor: help;
+	border-bottom: 1px dotted;
+	text-decoration: none
+}
+
+.clear {
+	clear: both
+}
+
+.hidden {
+	visibility: hidden
+}
+
+.invisible {
+	display: none
+}
+
+header {
+	margin: 1em 0
+}
+
+.menu,
+.menu:before {
+	border: 1px solid #000;
+	border-radius: 2px
+}
+
+.menu {
+	padding: .5em 1em;
+	border-bottom-width: 2px;
+	position: relative;
+	z-index: 10;
+	margin: 0 auto
+}
+
+.menu:before {
+	border-top-width: 2px;
+	content: "";
+	display: block;
+	position: absolute;
+	z-index: -1;
+	top: 1px;
+	left: 1px;
+	right: 1px;
+	bottom: 1px
+}
+
+.loading:after {
+	position: absolute;
+	top: 50%;
+	right: 4%;
+	z-index: -2;
+	content: "";
+	width: 1em;
+	height: 1em;
+	margin: -1em 0 0;
+	border-radius: 1em;
+	border: .25em solid;
+	border-color: currentColor transparent;
+	animation: 1.25s linear infinite rotate, .5s ease-out 0s 1 fadeIn
+}
+
+#history {
+	margin: 1em 0 0;
+	display: flex;
+	justify-content: space-between
+}
+
+button.text {
+	background: transparent;
+	color: inherit;
+	border: 0;
+	padding: 0
+}
+
+#results li {
+	display: inline-block;
+	height: 3em;
+	padding-top: 128px;
+	width: 33%;
+	margin-bottom: 1em;
+	position: relative;
+	list-style: none;
+	animation: 0.5s ease-out 0s 1 fadeIn
+}
+
+#results .nature {
+	color: #888
+}
+
+.star {
+	color: #F4D04D
+}
+
+#results li.shiny:before,
+#results li.shiny:after,
+#results li.shiny .star:before,
+#results li.shiny .star:after {
+	content: "\2605";
+	position: absolute;
+	top: 64px;
+	left: 50%;
+	font-size: .75em;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 100
+}
+
+#results li.shiny:before {
+	animation: .6s steps(8) .075s 1 rotateStar, .075s alternate steps(2) infinite shine;
+	font-size: 1.5em
+}
+
+#results li.shiny:after {
+	animation: .6s steps(8) .150s 1 rotateStar, .075s alternate steps(2) infinite shine
+}
+
+#results li.shiny .star:before {
+	animation: .6s steps(8) .225s 1 rotateStar, .075s alternate steps(2) infinite shine
+}
+
+#results li.shiny .star:after {
+	animation: .6s steps(8) .300s 1 rotateStar, .075s alternate steps(2) infinite shine
+}
+
+#results img {
+	position: absolute;
+	bottom: 3em;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 10em;
+	height: 10em;
+	/* background-image: url(favicon-192.png); */
+}
+
+#results li.imageless {
+	font-weight: 700;
+	margin: 2em 0;
+	height: auto;
+	padding: 0
+}
+
+#shiny-toggler {
+	margin-bottom: .5em
+}
+
+#shinies {
+	margin-top: 1em
+}
+
+#shiny-container button {
+	margin-bottom: 1em
+}
+
+#shiny-toggler.is-showing .is-hiding,
+#shiny-toggler.is-hiding .is-showing {
+	display: none
+}
+
+footer {
+	font-size: .875em;
+	padding: 3em 0;
+	color: #666;
+	clear: both
+}
+
+/* 单选按钮组 */
+.radio-group {
+	margin-bottom: 15px;
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid #CCC;
+}
+
+.radio-group>p {
+	margin: 0;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+
+.radio-group label {
+	margin-right: 10px;
+}
+
+.radio-group input[type="radio"] {
+	margin-right: 5px;
+}
+
+/* 单选按钮组 */
+
+/* 数字范围输入控件组 */
+.num_range {
+	margin: 0.5em;
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid #CCC;
+	line-height: 1;
+}
+
+.num_range>p {
+	margin: 0;
+	margin-right: 0.75em;
+	margin-left: 0.5em;
+}
+
+.num_range input {
+	width: 3.5em;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.num_range>label:nth-of-type(1) {
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+}
+
+.num_range>label:nth-of-type(2) {
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+}
+
+.more-button {
+	display: block;
+	float: right;
+	height: 1.5em;
+	padding: 0em;
+	width: 8em;
+	font-size: 1em;
+	/* color: #FFF; */
+	/* background-color: rgb(213, 211, 211); */
+	border-radius: 0.3em;
+	border: 1px solid #CCC;
+}
+
+.more-button:hover {
+	background-color: #b0b0b0;
+}
+
+.default-hidden {
+	display: none;
+}
+
+.n_generator {
+	clear:both;
+}
+
+/* 数字范围输入控件组 */
+
+@media screen and (max-width:27em) {
+	header {
+		font-size: .75em
+	}
+}
+
+@media screen and (max-width:21em) {
+	header {
+		font-size: .625em
+	}
+}
+
+@media screen and (max-width:420px) {
+	#results li {
+		width: 49%
+	}
+}
+
+@media screen and (max-width:308px) {
+	#results li {
+		float: none;
+		width: auto
+	}
+}
+
+@media screen and (prefers-color-scheme: dark) {
+	html {
+		background: #222;
+		color: #FFF
+	}
+
+	h2,
+	footer {
+		color: #CCC
+	}
+
+	.menu,
+	.menu:before {
+		border-color: #FFF
+	}
+
+	a,
+	button.text {
+		color: #DDD;
+		border-bottom-color: #777
+	}
+
+	a:hover,
+	button.text:hover {
+		color: #FFF
+	}
+}
+
+/* Mobile Safari doesn't display this animation smoothly unless I add another CSS declaration. */
+@keyframes fadeIn {
+	from {
+		opacity: 0
+	}
+
+	to {
+		opacity: 1;
+		color: inherit
+	}
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg)
+	}
+
+	to {
+		transform: rotate(360deg)
+	}
+}
+
+@keyframes shine {
+	from {
+		color: #F8F838;
+		text-shadow: 2px 0 #F88008, -2px 0 #F88008, 0 2px #F88008, 0 -2px #F88008
+	}
+
+	to {
+		color: #F8F8F8;
+		text-shadow: 2px 0 #F8F838, -2px 0 #F8F838, 0 2px #F8F838, 0 -2px #F8F838
+	}
+}
+
+@keyframes rotateStar {
+	from {
+		opacity: 1;
+		transform: rotate(.4turn) translate(45px) rotate(-.4turn)
+	}
+
+	to {
+		opacity: 1;
+		transform: rotate(-.5turn) translate(45px) rotate(.5turn)
+	}
+}

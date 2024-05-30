@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Random Pokemon Generator</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+
+	<meta name="description" content="This tool generates random Pokemon by region, type, and more.">
+
+	<link rel="alternate" type="application/rss+xml" title="Random Pokemon Generator Feed" href="/rss.xml">
+
+	<link rel="icon" href="./favicon.ico">
+	<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="manifest" href="/manifest.webmanifest">
+</head>
+
+<body>
+	<header>
+		<h1 class="pokemon-title">Random Pokemon Generator</h1>
+	</header>
+
+	<!-- <div class="container" id="options-panel"> -->
+	<form action="?" method="get" id="controls" class="menu" onsubmit="generateRandom(); return false;">
+		<div id="main-options">
+			<fieldset>
+				<select name="region" id="region" required>
+					<option value="all" selected>All Regions</option>
+					<option value="kanto" title="Generation 1 (Red, Blue, and Yellow)" data-stadium="true"
+						data-forms="false">Kanto</option>
+					<option value="johto" title="Generation 2 (Gold, Silver, and Crystal)" data-stadium="true">Johto
+					</option>
+					<option value="hoenn" title="Generation 3 (Ruby, Sapphire, and Emerald)">Hoenn</option>
+					<option value="sinnoh" title="Generation 4 (Diamond, Pearl)">Sinnoh</option>
+					<option value="sinnoh_pt" title="Generation 4 (Platinum)">Sinnoh (Platinum)</option>
+					<option value="unova" title="Generation 5 (Black and White)">Unova</option>
+					<option value="unova_b2w2" title="Generation 5 (Black 2 and White 2)">Unova (B2W2)</option>
+					<option value="kalos" title="Generation 6 (X and Y)">Kalos</option>
+					<option value="alola" title="Generation 7 (Sun and Moon)">Alola</option>
+					<option value="alola_usum" title="Generation 7 (Ultra Sun and Ultra Moon)">Alola (USUM)</option>
+					<option value="galar" title="Generation 8 (Sword and Shield)">Galar</option>
+					<option value="hisui" title="Generation 8 (Legends: Arceus)">Hisui</option>
+					<option value="paldea" title="Generation 9 (Scarlet and Violet)">Paldea</option>
+					<option value="kitakami" title="Generation 9 (Scarlet and Violet: Teal Mask)">Kitakami</option>
+					<option value="blueberry" title="Generation 9 (Scarlet and Violet: Indigo Disk)">Blueberry Academy
+					</option>
+				</select>
+
+				<select name="type" id="type" required>
+					<option value="all" selected>All Types</option>
+					<option value="bug">Bug</option>
+					<option value="dark">Dark</option>
+					<option value="dragon">Dragon</option>
+					<option value="electric">Electric</option>
+					<option value="fairy">Fairy</option>
+					<option value="fighting">Fighting</option>
+					<option value="fire">Fire</option>
+					<option value="flying">Flying</option>
+					<option value="ghost">Ghost</option>
+					<option value="grass">Grass</option>
+					<option value="ground">Ground</option>
+					<option value="ice">Ice</option>
+					<option value="normal">Normal</option>
+					<option value="poison">Poison</option>
+					<option value="psychic">Psychic</option>
+					<option value="rock">Rock</option>
+					<option value="steel">Steel</option>
+					<option value="water">Water</option>
+				</select>
+
+				<select name="color" id="color" required>
+					<option value="all" selected>All Colors</option>
+					<option value="black">Black</option>
+					<option value="blue">Blue</option>
+					<option value="brown">Brown</option>
+					<option value="gray">Gray</option>
+					<option value="green">Green</option>
+					<option value="pink">Pink</option>
+					<option value="purple">Purple</option>
+					<option value="red">Red</option>
+					<option value="white">White</option>
+					<option value="yellow">Yellow</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<label><input type="checkbox" id="legendaries" name="legensdaries"
+						title="The pokémon generated are legendaries.">Legendaries</label>
+
+				<label><input type="checkbox" id="mythical" name="mythical"
+						title="The pokémon generated are mythical.">Mythical</label>
+
+				<label><input type="checkbox" id="nfes" name="nfes"
+						title="The pokémon generated are not fully evolved.">NFEs</label>
+			</fieldset>
+
+			<fieldset>
+				<!-- Height -->
+				<div class="num_range" id="height">
+					<p>Height:</p>
+					<input type="number" name="height_min" id="height_min" min="0.1" max="100" value="0.1" step="0.1">
+					<label>-</label>
+					<input type="number" name="height_max" id="height_max" min="0.1" max="100" value="100" step="0.1">
+					<label>m</label>
+				</div>
+
+				<!-- Weight -->
+				<div class="num_range" id="weight">
+					<p>Weight:</p>
+					<input type="number" name="weight_min" id="weight_min" min="0" max="1000" value="0">
+					<label>-</label>
+					<input type="number" name="weight_max" id="weight_max" min="0" max="1000" value="1000">
+					<label>kg</label>
+				</div>
+			</fieldset>
+		</div>
+
+		<div id="more-options" class="default-hidden">
+			<hr>
+			<fieldset>
+				<select name="growthRate" id="growthRate" required>
+					<option value="all" selected>All GrowthRates</option>
+					<option value="slow">Slow</option>
+					<option value="medium">Medium</option>
+					<option value="fast">Fast</option>
+					<option value="medium-slow">Medium Slow</option>
+					<option value="slow-then-very-fast">Slow Then Very Fast</option>
+					<option value="fast-then-very-slow">Fast Then Very Slow</option>
+				</select>
+
+				<select name="habitat" id="habitat" required>
+					<option value="all" selected>All Habitats</option>
+					<option value="cave">Cave</option>
+					<option value="forest">Forest</option>
+					<option value="grassland">Grassland</option>
+					<option value="mountain">Mountain</option>
+					<option value="rare">Rare</option>
+					<option value="rough-terrain">Rough Terrain</option>
+					<option value="sea">Sea</option>
+					<option value="urban">Urban</option>
+					<option value="waters-edge">Waters Edge</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<label><input type="checkbox" id="allowVarieties" name="allowVarieties" checked
+						title="Allow generate varieties, such as Mega Evolutions.">AllowVarieties</label>
+
+				<label><input type="checkbox" id="baby" name="baby" value="false"
+						title="The pokémon generated are babies.">Baby</label>
+			</fieldset>
+
+			<fieldset>
+				<!-- BaseHappiness -->
+				<div class="num_range" id="baseHappiness">
+					<p>BaseHappiness:</p>
+					<input type="number" name="baseHappiness_min" id="baseHappiness_min" min="0" max="140" value="0">
+					<label>-</label>
+					<input type="number" name="baseHappiness_max" id="baseHappiness_max" min="0" max="140" value="140">
+					<label></label>
+				</div>
+
+				<!-- CaptureRate -->
+				<div class="num_range" id="captureRate">
+					<p>CaptureRate:</p>
+					<input type="number" name="captureRate_min" id="captureRate_min" min="0" max="255" value="0">
+					<label>-</label>
+					<input type="number" name="captureRate_max" id="captureRate_max" min="0" max="255" value="255">
+					<label></label>
+				</div>
+
+				<!-- HatchCounter -->
+				<div class="num_range" id="hatchCounter">
+					<p>HatchCounter:</p>
+					<input type="number" name="hatchCounter_min" id="hatchCounter_min" min="5" max="120" value="5">
+					<label>-</label>
+					<input type="number" name="hatchCounter_max" id="hatchCounter_max" min="5" max="120" value="120">
+					<label></label>
+				</div>
+			</fieldset>
+		</div>
+	</form>
+	<button id="more-button" class="more-button" onclick="toggleMoreOptions()">&#x23EC; More Options</button>
+	<button id="collapse-more-button" class="more-button default-hidden" onclick="collapseMoreOptions()">&#x23EB;
+		Collapse</button>
+	<!-- </div> -->
+
+	<div class="n_generator">
+		<select form="controls" name="n" id="n" required>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6" selected>6</option>
+		</select>
+		<input form="controls" value="Generate" type="submit" />
+	</div>
+
+	<nav id="history">
+		<button class="hidden text" id="previous" onclick="displayPrevious()">&#x23EA; Previous</button>
+		<button class="hidden text" id="next" onclick="displayNext()">Next &#x23E9;</button>
+	</nav>
+
+	<section id="results"></section>
+
+	<button id="shiny-toggler" class="text is-hiding" onclick="toggleShinyDisplay()">
+		<span class="star">&starf;</span>
+		<span id="shiny-count">0</span> shiny Pokémon
+		<span class="is-showing">&and;</span><span class="is-hiding">&or;</span>
+	</button>
+	<section id="shiny-container" class="menu invisible">
+		<div id="shinies"></div>
+		<button class="text" onclick="clearShinies()">&#x274C; Clear your shiny Pokémon</button>
+	</section>
+
+	<footer>
+		<p>
+			<a href="./rss.xml">RSS</a> |
+			<a href="https://github.com/happydrew/Random-Pokemon-Generator">GitHub</a> |
+			<a href="zhugetd@gmail.com">Contact</a> |
+			Pokemon is &copy; Nintendo. Website is &copy; Drew Grant</a>.
+		</p>
+	</footer>
+
+	<script src="./random.js"></script>
+
+</body>
+
+</html>
