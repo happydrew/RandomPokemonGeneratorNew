@@ -1,6 +1,10 @@
 {
 	"compilerOptions": {
-		"lib": ["dom", "es2017", "es2021"],
+		"lib": [
+			"dom",
+			"es2017",
+			"es2021"
+		],
 		"target": "es5",
 		"noImplicitAny": true,
 		"removeComments": true,
@@ -8,5 +12,7 @@
 		"sourceMap": true,
 		"outFile": "public/random.js"
 	},
-	"include": ["src/**/*"]
+	"include": [
+		"src/**/*"
+	]
 }
