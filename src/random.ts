@@ -117,28 +117,28 @@ function chooseRandom(eligiblePokemon: Pokemon[], options: Options): Pokemon[] {
 }
 
 /** Filters megas from the array. Doesn't mutate the original array. */
-function removeMegas(pokemonArray: Pokemon[]): Pokemon[] {
-	return pokemonArray.filter((pokemon: Pokemon) => {
-		if (pokemon.forms) {
-			pokemon.forms = pokemon.forms.filter(form => !form.isMega);
-			return pokemon.forms.length > 0;
-		} else {
-			return true; // always keep if no forms
-		}
-	});
-}
+// function removeMegas(pokemonArray: Pokemon[]): Pokemon[] {
+// 	return pokemonArray.filter((pokemon: Pokemon) => {
+// 		if (pokemon.forms) {
+// 			pokemon.forms = pokemon.forms.filter(form => !form.isMega);
+// 			return pokemon.forms.length > 0;
+// 		} else {
+// 			return true; // always keep if no forms
+// 		}
+// 	});
+// }
 
 /** Filters Gigantamax forms from the array. Doesn't mutate the original array. */
-function removeGigantamaxes(pokemonArray: Pokemon[]): Pokemon[] {
-	return pokemonArray.filter((pokemon: Pokemon) => {
-		if (pokemon.forms) {
-			pokemon.forms = pokemon.forms.filter(form => !form.isGigantamax);
-			return pokemon.forms.length > 0;
-		} else {
-			return true; // always keep if no forms
-		}
-	});
-}
+// function removeGigantamaxes(pokemonArray: Pokemon[]): Pokemon[] {
+// 	return pokemonArray.filter((pokemon: Pokemon) => {
+// 		if (pokemon.forms) {
+// 			pokemon.forms = pokemon.forms.filter(form => !form.isGigantamax);
+// 			return pokemon.forms.length > 0;
+// 		} else {
+// 			return true; // always keep if no forms
+// 		}
+// 	});
+// }
 
 /** Converts a JSON array of Pokémon into an HTML ordered list. */
 function toHtml(pokemon: Pokemon[]) {

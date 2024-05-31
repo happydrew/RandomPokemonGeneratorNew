@@ -150,9 +150,9 @@ function setOptions(options: Partial<Options>) {
 		hatchCounterMaxInput.value = options.hatchCounter_max.toString();
 	}
 
-	if (options.generate !== undefined) {
-		generateRandom();
-	}
+	// if (options.generate !== undefined) {
+	// 	generateRandom();
+	// }
 }
 
 /** Stores the current options in local storage and in the URL. */
@@ -278,11 +278,11 @@ function addFormChangeListeners() {
 function toggleStadiumRentalsCheckbox() {
 	const regionOption = regionDropdown.options[regionDropdown.selectedIndex];
 	const shouldShow = regionOption?.dataset?.stadium == "true";
-	stadiumRentalsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
+	//stadiumRentalsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
 }
 
 function toggleFormsCheckbox() {
 	const regionOption = regionDropdown.options[regionDropdown.selectedIndex];
 	const shouldShow = regionOption?.dataset?.forms != "false";
-	formsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
+	//formsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
 }

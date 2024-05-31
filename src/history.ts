@@ -17,10 +17,10 @@ function addToHistory(pokemon: Pokemon[]) {
 	// window.localStorage.setItem(STORAGE_SHINIES_KEY, JSON.stringify(shinies));
 
 	displayedIndex = 0;
-	toggleHistoryVisibility(null);
+	toggleHistoryVisibility();
 }
 
-function toggleHistoryVisibility(shinies?: GeneratedPokemon[]) {
+function toggleHistoryVisibility() {
 	// 这里因为latestPokemon是一个栈的结构，最早生成的在数组的最后面，而数组的头部是最新生成的
 	document.getElementById("previous").classList.toggle("hidden", displayedIndex >= latestPokemon.length - 1);
 	document.getElementById("next").classList.toggle("hidden", displayedIndex <= 0);
@@ -48,13 +48,13 @@ function displayHistoryAtIndex(index: number) {
 }
 
 /** All encountered shiny Pokémon, newest first. */
-function getShinies(): GeneratedPokemon[] {
-	const shinies = JSON.parse(window.localStorage.getItem(STORAGE_SHINIES_KEY));
-	if (!Array.isArray(shinies)) {
-		return [];
-	}
-	return shinies.map(shiny => GeneratedPokemon.fromJson(shiny));
-}
+// function getShinies(): GeneratedPokemon[] {
+// 	const shinies = JSON.parse(window.localStorage.getItem(STORAGE_SHINIES_KEY));
+// 	if (!Array.isArray(shinies)) {
+// 		return [];
+// 	}
+// 	return shinies.map(shiny => GeneratedPokemon.fromJson(shiny));
+// }
 
 function toggleShinyDisplay() {
 	const isInvisible = document.getElementById("shiny-container").classList.toggle("invisible");
@@ -71,7 +71,7 @@ function clearShinies() {
 	if (window.confirm("Are you sure you want to clear your shiny Pokémon?")) {
 		window.localStorage.removeItem(STORAGE_SHINIES_KEY);
 		document.getElementById("shiny-container").classList.add("invisible");
-		toggleHistoryVisibility([]);
+		toggleHistoryVisibility();
 		updateShinyToggler(false); // Prepare for next time
 	}
 }

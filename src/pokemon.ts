@@ -80,94 +80,94 @@ interface Form {
 	isGigantamax?: boolean;
 }
 
-class GeneratedPokemon {
-	/** National Pokédex number. */
-	readonly id: number;
-	/** The name of this Pokémon, not including what form it is. */
-	//readonly baseName: string;
-	/** The name of this Pokémon, including what form it is. */
-	readonly name: string;
-	/** An optional suffix added to the sprite's filename (between a hyphen and the extension). */
-	//private readonly spriteSuffix?: string;
-	/** This Pokémon's nature, if generated. */
-	readonly nature?: string;
-	/** Whether this Pokémon is shiny. */
-	readonly shiny: boolean;
-	/** When this Pokémon was generated. */
-	readonly date: Date;
+// class GeneratedPokemon {
+// 	/** National Pokédex number. */
+// 	readonly id: number;
+// 	/** The name of this Pokémon, not including what form it is. */
+// 	//readonly baseName: string;
+// 	/** The name of this Pokémon, including what form it is. */
+// 	readonly name: string;
+// 	/** An optional suffix added to the sprite's filename (between a hyphen and the extension). */
+// 	//private readonly spriteSuffix?: string;
+// 	/** This Pokémon's nature, if generated. */
+// 	readonly nature?: string;
+// 	/** Whether this Pokémon is shiny. */
+// 	readonly shiny: boolean;
+// 	/** When this Pokémon was generated. */
+// 	readonly date: Date;
 
-	private constructor(pokemon?: Pokemon, options?: Options) {
-		if (!pokemon) {
-			return;
-		}
-		this.id = pokemon.id;
-		//this.baseName = pokemon.name;
-		this.name = pokemon.name;
-		//this.spriteSuffix = form?.spriteSuffix;
-		if (options.natures) {
-			this.nature = generateNature();
-		}
-		// http://bulbapedia.bulbagarden.net/wiki/Shiny_Pok%C3%A9mon#Generation_VI
-		//this.shiny = Math.floor(Math.random() * 65536) < 16;
-		this.date = new Date();
-	}
+// 	private constructor(pokemon?: Pokemon, options?: Options) {
+// 		if (!pokemon) {
+// 			return;
+// 		}
+// 		this.id = pokemon.id;
+// 		//this.baseName = pokemon.name;
+// 		this.name = pokemon.name;
+// 		//this.spriteSuffix = form?.spriteSuffix;
+// 		if (options.natures) {
+// 			this.nature = generateNature();
+// 		}
+// 		// http://bulbapedia.bulbagarden.net/wiki/Shiny_Pok%C3%A9mon#Generation_VI
+// 		//this.shiny = Math.floor(Math.random() * 65536) < 16;
+// 		this.date = new Date();
+// 	}
 
-	static generate(pokemon: Pokemon, form: Form | undefined, options: Options): GeneratedPokemon {
-		return new GeneratedPokemon(pokemon, form, options);
-	}
+// 	static generate(pokemon: Pokemon, form: Form | undefined, options: Options): GeneratedPokemon {
+// 		return new GeneratedPokemon(pokemon, form, options);
+// 	}
 
-	static fromJson(parsed: Object): GeneratedPokemon {
-		const pokemon = new GeneratedPokemon();
-		Object.assign(pokemon, parsed);
-		return pokemon;
-	}
+// 	static fromJson(parsed: Object): GeneratedPokemon {
+// 		const pokemon = new GeneratedPokemon();
+// 		Object.assign(pokemon, parsed);
+// 		return pokemon;
+// 	}
 
-	/** Converts JSON for a single Pokémon into an HTML list item. */
-	toHtml(includeSprite: boolean): string {
-		let classes = "";
-		if (this.shiny) {
-			classes += "shiny ";
-		}
-		if (!includeSprite) {
-			classes += "imageless ";
-		}
-		return `<li class="${classes}">
-			${includeSprite ? this.toImage() : ""}
-			${this.toText()}
-		</li>`;
-	}
+// 	/** Converts JSON for a single Pokémon into an HTML list item. */
+// 	toHtml(includeSprite: boolean): string {
+// 		let classes = "";
+// 		if (this.shiny) {
+// 			classes += "shiny ";
+// 		}
+// 		if (!includeSprite) {
+// 			classes += "imageless ";
+// 		}
+// 		return `<li class="${classes}">
+// 			${includeSprite ? this.toImage() : ""}
+// 			${this.toText()}
+// 		</li>`;
+// 	}
 
-	toText(): string {
-		return `
-			${this.nature ? `<span class="nature">${this.nature}</span>` : ""}
-			${this.name}
-			${this.shiny ? `<span class="star">&starf;</span>` : ""}
-		`;
-	}
+// 	toText(): string {
+// 		return `
+// 			${this.nature ? `<span class="nature">${this.nature}</span>` : ""}
+// 			${this.name}
+// 			${this.shiny ? `<span class="star">&starf;</span>` : ""}
+// 		`;
+// 	}
 
-	toImage(): string {
-		const altText = (this.shiny ? "Shiny " : "") + this.name;
-		return `<img src="${this.getSpritePath()}" alt="${altText}" title="${altText}" />`;
-	}
+// 	toImage(): string {
+// 		const altText = (this.shiny ? "Shiny " : "") + this.name;
+// 		return `<img src="${this.getSpritePath()}" alt="${altText}" title="${altText}" />`;
+// 	}
 
-	private getSpritePath(): string {
-		//const path = this.shiny ? PATH_TO_SHINY_SPRITES : PATH_TO_SPRITES;
-		let name = this.normalizeName();
-		if (this.spriteSuffix) {
-			name += "-" + this.spriteSuffix;
-		}
-		return path + name + SPRITE_EXTENTION;
-	}
+// 	private getSpritePath(): string {
+// 		//const path = this.shiny ? PATH_TO_SHINY_SPRITES : PATH_TO_SPRITES;
+// 		let name = this.normalizeName();
+// 		if (this.spriteSuffix) {
+// 			name += "-" + this.spriteSuffix;
+// 		}
+// 		return path + name + SPRITE_EXTENTION;
+// 	}
 
-	private normalizeName(): string {
-		return (this.baseName ?? this.name)
-			.toLowerCase()
-			.replaceAll("é", "e")
-			.replaceAll("♀", "f")
-			.replaceAll("♂", "m")
-			.replaceAll(/['.:% -]/g, "");
-	}
-}
+// 	private normalizeName(): string {
+// 		return (this.baseName ?? this.name)
+// 			.toLowerCase()
+// 			.replaceAll("é", "e")
+// 			.replaceAll("♀", "f")
+// 			.replaceAll("♂", "m")
+// 			.replaceAll(/['.:% -]/g, "");
+// 	}
+// }
 
 function generateNature(): string {
 	return getRandomElement(NATURES);
