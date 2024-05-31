@@ -9,7 +9,7 @@
 		"noImplicitAny": true,
 		"removeComments": true,
 		"preserveConstEnums": true,
-		"sourceMap": true,
+		//"sourceMap": true,
 		"outFile": "public/random.js"
 	},
 	"include": [
