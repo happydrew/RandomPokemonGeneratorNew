@@ -43,6 +43,7 @@ const STORAGE_PARAMS_KEY = "params";
 const STORAGE_POKEMONS_KEY = "pokemons";
 //const queryUrl = "http://localhost:8081/random-pokemon/api/pokemon/queryConditions";
 const queryUrl = "http://localhost:3000/api/queryConditions";
+const queryUrl_vercel = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
 /** Called when the Generate button is clicked. */
 async function generateRandom() {
     markLoading(true);
@@ -242,7 +243,7 @@ async function getEligiblePokemon(options: Options): Promise<Pokemon[]> {
 }
 
 async function fetchPokemons(options: Options): Promise<Pokemon[]> {
-    const url = queryUrl + '?' + convertOptionsToUrlParams(options);
+    const url = queryUrl_vercel + '?' + convertOptionsToUrlParams(options);
     console.log("Fetching eligible Pokémon from: " + url);
     const response = await fetch(url);
     if (!response.ok) {
@@ -276,22 +277,22 @@ function setPokemonsCache(pokemons: Pokemon[]): void {
 }
 
 function addFormChangeListeners() {
-	regionDropdown.addEventListener("change", toggleStadiumRentalsCheckbox);
-	toggleStadiumRentalsCheckbox();
-	regionDropdown.addEventListener("change", toggleFormsCheckbox);
-	toggleFormsCheckbox();
+    regionDropdown.addEventListener("change", toggleStadiumRentalsCheckbox);
+    toggleStadiumRentalsCheckbox();
+    regionDropdown.addEventListener("change", toggleFormsCheckbox);
+    toggleFormsCheckbox();
 }
 
 function toggleStadiumRentalsCheckbox() {
-	const regionOption = regionDropdown.options[regionDropdown.selectedIndex];
-	const shouldShow = regionOption?.dataset?.stadium == "true";
-	//stadiumRentalsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
+    const regionOption = regionDropdown.options[regionDropdown.selectedIndex];
+    const shouldShow = regionOption?.dataset?.stadium == "true";
+    //stadiumRentalsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
 }
 
 function toggleFormsCheckbox() {
-	const regionOption = regionDropdown.options[regionDropdown.selectedIndex];
-	const shouldShow = regionOption?.dataset?.forms != "false";
-	//formsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
+    const regionOption = regionDropdown.options[regionDropdown.selectedIndex];
+    const shouldShow = regionOption?.dataset?.forms != "false";
+    //formsCheckbox.parentElement.classList.toggle("invisible", !shouldShow);
 }
 
 /** Chooses N random Pokémon from the array of eligibles without replacement. */
