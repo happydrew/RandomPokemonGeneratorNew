@@ -1,2 +1,5 @@
 public/random.js
 node_modules/
+.vercel
+public/**/*.js
+public/**/*.js.map

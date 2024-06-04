@@ -1,3 +1,6 @@
+export { addToHistory, displayPrevious, displayNext, toggleHistoryVisibility, displayHistoryAtIndex, toggleShinyDisplay, updateShinyToggler, clearShinies };
+import { Pokemon, displayPokemon } from "./pokemon.js";
+
 const HISTORY_SIZE = 64;
 const STORAGE_SHINIES_KEY = "shinies";
 

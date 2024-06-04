@@ -100,9 +100,9 @@
 				<!-- Height -->
 				<div class="num_range" id="height">
 					<p>Height:</p>
-					<input type="number" name="height_min" id="height_min" min="0.1" max="100" value="0.1" step="0.1">
+					<input type="number" name="height_min" id="height_min" min="0" max="100" value="0" step="0.1">
 					<label>-</label>
-					<input type="number" name="height_max" id="height_max" min="0.1" max="100" value="100" step="0.1">
+					<input type="number" name="height_max" id="height_max" min="0" max="100" value="100" step="0.1">
 					<label>m</label>
 				</div>
 
@@ -174,9 +174,9 @@
 				<!-- HatchCounter -->
 				<div class="num_range" id="hatchCounter">
 					<p>HatchCounter:</p>
-					<input type="number" name="hatchCounter_min" id="hatchCounter_min" min="5" max="120" value="5">
+					<input type="number" name="hatchCounter_min" id="hatchCounter_min" min="0" max="120" value="0">
 					<label>-</label>
-					<input type="number" name="hatchCounter_max" id="hatchCounter_max" min="5" max="120" value="120">
+					<input type="number" name="hatchCounter_max" id="hatchCounter_max" min="0" max="120" value="120">
 					<label></label>
 				</div>
 			</fieldset>
@@ -224,9 +224,8 @@
 			Pokemon is &copy; Nintendo. Website is &copy; Drew Grant</a>.
 		</p>
 	</footer>
-
-	<script src="./random.js"></script>
-
+	<script src="./random.js" type="module">
+	</script>
 </body>
 
 </html>

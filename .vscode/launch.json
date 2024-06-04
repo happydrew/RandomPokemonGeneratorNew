@@ -1,0 +1,43 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:8000",
+            "webRoot": "${workspaceFolder}/public",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${workspaceFolder}/src/*",
+                "webpack:///*": "${workspaceFolder}/*",
+                "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+                "public/*": "${workspaceFolder}/public/*"
+            },
+            "skipFiles": [
+                "node_modules/**"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/public/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug ts file",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}.ts",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register",
+                "-r",
+                "tsconfig-paths/register"
+            ]
+        }
+    ]
+}
