@@ -41,9 +41,8 @@ const numberDropdown = document.getElementById("n") as HTMLSelectElement;
 const STORAGE_OPTIONS_KEY = "options";
 const STORAGE_PARAMS_KEY = "params";
 const STORAGE_POKEMONS_KEY = "pokemons";
-//const queryUrl = "http://localhost:8081/random-pokemon/api/pokemon/queryConditions";
-const queryUrl = "http://localhost:3000/api/queryConditions";
-const queryUrl_vercel = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
+//const queryUrl = "http://localhost:3000/api/queryConditions";
+const queryUrl = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
 /** Called when the Generate button is clicked. */
 async function generateRandom() {
     markLoading(true);
@@ -99,7 +98,8 @@ function getOptionsFromForm(): Options {
         },
         n: parseInt(numberDropdown.value),
         // todo，暂时设为true, 后续再修改
-        natures: true
+        natures: true,
+        sprites: true
     };
 }
 
@@ -243,7 +243,7 @@ async function getEligiblePokemon(options: Options): Promise<Pokemon[]> {
 }
 
 async function fetchPokemons(options: Options): Promise<Pokemon[]> {
-    const url = queryUrl_vercel + '?' + convertOptionsToUrlParams(options);
+    const url = queryUrl + '?' + convertOptionsToUrlParams(options);
     console.log("Fetching eligible Pokémon from: " + url);
     const response = await fetch(url);
     if (!response.ok) {

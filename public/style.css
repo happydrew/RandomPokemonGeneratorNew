@@ -206,7 +206,12 @@ abbr {
 }
 
 header {
-	margin: 1em 0
+	margin: 1em 0 0 0;
+}
+
+.sub-title {
+	margin: 0;
+	font-size: 0.5em;
 }
 
 .menu,
@@ -216,7 +221,7 @@ header {
 }
 
 .menu {
-	padding: .5em 1em;
+	padding: .2em 1em;
 	border-bottom-width: 2px;
 	position: relative;
 	z-index: 10;
@@ -433,7 +438,6 @@ footer {
 .n_generator {
 	clear:both;
 }
-
 /* 数字范围输入控件组 */
 
 @media screen and (max-width:27em) {

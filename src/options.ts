@@ -29,7 +29,10 @@ type Options = {
 	requestParams: RequestParams;
 	n: number;
 	//generate: boolean;
-	natures: boolean
+	/** 是否为每个pokemon随机生成一个性格 */
+	natures: boolean,
+	/** 是否展示pokemon图片 */
+	sprites: boolean
 }
 
 function convertSearchParamsToOptions(params: URLSearchParams) {

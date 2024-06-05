@@ -4,7 +4,15 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Random Pokemon Generator</title>
+	<title>Random PokeGen | Random Pokemon Generator Online</title>
+	<meta name="description" content="Generate random Pokemon effortlessly using a wide variety of customizable filters, 
+	include regions, types, colors, heights, weights, legendaries, mythicals, and various growth rates and habitats. 
+	Enjoy a unique and personalized Pokemon generation experience with instant results. 
+	Explore the world of Pokemon with Random PokeGen at randompokegen.cc!
+	">
+	<meta name="keywords"
+		content="Random PokeGen, Random Pokemon Generator, Online Pokemon Generator, Pokemon generator tool">
+	<meta name="author" content="DrewGrant">
 	<link rel="stylesheet" type="text/css" href="./style.css">
 
 	<meta name="description" content="This tool generates random Pokemon by region, type, and more.">
@@ -21,6 +29,11 @@
 	<header>
 		<h1 class="pokemon-title">Random Pokemon Generator</h1>
 	</header>
+
+	<div class="sub-title">
+		<span class="star">&starf;</span>
+		1300+ Pokemons
+	</div>
 
 	<!-- <div class="container" id="options-panel"> -->
 	<form action="?" method="get" id="controls" class="menu" onsubmit="generateRandom(); return false;">
@@ -86,14 +99,20 @@
 			</fieldset>
 
 			<fieldset>
-				<label><input type="checkbox" id="legendaries" name="legensdaries"
-						title="The pokémon generated are legendaries.">Legendaries</label>
+				<label>
+					<input type="checkbox" id="legendaries" name="legensdaries" checked>
+					<abbr title="Include legendary pokemons.">Legendaries</abbr>
+				</label>
 
-				<label><input type="checkbox" id="mythical" name="mythical"
-						title="The pokémon generated are mythical.">Mythical</label>
+				<label>
+					<input type="checkbox" id="mythical" name="mythical" checked>
+					<abbr title="Include mythical pokemons.">Mythical</abbr>
+				</label>
 
-				<label><input type="checkbox" id="nfes" name="nfes"
-						title="The pokémon generated are not fully evolved.">NFEs</label>
+				<label>
+					<input type="checkbox" id="nfes" name="nfes" checked>
+					<abbr title="Include not fully evolved (NFE) pokemons.">NFEs</abbr>
+				</label>
 			</fieldset>
 
 			<fieldset>
@@ -145,11 +164,13 @@
 			</fieldset>
 
 			<fieldset>
-				<label><input type="checkbox" id="allowVarieties" name="allowVarieties" checked
-						title="Allow generate varieties, such as Mega Evolutions.">AllowVarieties</label>
+				<label>
+					<input type="checkbox" id="allowVarieties" name="allowVarieties" checked>
+					<abbr title="Include alternate forms, such as Mega Evolutions.">Forms</abbr>
+				</label>
 
-				<label><input type="checkbox" id="baby" name="baby" value="false"
-						title="The pokémon generated are babies.">Baby</label>
+				<label title=""><input type="checkbox" id="baby" name="baby" value="false" checked>
+					<abbr title="Include baby Pokémons, which are pre-evolved forms.">Baby</abbr></label>
 			</fieldset>
 
 			<fieldset>
