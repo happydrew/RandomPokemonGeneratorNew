@@ -36,7 +36,7 @@ type Options = {
 }
 
 function convertSearchParamsToOptions(params: URLSearchParams) {
-	const options: Partial<Options> = {};
+	const options: Partial<Options> = {requestParams: {}};
 
 	if (params.has("region")) {
 		options.requestParams.region = params.get("region");

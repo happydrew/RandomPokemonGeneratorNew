@@ -106,12 +106,22 @@ function getOptionsFromForm(): Options {
 /** Loads options from either the URL or local storage. */
 function loadOptions() {
     if (urlHasOptions()) {
-        setOptions(convertUrlParamsToOptions());
-    } else {
-        const optionsJson = window.localStorage.getItem(STORAGE_OPTIONS_KEY);
-        if (optionsJson) {
-            setOptions(JSON.parse(optionsJson));
+        try {
+            setOptions(convertUrlParamsToOptions());
+        } catch (error) {
+            // 抛出异常，说明url参数有问题，转而从缓存中获取
+            console.error(error);
+            loadOptionsFromCache();
         }
+    } else {
+        loadOptionsFromCache();
+    }
+}
+
+function loadOptionsFromCache() {
+    const optionsJson = window.localStorage.getItem(STORAGE_OPTIONS_KEY);
+    if (optionsJson) {
+        setOptions(JSON.parse(optionsJson));
     }
 }
 
