@@ -63,10 +63,9 @@ h1 {
 }
 
 h2 {
-	font-weight: 400;
+	font-weight: bold;
 	color: #666;
 	font-size: 1.25em;
-	font-style: italic;
 	font-family: Georgia, serif;
 	margin: .25em 0 .5em
 }
@@ -436,9 +435,75 @@ footer {
 }
 
 .n_generator {
-	clear:both;
+	clear: both;
 }
+
 /* 数字范围输入控件组 */
+
+/* 页面内容 */
+h2 {
+	cursor: pointer;
+	padding: 10px;
+	/* background-color: #f4f4f4; */
+	margin: 0;
+	text-align: left;
+	display: block !important;
+	/* clear: both; */
+}
+
+.arrow {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 10px;
+	height: 10px;
+	border: solid #000 2px;
+	border-bottom-width: 0;
+	transform: rotate(-45deg);
+}
+
+.content {
+	padding: 10px;
+	display: none;
+	text-align: justify;
+	font-family: geistSansFont, arial;
+}
+
+.carousel {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	height: 150px;
+}
+
+.carousel-inner {
+	display: flex;
+	animation: scroll 20s linear infinite;
+}
+
+.carousel-inner>div {
+	min-width: 20%;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.arrow-icon {
+	margin-right: 10px;
+}
+
+@keyframes scroll {
+	0% {
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: translateY(-2000%);
+	}
+}
+
+/* 页面内容 */
+
 
 @media screen and (max-width:27em) {
 	header {
