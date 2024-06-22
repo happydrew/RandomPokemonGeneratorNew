@@ -350,20 +350,20 @@ abbr {
 
 .generate-button {
 	background: linear-gradient(145deg, #ffd700, #ffa500);
-	border: 1px solid transparent;
-	border-radius: 0.9em;
-	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -6px -6px 12px rgba(255, 255, 255, 0.7);
-	color: #2b2b6c;
-	font-size: 1em;
-	font-weight: bold;
-	padding: 0.5em;
-	text-align: center;
-	transition: all 0.1s ease-in-out;
-	width: 8em;
-	height: 2em;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 0.9em;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -6px -6px 12px rgba(255, 255, 255, 0.7);
+    color: #2b2b6c;
+    font-size: 1.3em;
+    font-weight: bold;
+    /* padding: 0.5em; */
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+    width: 8rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .generate-button:hover {
