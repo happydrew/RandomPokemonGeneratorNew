@@ -1,2 +1,0 @@
-1. 有的图片不存在, 增加降级选择，home-default不存在时，选择其他的图片。
-https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10265.png
