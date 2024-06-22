@@ -50,8 +50,8 @@ const STORAGE_OPTIONS_KEY_V2 = "options_v2";
 const STORAGE_PARAMS_KEY = "params";
 const STORAGE_FILTER_PARAMS_KEY = "filterParams";
 const STORAGE_POKEMONS_KEY = "pokemons";
-const queryUrl = "http://localhost:3000/api/queryConditions";
-//const queryUrl = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
+//const queryUrl = "http://localhost:3000/api/queryConditions";
+const queryUrl = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
 /** Called when the Generate button is clicked. */
 async function generateRandom() {
     markLoading(true);
