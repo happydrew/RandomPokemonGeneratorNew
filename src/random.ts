@@ -418,6 +418,7 @@ function onPageLoad() {
     loadOptions();
     toggleHistoryVisibility();
     addFormChangeListeners();
+    addNumrangeValidateListeners();
     displayYearsInFooter();
     clearOldCacheVersion();
 }
@@ -427,6 +428,7 @@ async function clearOldCacheVersion() {
     window.localStorage.removeItem(STORAGE_OPTIONS_KEY);
     window.localStorage.removeItem(STORAGE_PARAMS_KEY);
 }
+
 document.addEventListener("DOMContentLoaded", onPageLoad);
 
 // Cache the results of getEligiblePokemon by options.
@@ -517,6 +519,32 @@ function addFormChangeListeners() {
         });
     });
 
+}
+
+/**
+ * 添加数字范围校验监听器， 自动更正超出范围的值
+ */
+function addNumrangeValidateListeners() {
+    document.querySelectorAll("input[type='number'][range-min]").forEach((minInput: HTMLInputElement) => {
+        minInput.addEventListener("blur", () => {
+            const minValStr = minInput.getAttribute("min")
+            const minValue = parseFloat(minValStr);
+            const curValue = parseFloat(minInput.value)
+            if (curValue < minValue) {
+                minInput.value = minValStr
+            }
+        })
+    })
+    document.querySelectorAll("input[type='number'][range-max]").forEach((maxInput: HTMLInputElement) => {
+        maxInput.addEventListener("blur", () => {
+            const maxValStr = maxInput.getAttribute("max")
+            const maxValue = parseFloat(maxValStr);
+            const curValue = parseFloat(maxInput.value)
+            if (curValue > maxValue) {
+                maxInput.value = maxValStr
+            }
+        })
+    })
 }
 
 function updateDropdownTitle(dropdownContainer: HTMLElement) {
