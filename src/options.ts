@@ -66,6 +66,8 @@ type ShowParams = {
 	ablilites?: boolean,
 	/** 是否展示pokemon的叫声 */
 	cries?: boolean,
+	/** 是否展示pokemon的性别 */
+	//genders?: boolean
 }
 
 type Options = {

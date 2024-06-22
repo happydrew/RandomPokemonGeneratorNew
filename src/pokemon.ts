@@ -54,12 +54,36 @@ class Pokemon {
 	toImage(): string {
 		// 后续支持用户选择展示哪种图片
 		//const altText = (this.shiny ? "Shiny " : "") + this.name;
-		return `<img src="${this.getSpritePath()}" alt="${this.name}" title="${this.name}" onerror="this.src='favicon.ico'" />`;
+		return `<img src="${this.getSpritePath("home")}" alt="${this.name}" title="${this.name}" onerror="this.src='favicon.ico'" />`;
 	}
 
-	private getSpritePath(): string {
+	private getSpritePath(verison: string = "home"): string {
 		// 暂时默认使用PokeApi提供的home_front_default, 如果图片访问比较忙，看看别的paokemon数据库，比如Bulbapedia的图片
-		return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + this.id + '.png';
+		switch (verison) {
+			case "home":
+				let imgName;
+				switch (this.id) {
+					case 10182:
+						imgName = "845-gulping.png";
+						break;
+					case 10183:
+						imgName = "845-gorging.png";
+						break;
+					case 10187:
+						imgName = "877-hangry.png";
+						break;
+					case 10192:
+						imgName = "893-dada.png";
+						break;
+					default:
+						imgName = this.id + ".png";
+				}
+				return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/' + imgName;
+				break;
+			default:
+				throw new Error("Invalid sprite version: " + verison);
+				break;
+		}
 		//return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + this.id + '.png';
 		//return '/sprites/normal/' + this.name.toLowerCase() + '.png';
 	}

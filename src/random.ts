@@ -17,29 +17,6 @@ import {
 
 /** html页面表单的选项控件 */
 const regionDropdown = document.getElementById("region") as HTMLSelectElement;
-const typeDropdown = document.getElementById("type") as HTMLSelectElement;
-const colorDropdown = document.getElementById("color") as HTMLSelectElement;
-const growthRateDropdown = document.getElementById("growthRate") as HTMLSelectElement;
-const habitatDropdown = document.getElementById("habitat") as HTMLSelectElement;
-
-const legendariesCheckbox = document.getElementById("legendaries") as HTMLInputElement;
-const mythicalCheckbox = document.getElementById("mythical") as HTMLInputElement;
-const nfesCheckbox = document.getElementById("nfes") as HTMLInputElement;
-const allowVarietiesCheckbox = document.getElementById("allowVarieties") as HTMLInputElement;
-const babyCheckbox = document.getElementById("baby") as HTMLInputElement;
-
-const heightMinInput = document.getElementById("height_min") as HTMLInputElement;
-const heightMaxInput = document.getElementById("height_max") as HTMLInputElement;
-const weightMinInput = document.getElementById("weight_min") as HTMLInputElement;
-const weightMaxInput = document.getElementById("weight_max") as HTMLInputElement;
-const baseHappinessMinInput = document.getElementById("baseHappiness_min") as HTMLInputElement;
-const baseHappinessMaxInput = document.getElementById("baseHappiness_max") as HTMLInputElement;
-const captureRateMinInput = document.getElementById("captureRate_min") as HTMLInputElement;
-const captureRateMaxInput = document.getElementById("captureRate_max") as HTMLInputElement;
-const hatchCounterMinInput = document.getElementById("hatchCounter_min") as HTMLInputElement;
-const hatchCounterMaxInput = document.getElementById("hatchCounter_max") as HTMLInputElement;
-const palParkEncounterMinInput = document.getElementById("palParkEncounterRate_min") as HTMLInputElement;
-const palParkEncounterMaxInput = document.getElementById("palParkEncounterRate_max") as HTMLInputElement;
 const spritesCheckbox = document.getElementById("sprites") as HTMLInputElement;
 const naturesCheckbox = document.getElementById("natures") as HTMLInputElement;
 
@@ -50,7 +27,7 @@ const STORAGE_OPTIONS_KEY_V2 = "options_v2";
 const STORAGE_PARAMS_KEY = "params";
 const STORAGE_FILTER_PARAMS_KEY = "filterParams";
 const STORAGE_POKEMONS_KEY = "pokemons";
-//const queryUrl = "http://localhost:3000/api/queryConditions";
+//const queryUrl = "http://192.168.1.6:3000/api/queryConditions";
 const queryUrl = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
 /** Called when the Generate button is clicked. */
 async function generateRandom() {
