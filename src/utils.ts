@@ -1,7 +1,9 @@
 export {
     toggleDropdownsOnButtonClick, displayYearsInFooter, getRandomElement, removeRandomElement,
     shuffle, randomInteger, markLoading, setDropdownIfValid, parseBoolean, deepClone, expandMoreOptions,
-    collapseMoreOptions, imgOnerror, getDropdownOptions, setSelectIfValid, getNumrangeOptions, setNumrangeIfValid
+    collapseMoreOptions, imgOnerror, getDropdownOptions, setSelectIfValid, getNumrangeOptions,
+    setNumrangeIfValid, getTrueByProbability, getCheckboxValueById, setCheckbox,
+    expandMoreShowOptions, collapseMoreShowOptions
 };
 
 function getRandomElement<T>(arr: T[]): T {
@@ -81,13 +83,27 @@ function collapseMoreOptions(event: Event) {
     document.getElementById("option-panel-hr").style.display = "none";
 }
 
+function expandMoreShowOptions(event: Event) {
+    document.getElementById("more-show-button").style.display = "none";
+    document.getElementById("more-show-options").style.display = "flex";
+    document.getElementById("collapse-more-show-button").style.display = "block";
+    document.getElementById("show-option-panel-hr").style.display = "block";
+}
+
+function collapseMoreShowOptions(event: Event) {
+    document.getElementById("more-show-options").style.display = "none";
+    document.getElementById("collapse-more-show-button").style.display = "none";
+    document.getElementById("more-show-button").style.display = "block";
+    document.getElementById("show-option-panel-hr").style.display = "none";
+}
+
 function imgOnerror(event: Event) {
     const img = event.target as HTMLImageElement;
     img.src = "favicon-192.png";
 }
 
 function displayYearsInFooter() {
-    document.querySelectorAll("span[data-since]").forEach((span: HTMLSpanElement) => {
+        document.querySelectorAll("span[data-since]").forEach((span: HTMLSpanElement) => {
         span.innerText = span.dataset.since + "-" + new Date().getFullYear();
     });
 }
@@ -179,6 +195,15 @@ function getDropdownOptions(dropdownId: string): string | undefined {
         console.error("getDropdownOptions error, dropdown id: " + dropdownId, e);
     }
 }
+
+/**
+ * 获取指定checkbox组件的选中状态
+ * @param checkboxId 
+ * @returns 
+ */
+function getCheckboxValueById(checkboxId: string): boolean {
+    return (document.getElementById(checkboxId) as HTMLInputElement).checked;
+}
 /**
  * 获取范围选择器的选项
  * 
@@ -253,4 +278,28 @@ function setNumrangeIfValid(numrangeId: string, value: string) {
         minInput.value = min > minValue ? min.toString() : minValue.toString();
         maxInput.value = max < maxValue ? max.toString() : maxValue.toString();
     }
+}
+
+/**
+ * 反显checkbox组件
+ * @param checkboxId 
+ * @param value 
+ */
+function setCheckbox(checkboxId: string, value: boolean) {
+    const checkbox = document.getElementById(checkboxId) as HTMLInputElement;
+    if (checkbox) {
+        checkbox.checked = value;
+    }
+}
+
+function getTrueByProbability(probability: number): boolean {
+    return Math.random() < probability;
+}
+
+// 生成正态分布随机数的函数
+function getRandomNormal(mean: number, stdDev: number): number {
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random(); // 避免 log(0)
+    while (v === 0) v = Math.random();
+    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v) * stdDev + mean;
 }

@@ -3,14 +3,14 @@
 
 <head>
 	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-7P1N0JZ42G"></script>
+	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7P1N0JZ42G"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'G-7P1N0JZ42G');
-	</script>
+	</script> -->
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,6 +35,7 @@
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="manifest" href="/manifest.webmanifest">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
 	<script>
 		function toggleContent(id) {
 			var content = document.getElementById(id);
@@ -64,7 +65,8 @@
 		<div id="main-options" class="options-panel">
 			<!-- regions -->
 			<div class="option-unit">
-				<label for="regions" class="tip-label" data-label-tip="">Regions:</label>
+				<label for="regions" class="dotted-underline click-tip"
+					data-click-tip="Choose the region where the Pokémon might appear.">Regions:</label>
 				<div class="dropdown" id="regions">
 					<button type="button" data-plural-name="Regions" data-allow-showing-two="true">All
 						Regions</button>
@@ -127,7 +129,9 @@
 
 			<!-- types -->
 			<div class="option-unit">
-				<label for="types" class="tip-label" data-label-tip="">Types:</label>
+				<label for="types" class="dotted-underline click-tip"
+					data-click-tip="Select the type(s) that the Pokémon can have. It only needs to match one of the selected types."
+					data-label-tip="">Types:</label>
 				<div class="dropdown" id="types">
 					<button type="button" data-plural-name="Types" data-allow-showing-two="true">All Types</button>
 					<div class="popup">
@@ -168,7 +172,9 @@
 
 			<!-- forms -->
 			<div class="option-unit">
-				<label for="forms" class="tip-label" data-label-tip="">Forms:</label>
+				<label for="forms" class="dotted-underline click-tip"
+					data-click-tip="Specify the form of the Pokémon, like Mega Evolutions or Gigantamax."
+					data-label-tip="">Forms:</label>
 				<div class="dropdown" id="forms">
 					<button type="button" data-plural-name="Forms" data-allow-showing-two="true">All Forms</button>
 					<div class="popup">
@@ -196,7 +202,9 @@
 
 			<!-- rarity -->
 			<div class="option-unit">
-				<label for="rarity" class="tip-label" data-label-tip="">Rarity:</label>
+				<label for="rarity" class="dotted-underline click-tip"
+					data-click-tip="Set the rarity level for the Pokémon, such as Normal, Legendary, or Mythical."
+					data-label-tip="">Rarity:</label>
 				<div class="dropdown" id="rarity">
 					<button type="button" data-plural-name="Rarity" data-allow-showing-two="true">All Types</button>
 					<div class="popup">
@@ -217,7 +225,8 @@
 
 			<!-- Height -->
 			<div class="option-unit">
-				<label for="height" class="tip-label"
+				<label for="height" class="dotted-underline click-tip"
+					data-click-tip="Set the height range in meters for the Pokémon."
 					data-label-tip="The height of the pok&eacute;mon in meters.">Height:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="height">
@@ -232,7 +241,8 @@
 
 			<!-- Weight -->
 			<div class="option-unit">
-				<label for="weight" class="tip-label"
+				<label for="weight" class="dotted-underline click-tip"
+					data-click-tip="Set the weight range in kilograms for Pokémon."
 					data-label-tip="The weight of the pok&eacute;mon in kilograms.">Weight:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="weight">
@@ -249,7 +259,9 @@
 
 			<!-- generation -->
 			<div class="option-unit">
-				<label for="generations" class="tip-label" data-label-tip="">Generation:</label>
+				<label for="generations" class="dotted-underline click-tip"
+					data-click-tip="Pick the game generations the Pokémon was introduced in.."
+					data-label-tip="">Generation:</label>
 				<div class="dropdown" id="generations">
 					<button type="button" data-plural-name="Generations" data-allow-showing-two="true">All
 						Generations</button>
@@ -292,7 +304,8 @@
 
 			<!-- colors -->
 			<div class="option-unit">
-				<label for="colors" class="tip-label" data-label-tip="">Colors:</label>
+				<label for="colors" class="dotted-underline click-tip"
+					data-click-tip="Choose the colors of the Pokémon." data-label-tip="">Colors:</label>
 				<div class="dropdown" id="colors">
 					<button type="button" data-plural-name="Colors" data-allow-showing-two="true">All Types</button>
 					<div class="popup">
@@ -319,7 +332,8 @@
 
 			<!-- envolves -->
 			<div class="option-unit">
-				<label for="envolves" class="tip-label" data-label-tip="">Envolves:</label>
+				<label for="envolves" class="dotted-underline click-tip"
+					data-click-tip="Set the evolution stage of the Pokémon." data-label-tip="">Envolves:</label>
 				<div class="dropdown" id="envolves">
 					<button type="button" data-plural-name="Envolves" data-allow-showing-two="true">All
 						Types</button>
@@ -343,7 +357,9 @@
 
 			<!-- baby -->
 			<div class="option-unit">
-				<label for="baby" class="tip-label" data-label-tip="">Baby:</label>
+				<label for="baby" class="dotted-underline click-tip"
+					data-click-tip="Specify whether the generated Pokémon is a baby Pokémon."
+					data-label-tip="">Baby:</label>
 				<div class="dropdown" id="baby">
 					<button type="button" data-plural-name="" data-allow-showing-two="false">
 						All BabyOrNot</button>
@@ -363,7 +379,9 @@
 
 			<!-- growthRate -->
 			<div class="option-unit">
-				<label for="growthRate" class="tip-label" data-label-tip="">GrowRate:</label>
+				<label for="growthRate" class="dotted-underline click-tip"
+					data-click-tip="Select the growth rate category for the Pokémon."
+					data-label-tip="">GrowRate:</label>
 				<div class="dropdown" id="growthRate">
 					<button type="button" data-plural-name="Growth" data-allow-showing-two="true">All
 						Growth</button>
@@ -390,7 +408,8 @@
 
 			<!-- habitats -->
 			<div class="option-unit">
-				<label for="habitats" class="tip-label" data-label-tip="">Habitats:</label>
+				<label for="habitats" class="dotted-underline click-tip"
+					data-click-tip="Choose the habitats of generated Pokémons." data-label-tip="">Habitats:</label>
 				<div class="dropdown" id="habitats">
 					<button type="button" data-plural-name="Habitats" data-allow-showing-two="true">
 						All Habitats</button>
@@ -425,7 +444,9 @@
 
 			<!-- eggGroup -->
 			<div class="option-unit">
-				<label for="eggGroup" class="tip-label" data-label-tip="">EggGroup:</label>
+				<label for="eggGroup" class="dotted-underline click-tip"
+					data-click-tip="Specify the egg group for breeding compatibility."
+					data-label-tip="">EggGroup:</label>
 				<div class="dropdown" id="eggGroups">
 					<button type="button" data-plural-name="EggGroup" data-allow-showing-two="true">
 						All EggGroups</button>
@@ -472,7 +493,8 @@
 
 			<!-- genderRate -->
 			<div class="option-unit">
-				<label for="genderRate" class="tip-label" data-label-tip="">GendRate:</label>
+				<label for="genderRate" class="dotted-underline click-tip"
+					data-click-tip="Specify the gender rate of generated Pokémons." data-label-tip="">GendRate:</label>
 				<div class="dropdown" id="genderRate">
 					<button type="button" data-plural-name="GenderRate" data-allow-showing-two="true">
 						All GenderRate</button>
@@ -503,7 +525,8 @@
 
 			<!-- shape -->
 			<div class="option-unit">
-				<label for="shape" class="tip-label" data-label-tip="">Shape:</label>
+				<label for="shape" class="dotted-underline click-tip"
+					data-click-tip="Pick the body shape category of the Pokémon." data-label-tip="">Shape:</label>
 				<div class="dropdown" id="shape">
 					<button type="button" data-plural-name="Shapes" data-allow-showing-two="true">
 						All Shapes</button>
@@ -549,8 +572,8 @@
 			<!-- DefaultForm -->
 			<!-- DefaultForm is The standard or original form of a Pokémon, representing its most common or base form. -->
 			<div class="option-unit">
-				<label for="defaultForm" class="tip-label"
-					data-label-tip="DefaultForm is The standard or original form of a Pokémon, representing its most common or base form.">DefaultForm:</label>
+				<label for="defaultForm" class="dotted-underline click-tip"
+					data-click-tip="Whether the generated Pokémons are in their default forms.">DefaultForm:</label>
 				<div class="dropdown" id="defaultForm">
 					<button type="button" data-plural-name="" data-allow-showing-two="false">
 						All DefOrNot</button>
@@ -570,8 +593,8 @@
 			<!-- FormSwitchable -->
 			<!-- Whether or Not this Pokémon has multiple forms and can switch between them. -->
 			<div class="option-unit">
-				<label for="formSwitchable" class="tip-label"
-					data-label-tip="Whether or Not this Pokémon has multiple forms and can switch between them.">FormSwitch:</label>
+				<label for="formSwitchable" class="dotted-underline click-tip"
+					data-click-tip="Whether or Not the Pokémon has multiple forms and can switch between them.">FormSwitch:</label>
 				<div class="dropdown" id="formSwitchable">
 					<button type="button" data-plural-name="" data-allow-showing-two="false">
 						All SwitchableOrNot</button>
@@ -589,10 +612,10 @@
 			</div>
 
 			<!-- HasGenderDifferences -->
-			<!-- Whether or Not this Pokémon has visual gender differences. -->
+			<!-- Whether or Not the Pokémon has visual gender differences. -->
 			<div class="option-unit">
-				<label for="hasGenderDiff" class="tip-label"
-					data-label-tip="Whether or Not this Pok&eacute;mon has visual gender differences.">GenderDiff:</label>
+				<label for="hasGenderDiff" class="dotted-underline click-tip"
+					data-click-tip="Whether or Not the Pokémon has visual gender differences.">GenderDiff:</label>
 				<div class="dropdown" id="hasGenderDiff">
 					<button type="button" data-plural-name="" data-allow-showing-two="false">
 						All HasGenderDiffOrNot</button>
@@ -611,7 +634,9 @@
 
 			<!-- base stats hp -->
 			<div class="option-unit-medium" id="baseStats_hp">
-				<label for="hp" class="tip-label" data-label-tip="">Hp:</label>
+				<label for="hp" class="dotted-underline click-tip"
+					data-click-tip="Set the range for the base HP stat, and the effort value."
+					data-label-tip="">Hp:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="hp_range">
 						<input type="number" range-min name="hp_min" id="hp_min" min="0" max="255" value="0">
@@ -641,7 +666,9 @@
 
 			<!-- base stats attack -->
 			<div class="option-unit-medium" id="baseStats_attack">
-				<label for="attack" class="tip-label" data-label-tip="">Attack:</label>
+				<label for="attack" class="dotted-underline click-tip"
+					data-click-tip="Set the range for the base Attack stat, and the effort value."
+					data-label-tip="">Attack:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="attack_range">
 						<input type="number" range-min name="attack_min" id="attack_min" min="0" max="255" value="0">
@@ -671,7 +698,9 @@
 
 			<!-- base stats defense -->
 			<div class="option-unit-medium" id="baseStats_defense">
-				<label for="defense" class="tip-label" data-label-tip="">Defense:</label>
+				<label for="defense" class="dotted-underline click-tip"
+					data-click-tip="Set the range for the base Defense stat, and the effort value."
+					data-label-tip="">Defense:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="defense_range">
 						<input type="number" range-min name="defense_min" id="defense_min" min="0" max="255" value="0">
@@ -702,7 +731,9 @@
 
 			<!-- base stats spAttack -->
 			<div class="option-unit-medium" id="baseStats_spAtk">
-				<label for="spAttack" class="tip-label" data-label-tip="">SpAttack:</label>
+				<label for="spAttack" class="dotted-underline click-tip"
+					data-click-tip="Set the range for the base Special Attack stat, and the effort value."
+					data-label-tip="">SpAtk:</label>
 
 				<div class="num_rangecontainer">
 					<div class="num_range" id="spAttack_range">
@@ -735,7 +766,9 @@
 
 			<!-- base stats spDefense -->
 			<div class="option-unit-medium" id="baseStats_spDef">
-				<label for="spDefense" class="tip-label" data-label-tip="">SpDefense:</label>
+				<label for="spDefense" class="dotted-underline click-tip"
+					data-click-tip="Set the range for the base Special Defense stat, and the effort value."
+					data-label-tip="">SpDef:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="spDefense_range">
 						<input type="number" range-min name="spDefense_min" id="spDefense_min" min="0" max="255"
@@ -767,7 +800,9 @@
 
 			<!-- base stats speed -->
 			<div class="option-unit-medium" id="baseStats_speed">
-				<label for="speed" class="tip-label" data-label-tip="">Speed:</label>
+				<label for="speed" class="dotted-underline click-tip"
+					data-click-tip="Set the range for the base Speed stat, and the effort value."
+					data-label-tip="">Speed:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="speed_range">
 						<input type="number" range-min name="speed_min" id="speed_min" min="0" max="255" value="0">
@@ -797,7 +832,9 @@
 
 			<!-- BaseHappiness -->
 			<div class="option-unit">
-				<label for="baseHappiness" class="tip-label" data-label-tip="">Happiness:</label>
+				<label for="baseHappiness" class="dotted-underline click-tip"
+					data-click-tip="Set the base happiness range of generated Pokémons."
+					data-label-tip="">BaseHappy:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="baseHappiness">
 						<input type="number" range-min name="baseHappiness_min" id="baseHappiness_min" min="0" max="140"
@@ -809,9 +846,25 @@
 				</div>
 			</div>
 
+			<!-- BaseExperience -->
+			<!-- <div class="option-unit">
+				<label for="baseHappiness" class="dotted-underline" data-label-tip="">BaseExp:</label>
+				<div class="num_rangecontainer">
+					<div class="num_range" id="baseHappiness">
+						<input type="number" range-min name="baseHappiness_min" id="baseHappiness_min" min="0" max="1000"
+							value="0">
+						<label>-</label>
+						<input type="number" range-max name="baseHappiness_max" id="baseHappiness_max" min="0" max="1000"
+							value="140">
+					</div>
+				</div>
+			</div> -->
+
 			<!-- CaptureRate -->
 			<div class="option-unit">
-				<label for="captureRate" class="tip-label" data-label-tip="">CaptureRate:</label>
+				<label for="captureRate" class="dotted-underline click-tip"
+					data-click-tip="Set the base capture rate range of the Pokémon, up to 255. The higher the number, the easier the catch."
+					data-label-tip="">CatchRate:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="captureRate">
 						<input type="number" range-min name="captureRate_min" id="captureRate_min" min="0" max="255"
@@ -825,7 +878,9 @@
 
 			<!-- HatchCounter -->
 			<div class="option-unit">
-				<label for="hatchCounter" class="tip-label" data-label-tip="">HatchCount:</label>
+				<label for="hatchCounter" class="dotted-underline click-tip"
+					data-click-tip="Set the number of cycles needed for the Pokémon to hatch."
+					data-label-tip="">HatchCount:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="hatchCounter">
 						<input type="number" range-min name="hatchCounter_min" id="hatchCounter_min" min="0" max="120"
@@ -836,43 +891,102 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- PalParkEncounterRate -->
-			<!-- <div class="option-unit">
-				<label for="palParkEncounterRate" class="tip-label" data-label-tip="">PalParEncnt:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="palParkEncounterRate">
-						<input type="number" range-min name="palParkEncounterRate_min" id="palParkEncounterRate_min"
-							min="0" max="100" value="0">
-						<label>-</label>
-						<input type="number" range-max name="palParkEncounterRate_max" id="palParkEncounterRate_max"
-							min="0" max="100" value="100">
-					</div>
-				</div>
-			</div> -->
 		</div>
 	</form>
 	<button id="more-button" class="more-button" onclick="expandMoreOptions()">&#x23EC; More Options</button>
-	<button id="collapse-more-button" class="more-button default-hidden" onclick="collapseMoreOptions()">&#x23EB;
-		Collapse</button>
+	<button id="collapse-more-button" class="more-button default-hidden"
+		onclick="collapseMoreOptions()">&#x23EB;Collapse</button>
 	<!-- </div> -->
 
 	<!-- <div class="container" id="options-panel"> -->
-	<h2 class="panel-label tip-label" for="showing"
+	<h2 class="panel-label dotted-underline" for="showing"
 		title="Showing options for configuring the showing content of the random Pokémon generator, such as whether to display Pokémon images and whether to generate random natures.">
 		Showing Options</h2>
 	<form action="?" method="get" id="showing" class="menu">
 		<div id="main-show-options" class="options-panel">
-			<div class="option-unit">
-				<label for="sprites" class="tip-label" data-label-tip="">Sprites:</label>
+			<!-- showGeneration -->
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip=" Whether to display the generation of the Pokémon."
+					data-label-tip="">Generation:</label>
+				<input type="checkbox" id="showGeneration" checked />
+			</div>
+			<!-- showRegion -->
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to show the region where the Pokémon maybe found.">Region:</label>
+				<input type="checkbox" id="showRegion" checked />
+			</div>
+			<!-- natures -->
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to randomly assign a nature to each generated Pokémon.">Natures:</label>
+				<input type="checkbox" id="natures" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Background image is based on the type of Pokemon's first slot, to enhance the visual appeal.">BackImg:</label>
+				<input type="checkbox" id="backImg" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to display the background color for the Pokémon, based on pokemon's color.">BackColor:</label>
+				<input type="checkbox" id="backColor" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip" data-click-tip="Whether to display the Pokémon's abilities."
+					data-label-tip="">Ablilites:</label>
+				<input type="checkbox" id="showAblilites" checked />
+			</div>
+		</div>
+		<hr id="show-option-panel-hr" class="option-panel-hr default-hidden" />
+		<div id="more-show-options" class="options-panel default-hidden">
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to show the imgae of the Pokémon.">Sprites:</label>
 				<input type="checkbox" id="sprites" checked />
 			</div>
-			<div class="option-unit">
-				<label for="natures" class="tip-label" data-label-tip="">Natures:</label>
-				<input type="checkbox" id="natures" checked />
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to display the rarity level of the Pokémon.">Rarity:</label>
+				<input type="checkbox" id="showRarity" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to show the type(s) of the Pokémon.">Types:</label>
+				<input type="checkbox" id="showTypes" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to display the base stats of the Pokémon.">BaseStats:</label>
+				<input type="checkbox" id="showStats" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to show the effort values for the Pokémon.">Evs:</label>
+				<input type="checkbox" id="evs" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Whether to show the individual values for the Pokémon.">Ivs:</label>
+				<input type="checkbox" id="ivs" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Toggle to show or hide the play button for the Pokémon's cry sound.">Cries:</label>
+				<input type="checkbox" id="cries" checked />
+			</div>
+			<div class="option-unit-small">
+				<label class="dotted-underline click-tip"
+					data-click-tip="Set the probability of generating a Shiny Pokémon, expressed as a percentage.">Shiny:</label>
+				<input type="number" id="shinyProb" min="0" max="100" value="1" />
+				<span class="percent-sign">&nbsp;%</span>
 			</div>
 		</div>
 	</form>
+	<button id="more-show-button" class="more-button" onclick="expandMoreShowOptions()">&#x23EC; More Options</button>
+	<button id="collapse-more-show-button" class="more-button default-hidden"
+		onclick="collapseMoreShowOptions()">&#x23EB;Collapse</button>
 
 	<div class="n_generator">
 		<select form="controls" name="n" id="n" required>
@@ -894,7 +1008,8 @@
 		<button class="hidden text" id="next" onclick="displayNext()">Next &#x23E9;</button>
 	</nav>
 
-	<section id="results"></section>
+	<section id="results">
+	</section>
 
 	<button id="shiny-toggler" class="text is-hiding" onclick="toggleShinyDisplay()">
 		<span class="star">&starf;</span>
@@ -906,200 +1021,6 @@
 		<button class="text" onclick="clearShinies()">&#x274C; Clear your shiny Pokémon</button>
 	</section>
 
-	<!-- 介绍内容 -->
-	<!-- <h2 onclick="toggleContent('section1')" class="arrow-icon fas fa-chevron-down">1. Introduction</h2>
-	<div id="section1" class="content">
-		<p>Welcome to the Random Pok&eacute;mon Generator! This powerful tool allows you to generate a random
-			Pok&eacute;mon tailored
-			to your preferences. Whether you're looking to create a random team, explore new Pok&eacute;mon, or design
-			unique
-			challenges, our generator is here to assist. The purpose of this tool is to provide Pok&eacute;mon fans with
-			a
-			versatile and convenient way to engage with the Pok&eacute;mon universe, offering a wealth of customization
-			options
-			and a user-friendly interface.</p>
-	</div>
-
-	<h2 onclick="toggleContent('section2')" class="arrow-icon fas fa-chevron-down">2. Key Features</h2>
-	<div id="section2" class="content">
-		<p><strong>Personalized Customization:</strong></p>
-		<p>Our Random Pok&eacute;mon Generator offers extensive customization beyond the usual filters like region and
-			type.
-			You can personalize your search with options such as:</p>
-		<ul>
-			<li>Growth rate</li>
-			<li>Habitat</li>
-			<li>Forms</li>
-			<li>Baby status</li>
-			<li>Attribute ranges (height, weight, base happiness, capture rate, hatch counter)</li>
-		</ul>
-		<p>These features allow you to generate the perfect Pok&eacute;mon for any scenario, whether you're creating a
-			new team
-			or designing a fanfiction character.</p>
-
-		<p><strong>Extensive Database:</strong></p>
-		<p>With a comprehensive database of over 1400 Pok&eacute;mon, including all forms and variants, our generator
-			ensures
-			you have access to a wide selection. This extensive range makes it easy to find and generate any
-			Pok&eacute;mon you
-			might need.</p>
-
-		<p><strong>User-Friendly Interface:</strong></p>
-		<p>Our interface is designed to be clean, intuitive, and mobile-friendly. Options are neatly divided into common
-			and advanced categories, making it easy to navigate and use.</p>
-
-		<p><strong>High-Quality Visuals:</strong></p>
-		<p>We use official HOME version designs to provide high-quality images for each Pok&eacute;mon, enhancing your
-			visual
-			experience.</p>
-
-		<p><strong>Quick Generation:</strong></p>
-		<p>Generate your desired Pok&eacute;mon in less than a second on average, ensuring a fast and smooth experience
-			with
-			our random Pok&eacute;mon generator.</p>
-	</div>
-
-	<h2 onclick="toggleContent('section3')" class="arrow-icon fas fa-chevron-down">3. How to Use the Random
-		Pok&eacute;mon
-		Generator</h2>
-	<div id="section3" class="content">
-		<p>Using the Random Pok&eacute;mon Generator is simple and straightforward:</p>
-		<ol>
-			<li><strong>Setting the Filters:</strong> Customize your search by setting filters for region, type, color,
-				growth rate, habitat, forms, baby status, and attribute ranges (height, weight, base happiness, capture
-				rate, hatch counter).</li>
-			<li><strong>Clicking the Generate Button:</strong> Once you've set your desired filters, click the
-				"Generate" button to generate a random Pok&eacute;mon.</li>
-			<li><strong>Viewing the Generated Pok&eacute;mon:</strong> The generated Pok&eacute;mon will appear on your
-				screen along
-				with their attributes. You can view details and use the generated Pok&eacute;mon for your specific
-				needs.</li>
-		</ol>
-	</div>
-
-	<h2 onclick="toggleContent('section4')" class="arrow-icon fas fa-chevron-down">4. Applications of the Pok&eacute;mon
-		Generator</h2>
-	<div id="section4" class="content">
-		<p>Our random Pok&eacute;mon generator can be used in various ways, including:</p>
-		<ul>
-			<li><strong>Creating Random Teams for Battles:</strong> Use the generator to create balanced and diverse
-				teams for competitive battles.</li>
-			<li><strong>Designing Unique Challenges:</strong> Generate random Pok&eacute;mon to create new and exciting
-				challenges for yourself and your friends.</li>
-			<li><strong>Generating Pok&eacute;mon for Fanfiction or Artwork Inspiration:</strong> Find inspiration for
-				characters and storylines by generating unique Pok&eacute;mon combinations.</li>
-			<li><strong>Educational Purposes:</strong> Learn about different Pok&eacute;mon and their attributes by
-				exploring
-				the generator's extensive database.</li>
-		</ul>
-	</div>
-
-	<h2 onclick="toggleContent('section5')" class="arrow-icon fas fa-chevron-down">5. Future Tools and Features</h2>
-	<div id="section5" class="content">
-		<p>While our current primary tool is the Random Pok&eacute;mon Generator, we have exciting features planned for
-			the
-			future. Stay tuned for the following updates:</p>
-		<ul>
-			<li><strong>Pok&eacute;mon Randomizer:</strong> A tool that will allow you to randomize your entire
-				Pok&eacute;mon game
-				experience.</li>
-			<li><strong>Random Pok&eacute;mon Type Generator:</strong> Generate random Pok&eacute;mon types for new and
-				unique
-				combinations.</li>
-			<li><strong>Random Pok&eacute;mon Team Generator:</strong> Create complete teams of random Pok&eacute;mon
-				for battles,
-				challenges, or creative projects.</li>
-		</ul>
-		<p>We invite you to follow our updates and be the first to try these new features as they become available!</p>
-	</div> -->
-
-	<!-- <h2 onclick="toggleContent('section6')" class="arrow-icon fas fa-chevron-down">6. User Testimonials and Reviews</h2>
-	<div id="section6" class="content">
-		<div class="carousel">
-			<div class="carousel-inner">
-				<div><strong>Alex P.:</strong> "The random Pok&eacute;mon generator is perfect for creating balanced teams for
-					my online battles. Highly recommend!"</div>
-				<div><strong>Jamie L.:</strong> "I use this tool all the time for my fanfiction. The random combinations
-					are so inspiring."</div>
-				<div><strong>Riley S.:</strong> "The interface is super user-friendly and the customization options are
-					endless. Great tool!"</div>
-				<div><strong>Morgan K.:</strong> "I love how fast it generates Pok&eacute;mon. It's become a staple in my
-					Pok&eacute;mon gaming sessions."</div>
-				<div><strong>Taylor J.:</strong> "The high-quality images make a huge difference. It’s visually
-					appealing and fun to use."</div>
-				<div><strong>Jordan W.:</strong> "I’ve been able to create some amazing random teams with this
-					generator. It's a game-changer!"</div>
-				<div><strong>Casey R.:</strong> "The comprehensive database ensures I always find what I need.
-					Absolutely love it!"</div>
-				<div><strong>Peyton M.:</strong> "A fantastic tool for both casual and competitive players. The
-					customization is top-Notch."</div>
-				<div><strong>Drew B.:</strong> "Generating random Pok&eacute;mon has never been easier. The user-friendly
-					design is a huge plus."</div>
-				<div><strong>Alexis H.:</strong> "I enjoy using this for educational purposes with my kids. They learn
-					so much about different Pok&eacute;mon."</div>
-				<div><strong>Taylor C.:</strong> "Creating random challenges has never been this fun. This tool is
-					incredibly versatile."</div>
-				<div><strong>Reese G.:</strong> "The random Pok&eacute;mon generator adds a new level of excitement to my
-					Pok&eacute;mon journey."</div>
-				<div><strong>Blake T.:</strong> "I appreciate how quickly it generates Pok&eacute;mon. Saves me a lot of time."
-				</div>
-				<div><strong>Dakota F.:</strong> "The range of customization options is impressive. I can fine-tune
-					exactly what I want."</div>
-				<div><strong>Jordan D.:</strong> "Using this tool for artwork inspiration has been fantastic. The random
-					Pok&eacute;mon give me so many ideas."</div>
-				<div><strong>Charlie K.:</strong> "I’ve recommended this generator to all my friends. It's the best one
-					out there!"</div>
-				<div><strong>Emerson J.:</strong> "The extensive database ensures there's always something new to
-					discover."</div>
-				<div><strong>Avery N.:</strong> "It's incredibly helpful for creating balanced and interesting Pok&eacute;mon
-					teams."</div>
-				<div><strong>Taylor L.:</strong> "The generator’s high-quality visuals make it a joy to use."</div>
-				<div><strong>Rory E.:</strong> "Whether for battles or creative projects, this tool has been
-					invaluable."</div>
-			</div>
-		</div>
-	</div> -->
-
-	<!-- <h2 onclick="toggleContent('section7')" class="arrow-icon fas fa-chevron-down">6. Frequently Asked Questions (FAQs)
-	</h2>
-	<div id="section7" class="content">
-		<ul>
-			<li><strong>Q: How many Pok&eacute;mon can I generate at once?</strong> A: You can generate up to six
-				Pok&eacute;mon at a
-				time with our random Pok&eacute;mon generator.</li>
-			<li><strong>Q: Are all Pok&eacute;mon included in the generator?</strong> A: true, our database includes
-				over
-				1400
-				Pok&eacute;mon, covering all forms and variants.</li>
-			<li><strong>Q: Can I customize the attributes of the generated Pok&eacute;mon?</strong> A: true, you can set
-				specific ranges for height, weight, base happiness, capture rate, and hatch counter.</li>
-			<li><strong>Q: Is the Random Pok&eacute;mon Generator mobile-friendly?</strong> A: Absolutely! Our user
-				interface
-				is designed to be clean, intuitive, and mobile-friendly.</li>
-			<li><strong>Q: How quickly does the generator produce results?</strong> A: The generator works incredibly
-				fast, usually producing results in less than a second.</li>
-			<li><strong>Q: Can I generate specific forms and baby Pok&eacute;mon?</strong> A: true, you can use the
-				advanced
-				filters to generate specific forms and baby Pok&eacute;mon.</li>
-			<li><strong>Q: What other tools are planned for the future?</strong> A: We are planning to introduce a
-				Pok&eacute;mon Randomizer, a Random Pok&eacute;mon Type Generator, and a Random Pok&eacute;mon Team
-				Generator.</li>
-			<li><strong>Q: Is there any support available if I encounter issues?</strong> A: true, we offer support
-				through our contact form and social media platforms.</li>
-		</ul>
-	</div>
-
-	<h2 onclick="toggleContent('section8')" class="arrow-icon fas fa-chevron-down">7. Contact Information and Support
-	</h2>
-	<div id="section8" class="content">
-		<p>For support or feedback, please contact us through our website or connect with us on email: <a
-				href="mailto:zhugetd@gmail.com">zhugetd@gmail.com</a></p>
-		<p>Thank you for using our Random Pok&eacute;mon Generator! We hope you enjoy exploring the endless
-			possibilities it
-			offers.</p>
-	</div> -->
-	<!-- 介绍内容 -->
-
 	<footer>
 		<p>
 			<a href="./rss.xml">RSS</a> |
@@ -1110,6 +1031,8 @@
 			Drew Grant</a>.
 		</p>
 	</footer>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 	<script src="./random.js" type="module">
 	</script>
 </body>

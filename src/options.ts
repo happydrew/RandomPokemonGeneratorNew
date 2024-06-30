@@ -1,5 +1,5 @@
 export { convertOptionsToUrlParams, convertSearchParamsToOptions };
-export type { FilterParams as RequestParams, Options };
+export type { FilterParams, Options, ShowParams };
 import { parseBoolean } from "./utils.js";
 
 type FilterParams = {
@@ -46,26 +46,36 @@ type FilterParams = {
 }
 
 type ShowParams = {
-	n?: number;
+	n?: string;
 	//generate: boolean;
 	/** 是否展示pokemon图片 */
 	sprites?: boolean,
+	/** 是否展示pokemon的背景图,取决于type */
+	background_image?: boolean,
+	/** 是否展示背景色，即pokemon的颜色 */
+	background_color?: boolean,
+	/** 是否展示pokemon的世代 */
+	showGeneration?: boolean,
+	/** 是否展示pokemon的region */
+	showRegion?: boolean,
 	/** 是否展示pokemon的稀有度 */
-	rarity?: boolean,
+	showRarity?: boolean,
 	/** 是否展示pokemon的属性 */
-	types?: boolean,
+	showTypes?: boolean,
 	/** 是否为每个pokemon随机生成一个性格 */
 	natures?: boolean,
 	/** 是否展示pokemon的base stats */
-	stats?: boolean,
+	showStats?: boolean,
 	/** 是否展示pokemon的努力值Effort Values, EVs */
 	evs?: boolean,
 	/** 是否为每个pokemon随机生成个体值iv */
 	ivs?: boolean,
 	/** 是否展示pokemon的能力值 */
-	ablilites?: boolean,
+	showAblilites?: boolean,
 	/** 是否展示pokemon的叫声 */
 	cries?: boolean,
+	// 获取shiny的概率，百分数，默认是1，即1%的概率
+	shinyProb?: number
 	/** 是否展示pokemon的性别 */
 	//genders?: boolean
 }
@@ -180,19 +190,53 @@ function convertSearchParamsToOptions(params: URLSearchParams): Partial<Options>
 		options.filterParams.speed_effort = params.get("speed_effort");
 	}
 
-	// if (params.has("palParkEncounterRate")) {
-	// 	options.filterParams.palParkEncounterRate = params.get("palParkEncounterRate");
-	// }
+	// showParams
 	if (params.has("n")) {
-		options.showParams.n = parseInt(params.get("n")!);
+		options.showParams.n = params.get("n")!;
 	}
 	if (params.has("natures")) {
 		options.showParams.natures = parseBoolean(params.get("natures")!);
 	}
 	if (params.has("sprites")) {
 		options.showParams.sprites = parseBoolean(params.get("sprites")!);
-		return options;
 	}
+	if (params.has("background_image")) {
+		options.showParams.background_image = parseBoolean(params.get("background_image")!);
+	}
+	if (params.has("background_color")) {
+		options.showParams.background_color = parseBoolean(params.get("background_color")!);
+	}
+	if (params.has("showGeneration")) {
+		options.showParams.showGeneration = parseBoolean(params.get("showGeneration")!);
+	}
+	if (params.has("showRegion")) {
+		options.showParams.showRegion = parseBoolean(params.get("showRegion")!);
+	}
+	if (params.has("showRarity")) {
+		options.showParams.showRarity = parseBoolean(params.get("showRarity")!);
+	}
+	if (params.has("showTypes")) {
+		options.showParams.showTypes = parseBoolean(params.get("showTypes")!);
+	}
+	if (params.has("showStats")) {
+		options.showParams.showStats = parseBoolean(params.get("showStats")!);
+	}
+	if (params.has("evs")) {
+		options.showParams.evs = parseBoolean(params.get("evs")!);
+	}
+	if (params.has("ivs")) {
+		options.showParams.ivs = parseBoolean(params.get("ivs")!);
+	}
+	if (params.has("showAblilites")) {
+		options.showParams.showAblilites = parseBoolean(params.get("showAblilites")!);
+	}
+	if (params.has("cries")) {
+		options.showParams.cries = parseBoolean(params.get("cries")!);
+	}
+	if (params.has("shinyProb")) {
+		options.showParams.shinyProb = parseFloat(params.get("shinyProb")!);
+	}
+	return options;
 }
 
 /** Returns URL parameters for the given settings, excluding the leading "?". */

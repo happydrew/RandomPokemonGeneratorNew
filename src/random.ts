@@ -1,15 +1,18 @@
 import { addToHistory, toggleHistoryVisibility, displayPrevious, displayNext, toggleShinyDisplay, clearShinies } from "./history.js";
-import { convertSearchParamsToOptions, Options, convertOptionsToUrlParams, RequestParams } from "./options.js";
-import { Pokemon, displayPokemon } from "./pokemon.js";
+import { convertSearchParamsToOptions, Options, convertOptionsToUrlParams, FilterParams, ShowParams } from "./options.js";
+import { Pokemon, DisplayPokemon, PokemonDetail, displayPokemon } from "./pokemon.js";
 import {
     toggleDropdownsOnButtonClick, markLoading, deepClone, removeRandomElement, shuffle, expandMoreOptions,
     collapseMoreOptions, setDropdownIfValid, displayYearsInFooter, getDropdownOptions,
-    parseBoolean, setSelectIfValid, getNumrangeOptions, setNumrangeIfValid
+    setSelectIfValid, getNumrangeOptions, setNumrangeIfValid, getCheckboxValueById, setCheckbox,
+    expandMoreShowOptions, collapseMoreShowOptions
 } from "./utils.js";
 
 (window as any).generateRandom = generateRandom;
 (window as any).expandMoreOptions = expandMoreOptions;
 (window as any).collapseMoreOptions = collapseMoreOptions;
+(window as any).expandMoreShowOptions = expandMoreShowOptions;
+(window as any).collapseMoreShowOptions = collapseMoreShowOptions;
 (window as any).displayPrevious = displayPrevious;
 (window as any).displayNext = displayNext;
 (window as any).toggleShinyDisplay = toggleShinyDisplay;
@@ -17,7 +20,6 @@ import {
 
 /** html页面表单的选项控件 */
 const regionDropdown = document.getElementById("region") as HTMLSelectElement;
-const spritesCheckbox = document.getElementById("sprites") as HTMLInputElement;
 const naturesCheckbox = document.getElementById("natures") as HTMLInputElement;
 
 const numberDropdown = document.getElementById("n") as HTMLSelectElement;
@@ -27,18 +29,64 @@ const STORAGE_OPTIONS_KEY_V2 = "options_v2";
 const STORAGE_PARAMS_KEY = "params";
 const STORAGE_FILTER_PARAMS_KEY = "filterParams";
 const STORAGE_POKEMONS_KEY = "pokemons";
-//const queryUrl = "http://192.168.1.6:3000/api/queryConditions";
-const queryUrl = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app/api/queryConditions";
+
+// pokemon详情数据缓存
+const POKEMON_DETAIL_STORAGE_KEY = "pokemon-details";
+const pokemonDetailsCache: PokemonDetail[] = [];
+const pokemonDetailsMapCache: { [key: string]: PokemonDetail } = {};
+var pokemonDetailsLoaded: boolean = false;
+// pokemon详情数据缓存
+
+const backEndDomain = "http://localhost:3000";
+//const backEndDomain = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app";
 /** Called when the Generate button is clicked. */
 async function generateRandom() {
     markLoading(true);
     const options = getOptionsFromForm();
+    // 用于测试
+    // options.showParams = {
+    //     n: 6,
+    //     //generate: boolean;
+    //     /** 是否展示pokemon图片 */
+    //     sprites: true,
+    //     /** 是否展示pokemon的背景图,取决于type */
+    //     background_image: true,
+    //     /** 是否展示背景色，即pokemon的颜色 */
+    //     background_color: true,
+    //     /** 是否展示pokemon的世代 */
+    //     showGeneration: true,
+    //     /** 是否展示pokemon的region */
+    //     showRegion: true,
+    //     /** 是否展示pokemon的稀有度 */
+    //     showRarity: true,
+    //     /** 是否展示pokemon的属性 */
+    //     showTypes: true,
+    //     /** 是否为每个pokemon随机生成一个性格 */
+    //     natures: true,
+    //     /** 是否展示pokemon的base stats */
+    //     showStats: true,
+    //     /** 是否展示pokemon的努力值Effort Values, EVs */
+    //     evs: true,
+    //     /** 是否为每个pokemon随机生成个体值iv */
+    //     ivs: true,
+    //     /** 是否展示pokemon的能力值 */
+    //     showAblilites: true,
+    //     /** 是否展示pokemon的叫声 */
+    //     cries: true,
+    //     // 获取shiny的概率，默认是1/1000
+    //     shinyProb: 0.5
+    //     /** 是否展示pokemon的性别 */
+    //     //genders?: boolean
+    // }
     persistOptions(options);
     try {
         const eligiblePokemon = await getEligiblePokemon(options);
-        const generatedPokemon = chooseRandom(eligiblePokemon, options);
-        addToHistory(generatedPokemon);
-        displayPokemon(generatedPokemon);
+        const generatedPokemons = options.showParams.n == "all" ? eligiblePokemon : chooseRandom(eligiblePokemon, options);
+        // 拉取详情数据,TODO: 改成异步加载，拉取到详情数据之前，界面显示卡片的主要框架形状及已有内容，待详情数据加载完成后，更新卡片内容
+        await fetchPokemonDetails(generatedPokemons);
+        const displayPokemons: DisplayPokemon[] = generatedPokemons.map(p => new DisplayPokemon(p, pokemonDetailsMapCache[p.id.toString()], options.showParams))
+        displayPokemon(displayPokemons);
+        addToHistory(displayPokemons);
     } catch (error) {
         console.error(error);
         displayPokemon(null);
@@ -59,181 +107,194 @@ function persistOptions(options: Options) {
 }
 
 function getOptionsFromForm(): Options {
-    const requestParams: RequestParams = {};
+    const filterParams: FilterParams = {};
     // regions
     const regions = getDropdownOptions("regions");
     if (regions) {
-        requestParams.regions = regions;
+        filterParams.regions = regions;
     }
     // types
     const types = getDropdownOptions("types");
     if (types) {
-        requestParams.types = types;
+        filterParams.types = types;
     }
     // forms
     const forms = getDropdownOptions("forms");
     if (forms) {
-        requestParams.forms = forms;
+        filterParams.forms = forms;
     }
     // rarity
     const rarity = getDropdownOptions("rarity");
     if (rarity) {
-        requestParams.rarity = rarity;
+        filterParams.rarity = rarity;
     }
     // generations
     const generations = getDropdownOptions("generations");
     if (generations) {
-        requestParams.generations = generations;
+        filterParams.generations = generations;
     }
     // colors
     const colors = getDropdownOptions("colors");
     if (colors) {
-        requestParams.colors = colors;
+        filterParams.colors = colors;
     }
     // envolves
     const envolves = getDropdownOptions("envolves");
     if (envolves) {
-        requestParams.envolves = envolves;
+        filterParams.envolves = envolves;
     }
     // baby
     const baby = getDropdownOptions("baby");
     if (baby) {
-        requestParams.baby = baby;
+        filterParams.baby = baby;
     }
     // growthRate
     const growthRate = getDropdownOptions("growthRate");
     if (growthRate) {
-        requestParams.growthRate = growthRate;
+        filterParams.growthRate = growthRate;
     }
     // habitats
     const habitats = getDropdownOptions("habitats");
     if (habitats) {
-        requestParams.habitats = habitats;
+        filterParams.habitats = habitats;
     }
     // eggGroups
     const eggGroups = getDropdownOptions("eggGroups");
     if (eggGroups) {
-        requestParams.eggGroups = eggGroups;
+        filterParams.eggGroups = eggGroups;
     }
     // genderRate
     const genderRate = getDropdownOptions("genderRate");
     if (genderRate) {
-        requestParams.genderRate = genderRate;
+        filterParams.genderRate = genderRate;
     }
     // shape
     const shape = getDropdownOptions("shape");
     if (shape) {
-        requestParams.shape = shape;
+        filterParams.shape = shape;
     }
     // defaultForm
     const defaultForm = getDropdownOptions("defaultForm");
     if (defaultForm) {
-        requestParams.defaultForm = defaultForm;
+        filterParams.defaultForm = defaultForm;
     }
     // formSwitchable
     const formSwitchable = getDropdownOptions("formSwitchable");
     if (formSwitchable) {
-        requestParams.formSwitchable = formSwitchable;
+        filterParams.formSwitchable = formSwitchable;
     }
     // hasGenderDiff
     const hasGenderDiff = getDropdownOptions("hasGenderDiff");
     if (hasGenderDiff) {
-        requestParams.hasGenderDiff = hasGenderDiff;
+        filterParams.hasGenderDiff = hasGenderDiff;
     }
     // height
     const height = getNumrangeOptions("height");
     if (height) {
-        requestParams.height = height;
+        filterParams.height = height;
     }
     // weight
     const weight = getNumrangeOptions("weight");
     if (weight) {
-        requestParams.weight = weight;
+        filterParams.weight = weight;
     }
     // baseHappiness
     const baseHappiness = getNumrangeOptions("baseHappiness");
     if (baseHappiness) {
-        requestParams.baseHappiness = baseHappiness;
+        filterParams.baseHappiness = baseHappiness;
     }
     // captureRate
     const captureRate = getNumrangeOptions("captureRate");
     if (captureRate) {
-        requestParams.captureRate = captureRate;
+        filterParams.captureRate = captureRate;
     }
     // hatchCounter
     const hatchCounter = getNumrangeOptions("hatchCounter");
     if (hatchCounter) {
-        requestParams.hatchCounter = hatchCounter;
+        filterParams.hatchCounter = hatchCounter;
     }
     // hp_range
     const hp_range = getNumrangeOptions("hp_range");
     if (hp_range) {
-        requestParams.hp_range = hp_range;
+        filterParams.hp_range = hp_range;
     }
     // attack_range
     const attack_range = getNumrangeOptions("attack_range");
     if (attack_range) {
-        requestParams.attack_range = attack_range;
+        filterParams.attack_range = attack_range;
     }
     // defense_range
     const defense_range = getNumrangeOptions("defense_range");
     if (defense_range) {
-        requestParams.defense_range = defense_range;
+        filterParams.defense_range = defense_range;
     }
     // spAttack_range
     const spAttack_range = getNumrangeOptions("spAttack_range");
     if (spAttack_range) {
-        requestParams.spAttack_range = spAttack_range;
+        filterParams.spAttack_range = spAttack_range;
     }
     // spDefense_range
     const spDefense_range = getNumrangeOptions("spDefense_range");
     if (spDefense_range) {
-        requestParams.spDefense_range = spDefense_range;
+        filterParams.spDefense_range = spDefense_range;
     }
     // speed_range
     const speed_range = getNumrangeOptions("speed_range");
     if (speed_range) {
-        requestParams.speed_range = speed_range;
+        filterParams.speed_range = speed_range;
     }
     // hp_effort
     const hp_effort = getDropdownOptions("hp_effort");
     if (hp_effort) {
-        requestParams.hp_effort = hp_effort;
+        filterParams.hp_effort = hp_effort;
     }
     // attack_effort
     const attack_effort = getDropdownOptions("attack_effort");
     if (attack_effort) {
-        requestParams.attack_effort = attack_effort;
+        filterParams.attack_effort = attack_effort;
     }
     // defense_effort
     const defense_effort = getDropdownOptions("defense_effort");
     if (defense_effort) {
-        requestParams.defense_effort = defense_effort;
+        filterParams.defense_effort = defense_effort;
     }
     // spAttack_effort
     const spAttack_effort = getDropdownOptions("spAttack_effort");
     if (spAttack_effort) {
-        requestParams.spAttack_effort = spAttack_effort;
+        filterParams.spAttack_effort = spAttack_effort;
     }
     // spDefense_effort
     const spDefense_effort = getDropdownOptions("spDefense_effort");
     if (spDefense_effort) {
-        requestParams.spDefense_effort = spDefense_effort;
+        filterParams.spDefense_effort = spDefense_effort;
     }
     // speed_effort
     const speed_effort = getDropdownOptions("speed_effort");
     if (speed_effort) {
-        requestParams.speed_effort = speed_effort;
+        filterParams.speed_effort = speed_effort;
     }
 
+    // showParams
+    const showParams: ShowParams = {};
+    showParams.n = numberDropdown.value;
+    showParams.sprites = getCheckboxValueById("sprites");
+    showParams.background_image = getCheckboxValueById("backImg");
+    showParams.background_color = getCheckboxValueById("backColor");
+    showParams.showGeneration = getCheckboxValueById("showGeneration");
+    showParams.showRegion = getCheckboxValueById("showRegion");
+    showParams.showRarity = getCheckboxValueById("showRarity");
+    showParams.showTypes = getCheckboxValueById("showTypes");
+    showParams.natures = getCheckboxValueById("natures");
+    showParams.showStats = getCheckboxValueById("showStats");
+    showParams.evs = getCheckboxValueById("evs");
+    showParams.ivs = getCheckboxValueById("ivs");
+    showParams.showAblilites = getCheckboxValueById("showAblilites");
+    showParams.cries = getCheckboxValueById("cries");
+    showParams.shinyProb = parseFloat((document.getElementById("shinyProb") as HTMLInputElement).value);
+
     return {
-        filterParams: requestParams,
-        showParams: {
-            n: parseInt(numberDropdown.value),
-            // todo，暂时设为true, 后续再修改
-            natures: naturesCheckbox.checked,
-            sprites: spritesCheckbox.checked
-        }
+        filterParams: filterParams,
+        showParams: showParams
     };
 }
 
@@ -364,19 +425,52 @@ function setOptions(options: Partial<Options>) {
         setDropdownIfValid("speed_effort", options.filterParams.speed_effort);
     }
 
-    if (options.showParams.natures != undefined) {
-        naturesCheckbox.checked = options.showParams.natures;
-    }
-    if (options.showParams.sprites != undefined) {
-        spritesCheckbox.checked = options.showParams.sprites;
-    }
+    // showParams
     if (options.showParams.n != null) {
         setSelectIfValid("n", options.showParams.n);
     }
-
-    // if (options.generate !== undefined) {
-    // 	generateRandom();
-    // }
+    if (options.showParams.sprites != undefined) {
+        setCheckbox("sprites", options.showParams.sprites)
+    }
+    if (options.showParams.natures != undefined) {
+        setCheckbox("natures", options.showParams.natures)
+    }
+    if (options.showParams.background_image != undefined) {
+        setCheckbox("backImg", options.showParams.background_image)
+    }
+    if (options.showParams.background_color != undefined) {
+        setCheckbox("backColor", options.showParams.background_color)
+    }
+    if (options.showParams.showGeneration != undefined) {
+        setCheckbox("showGeneration", options.showParams.showGeneration)
+    }
+    if (options.showParams.showRegion != undefined) {
+        setCheckbox("showRegion", options.showParams.showRegion)
+    }
+    if (options.showParams.showRarity != undefined) {
+        setCheckbox("showRarity", options.showParams.showRarity)
+    }
+    if (options.showParams.showTypes != undefined) {
+        setCheckbox("showTypes", options.showParams.showTypes)
+    }
+    if (options.showParams.showStats != undefined) {
+        setCheckbox("showStats", options.showParams.showStats)
+    }
+    if (options.showParams.evs != undefined) {
+        setCheckbox("evs", options.showParams.evs)
+    }
+    if (options.showParams.ivs != undefined) {
+        setCheckbox("ivs", options.showParams.ivs)
+    }
+    if (options.showParams.showAblilites != undefined) {
+        setCheckbox("showAblilites", options.showParams.showAblilites)
+    }
+    if (options.showParams.cries != undefined) {
+        setCheckbox("cries", options.showParams.cries)
+    }
+    if (options.showParams.shinyProb != undefined) {
+        (document.getElementById("shinyProb") as HTMLInputElement).value = options.showParams.shinyProb.toString();
+    }
 }
 
 /** Returns whether or not the URL specifies any options as parameters. */
@@ -396,8 +490,46 @@ function onPageLoad() {
     toggleHistoryVisibility();
     addFormChangeListeners();
     addNumrangeValidateListeners();
+    addClickTipListeners();
+    loadPokemonDetailsFromCache()
     displayYearsInFooter();
     clearOldCacheVersion();
+}
+
+/**
+ * Loads the Pokémon details from the cache, if available.
+ */
+async function loadPokemonDetailsFromCache() {
+    const cacheData = window.localStorage.getItem(POKEMON_DETAIL_STORAGE_KEY);
+    if (cacheData) {
+        const cachePokemons: PokemonDetail[] = JSON.parse(cacheData);
+        pokemonDetailsCache.push(...cachePokemons)
+        for (const p of pokemonDetailsCache) {
+            pokemonDetailsMapCache[p.id.toString()] = p;
+        }
+    }
+    pokemonDetailsLoaded = true;
+}
+
+/**
+ *  Fetches details for not cached Pokémons.
+ * @param pokemons Pokémon to display.
+ */
+async function fetchPokemonDetails(pokemons: Pokemon[]) {
+    // 首先从本地缓存中获取数据
+    const needFecthIds: number[] = pokemons.filter(p => !(p.id.toString() in pokemonDetailsMapCache)).map(p => p.id)
+    if (needFecthIds.length > 0) {
+        const response = await fetch(backEndDomain + "/api/pokemon-details?ids=" + needFecthIds.join(","));
+        if (response.ok) {
+            const pokemonDetails: PokemonDetail[] = await response.json();
+            pokemonDetailsCache.push(...pokemonDetails)
+            pokemonDetails.forEach(p => pokemonDetailsMapCache[p.id.toString()] = p)
+            window.localStorage.setItem(POKEMON_DETAIL_STORAGE_KEY, JSON.stringify(pokemonDetailsCache));
+        } else {
+            console.error("Failed to fetch pokemon details from server.");
+            throw new Error("Opps, something went wrong, please try again later.");
+        }
+    }
 }
 
 // 清除旧版本缓存
@@ -439,12 +571,12 @@ async function getEligiblePokemon(options: Options): Promise<Pokemon[]> {
     }
     // 转换成原型类
     // TODO, 这里要改，单独创建一个类型用作原型类，Pokemon类型只用来存数据
-    return pokemonsJson.map(p => new Pokemon(p))
+    return pokemonsJson;
 }
 
 async function fetchPokemons(options: Options): Promise<Pokemon[]> {
     //return Promise.resolve([]);
-    const url = queryUrl + '?' + convertOptionsToUrlParams(options);
+    const url = backEndDomain + "/api/queryConditions?" + convertOptionsToUrlParams(options);
     console.log("Fetching eligible Pokémon from: " + url);
     const response = await fetch(url);
     if (!response.ok) {
@@ -502,26 +634,104 @@ function addFormChangeListeners() {
  * 添加数字范围校验监听器， 自动更正超出范围的值
  */
 function addNumrangeValidateListeners() {
-    document.querySelectorAll("input[type='number'][range-min]").forEach((minInput: HTMLInputElement) => {
-        minInput.addEventListener("blur", () => {
-            const minValStr = minInput.getAttribute("min")
-            const minValue = parseFloat(minValStr);
-            const curValue = parseFloat(minInput.value)
-            if (curValue < minValue) {
-                minInput.value = minValStr
+    document.querySelectorAll("input[type='number']").forEach((numberInput: HTMLInputElement) => {
+        numberInput.addEventListener("blur", () => {
+            const curValue = parseFloat(numberInput.value)
+            if (Number.isNaN(curValue)) {
+                numberInput.value = numberInput.getAttribute("value");
+                return;
+            }
+            // 校验最小值
+            const minValStr = numberInput.getAttribute("min")
+            if (minValStr) {
+                const minValue = parseFloat(minValStr);
+                if (curValue < minValue) {
+                    numberInput.value = minValStr
+                }
+            }
+            // 校验最大值
+            const maxValStr = numberInput.getAttribute("max")
+            if (maxValStr) {
+                const maxValue = parseFloat(maxValStr);
+                if (curValue > maxValue) {
+                    numberInput.value = maxValStr
+                }
             }
         })
     })
-    document.querySelectorAll("input[type='number'][range-max]").forEach((maxInput: HTMLInputElement) => {
-        maxInput.addEventListener("blur", () => {
-            const maxValStr = maxInput.getAttribute("max")
-            const maxValue = parseFloat(maxValStr);
-            const curValue = parseFloat(maxInput.value)
-            if (curValue > maxValue) {
-                maxInput.value = maxValStr
+}
+
+function addClickTipListeners() {
+    let currentTooltip: HTMLElement = null;
+    let currentClickTip: HTMLElement = null;
+
+    document.querySelectorAll('.click-tip').forEach(clickTip => {
+        clickTip.addEventListener('click', (event) => {
+            const content = clickTip.getAttribute('data-click-tip');
+            // 如果是同一个提示框，则隐藏它
+            if (currentClickTip && currentClickTip == event.target) {
+                currentTooltip.remove();
+                currentTooltip = null;
+                currentClickTip = null;
+                return;
             }
-        })
-    })
+            // 如果已经有一个提示框在显示，先隐藏它
+            if (currentTooltip) {
+                currentTooltip.remove();
+                currentTooltip = null;
+            }
+
+            // 创建提示框
+            const tooltip = document.createElement('div');
+            tooltip.className = 'click-tip-tooltip';
+            tooltip.textContent = content || '';
+            document.body.appendChild(tooltip);
+
+            // 设置提示框位置
+            const rect = clickTip.getBoundingClientRect();
+            let top = rect.bottom + window.scrollY;
+            let left = rect.right + window.scrollX;
+
+            tooltip.style.display = 'block';
+
+            // 检查并调整提示框位置以确保不超出视口
+            const tooltipRect = tooltip.getBoundingClientRect();
+
+            // 如果提示框底部超出视口高度
+            if (tooltipRect.bottom > window.innerHeight) {
+                top = rect.top + window.scrollY - tooltipRect.height;
+            }
+
+            // 如果提示框右侧超出视口宽度
+            if (tooltipRect.right > window.innerWidth) {
+                left = rect.left + window.scrollX - tooltipRect.width;
+            }
+
+            // 再次检查顶部和左侧是否超出视口
+            if (top < window.scrollY) {
+                top = rect.bottom + window.scrollY;
+            }
+            if (left < window.scrollX) {
+                left = rect.left + window.scrollX;
+            }
+
+            tooltip.style.top = `${top}px`;
+            tooltip.style.left = `${left}px`;
+
+            currentTooltip = tooltip;
+            currentClickTip = clickTip as HTMLElement;
+        });
+    });
+
+    // 点击提示框以外的地方时隐藏提示框
+    document.addEventListener('click', (event) => {
+        if (currentTooltip && !currentTooltip.contains(event.target as HTMLElement)
+            && !currentClickTip.contains(event.target as HTMLElement)) {
+            currentTooltip.remove();
+            currentTooltip = null;
+            currentClickTip = null;
+        }
+    });
 }
 
 function updateDropdownTitle(dropdownContainer: HTMLElement) {
@@ -623,7 +833,7 @@ function chooseRandom(eligiblePokemon: Pokemon[], options: Options): Pokemon[] {
     const eligiblePokemonDeepCopy: Pokemon[] = deepClone(eligiblePokemon)
     // const eligiblePokemonDeepCopy: Pokemon[] = JSON.parse(JSON.stringify(eligiblePokemon));
 
-    while (eligiblePokemonDeepCopy.length > 0 && generated.length < options.showParams.n) {
+    while (eligiblePokemonDeepCopy.length > 0 && generated.length < parseInt(options.showParams.n)) {
         // 随机取出一个pokemon
         const pokemon: Pokemon = removeRandomElement(eligiblePokemonDeepCopy);
         generated.push(pokemon);

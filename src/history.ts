@@ -1,16 +1,16 @@
 export { addToHistory, displayPrevious, displayNext, toggleHistoryVisibility, displayHistoryAtIndex, toggleShinyDisplay, updateShinyToggler, clearShinies };
-import { Pokemon, displayPokemon } from "./pokemon.js";
+import { Pokemon, DisplayPokemon, displayPokemon } from "./pokemon.js";
 
 const HISTORY_SIZE = 64;
 const STORAGE_SHINIES_KEY = "shinies";
 
 /** The last HISTORY_SIZE sets of Pokémon to be generated, newest first. */
-const latestPokemon: Pokemon[][] = [];
+const latestPokemon: DisplayPokemon[][] = [];
 
 let displayedIndex: number = -1; // Nothing displayed on first load
 
-function addToHistory(pokemon: Pokemon[]) {
-	latestPokemon.unshift(pokemon);
+function addToHistory(displayPokemons: DisplayPokemon[]) {
+	latestPokemon.unshift(displayPokemons);
 	while (latestPokemon.length > HISTORY_SIZE) {
 		latestPokemon.pop();
 	}
