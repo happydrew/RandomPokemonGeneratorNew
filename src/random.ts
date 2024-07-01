@@ -17,6 +17,7 @@ import {
 (window as any).displayNext = displayNext;
 (window as any).toggleShinyDisplay = toggleShinyDisplay;
 (window as any).clearShinies = clearShinies;
+(window as any).processClickTipEvent = processClickTipEvent;
 
 /** html页面表单的选项控件 */
 const regionDropdown = document.getElementById("region") as HTMLSelectElement;
@@ -665,60 +666,13 @@ function addNumrangeValidateListeners() {
     })
 }
 
+// 全局变量，记录当前显示的提示框和点击提示框
+var currentTooltip: HTMLElement = null;
+var currentClickTip: HTMLElement = null;
+
 function addClickTipListeners() {
-    let currentTooltip: HTMLElement = null;
-    let currentClickTip: HTMLElement = null;
-
     document.querySelectorAll('.click-tip').forEach(clickTip => {
-        clickTip.addEventListener('click', (event) => {
-            const content = clickTip.getAttribute('data-click-tip');
-            // 如果是同一个提示框，则隐藏它
-            if (currentClickTip && currentClickTip == event.target) {
-                currentTooltip.remove();
-                currentTooltip = null;
-                currentClickTip = null;
-                return;
-            }
-            // 如果已经有一个提示框在显示，先隐藏它
-            if (currentTooltip) {
-                currentTooltip.remove();
-                currentTooltip = null;
-            }
-
-            // 创建提示框
-            const tooltip = document.createElement('div');
-            tooltip.className = 'click-tip-tooltip';
-            tooltip.textContent = content || '';
-            tooltip.style.margin = "0";
-            tooltip.style.maxWidth = window.innerWidth + "px";
-            tooltip.style.display = 'block';
-            tooltip.style.visibility = 'hidden';
-            document.body.appendChild(tooltip);
-
-            // 设置提示框位置
-            const clickRect = clickTip.getBoundingClientRect();
-
-            // 首先决定提示框的横向位置，即左边缘的位置
-            let tooltipLeft = Math.min(clickRect.right, window.innerWidth - tooltip.offsetWidth) + window.scrollX;
-            tooltip.style.left = tooltipLeft + "px";
-            // 决定提示框的纵向位置，即上边缘的位置
-            // 主元素上下两边，哪边空间更大，就往哪边放
-            let clickUpDistance = clickRect.top;
-            let clickDownDistance = window.innerHeight - clickRect.bottom;
-            // 上边空间大，往上边放
-            if (clickDownDistance < clickUpDistance) {
-                let tooltipTop = Math.max(clickRect.top, tooltip.offsetHeight) + window.scrollY-tooltip.offsetHeight;
-                tooltip.style.top = tooltipTop + "px";
-            } else {
-                // 下边空间大，往下边放
-                let tooltipTop = Math.min(clickRect.bottom, window.innerHeight - tooltip.offsetHeight) + window.scrollY;
-                tooltip.style.top = tooltipTop + "px";
-            }
-            // 显示提示框
-            tooltip.style.visibility = "visible";
-            currentTooltip = tooltip;
-            currentClickTip = clickTip as HTMLElement;
-        });
+        clickTip.addEventListener('click', getClickTipListener(clickTip as HTMLElement));
     });
 
     // 点击提示框以外的地方时隐藏提示框
@@ -730,6 +684,74 @@ function addClickTipListeners() {
             currentClickTip = null;
         }
     });
+}
+
+/**
+ * 获取点击提示的事件监听函数
+ * @param clickElement 
+ * @param event 
+ * @returns 
+ */
+function getClickTipListener(clickElement: HTMLElement): (event: Event) => void {
+    return (event: Event) => processClickTipEvent(clickElement, event);
+}
+
+/**
+ * 点击提示tip的事件监听函数
+ * @param clickElement 
+ * @param event 
+ * @returns 
+ */
+function processClickTipEvent(clickElement: HTMLElement, event: Event) {
+    const content = clickElement.getAttribute('data-click-tip');
+    // 如果是同一个提示框，则隐藏它
+    if (currentClickTip && currentClickTip == event.currentTarget) {
+        currentTooltip.remove();
+        currentTooltip = null;
+        currentClickTip = null;
+        return;
+    }
+    // 如果已经有一个提示框在显示，先隐藏它
+    if (currentTooltip) {
+        currentTooltip.remove();
+        currentTooltip = null;
+    }
+
+    // 创建提示框
+    const tooltip = document.createElement('div');
+    tooltip.className = 'click-tip-tooltip';
+    if (clickElement.hasAttribute("tool-tip-style")) {
+        tooltip.style.cssText = clickElement.getAttribute("tool-tip-style");
+    }
+    tooltip.textContent = content || '';
+    tooltip.style.maxWidth = window.innerWidth + "px";
+    tooltip.style.display = 'block';
+    tooltip.style.visibility = 'hidden';
+    document.body.appendChild(tooltip);
+
+    // 设置提示框位置
+    const clickRect = clickElement.getBoundingClientRect();
+
+    // 首先决定提示框的横向位置，即左边缘的位置
+    let tooltipLeft = Math.min(clickRect.right - 0.5 * clickElement.offsetWidth, window.innerWidth - tooltip.offsetWidth) + window.scrollX;
+    tooltip.style.left = tooltipLeft + "px";
+    // 决定提示框的纵向位置，即上边缘的位置
+    // 主元素上下两边，哪边空间更大，就往哪边放
+    let clickUpDistance = clickRect.top;
+    let clickDownDistance = window.innerHeight - clickRect.bottom;
+    if (clickDownDistance > clickUpDistance) {
+        // 下边空间大，往下边放
+        let tooltipTop = Math.min(clickRect.bottom, window.innerHeight - tooltip.offsetHeight) + window.scrollY;
+        tooltip.style.top = tooltipTop + "px";
+    } else {
+        // 上边空间大，往上边放
+        let tooltipTop = Math.max(clickRect.top, tooltip.offsetHeight) + window.scrollY - tooltip.offsetHeight;
+        tooltip.style.top = tooltipTop + "px";
+    }
+    // 显示提示框
+    tooltip.style.visibility = "visible";
+    currentTooltip = tooltip;
+    currentClickTip = clickElement;
 }
 
 function updateDropdownTitle(dropdownContainer: HTMLElement) {

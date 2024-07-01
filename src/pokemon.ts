@@ -106,12 +106,12 @@ class DisplayPokemon {
 							${(this.showParams.showRarity && (this.getRarity() === "Mythical" || this.getRarity() === "Legendary")) ? `<div class="pokecard-header-rarity" style="background-color: ${this.getRarityColor()}">${this.getRarity()}</div>` : ""}	
 							${this.shiny ? `<div class="pokecard-header-shiny"><span class="star">&starf;</span>Shiny</div>` : ""}  
 							${this.showParams.showTypes ? `<div class="pokecard-types-container" style="background: ${this.getTypesArray().length > 1 ? `linear-gradient(105deg, ${this.getTypeBackColor(this.getTypesArray()[0])} 48%, ${this.getTypeBackColor(this.getTypesArray()[1])} calc(48% + 1px))` : this.getTypeBackColor(this.getTypesArray()[0])}">
-								<div class="pokecard-type">
+								<div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[0])}">
 									<img src="./img/type-icons/40px-${this.getTypesArray()[0]}_icon.png"
 										alt="icon of type ${this.getTypesArray()[0]}">
 								</div>
 							${this.getTypesArray().length > 1 ? `
-							    <div class="pokecard-type">
+							    <div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[1]}" onclick="processClickTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[1])}">
 									<img src="./img/type-icons/40px-${this.getTypesArray()[1]}_icon.png"
 										alt="icon of type ${this.getTypesArray()[1]}">
 								</div>`: ""}
