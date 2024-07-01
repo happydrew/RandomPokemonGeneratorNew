@@ -39,6 +39,23 @@ var pokemonDetailsLoaded: boolean = false;
 
 //const backEndDomain = "http://localhost:3000";
 const backEndDomain = "https://randompokemonbackend-zhuges-projects-c7e0a445.vercel.app";
+
+document.addEventListener("DOMContentLoaded", onPageLoad);
+
+/**
+ * 页面加载完成后，初始化页面元素
+ */
+function onPageLoad() {
+    loadOptions();
+    toggleHistoryVisibility();
+    addFormChangeListeners();
+    addNumrangeValidateListeners();
+    addClickTipListeners();
+    loadPokemonDetailsFromCache()
+    displayYearsInFooter();
+    clearOldCacheVersion();
+}
+
 /** Called when the Generate button is clicked. */
 async function generateRandom() {
     markLoading(true);
@@ -485,17 +502,6 @@ function convertUrlParamsToOptions(): Partial<Options> {
     return convertSearchParamsToOptions(params);
 }
 
-function onPageLoad() {
-    loadOptions();
-    toggleHistoryVisibility();
-    addFormChangeListeners();
-    addNumrangeValidateListeners();
-    addClickTipListeners();
-    loadPokemonDetailsFromCache()
-    displayYearsInFooter();
-    clearOldCacheVersion();
-}
-
 /**
  * Loads the Pokémon details from the cache, if available.
  */
@@ -537,8 +543,6 @@ async function clearOldCacheVersion() {
     window.localStorage.removeItem(STORAGE_OPTIONS_KEY);
     window.localStorage.removeItem(STORAGE_PARAMS_KEY);
 }
-
-document.addEventListener("DOMContentLoaded", onPageLoad);
 
 // Cache the results of getEligiblePokemon by options.
 let cachedParmasJson: string;
@@ -685,39 +689,33 @@ function addClickTipListeners() {
             const tooltip = document.createElement('div');
             tooltip.className = 'click-tip-tooltip';
             tooltip.textContent = content || '';
+            tooltip.style.margin = "0";
+            tooltip.style.maxWidth = window.innerWidth + "px";
+            tooltip.style.display = 'block';
+            tooltip.style.visibility = 'hidden';
             document.body.appendChild(tooltip);
 
             // 设置提示框位置
-            const rect = clickTip.getBoundingClientRect();
-            let top = rect.bottom + window.scrollY;
-            let left = rect.right + window.scrollX;
+            const clickRect = clickTip.getBoundingClientRect();
 
-            tooltip.style.display = 'block';
-
-            // 检查并调整提示框位置以确保不超出视口
-            const tooltipRect = tooltip.getBoundingClientRect();
-
-            // 如果提示框底部超出视口高度
-            if (tooltipRect.bottom > window.innerHeight) {
-                top = rect.top + window.scrollY - tooltipRect.height;
+            // 首先决定提示框的横向位置，即左边缘的位置
+            let tooltipLeft = Math.min(clickRect.right, window.innerWidth - tooltip.offsetWidth) + window.scrollX;
+            tooltip.style.left = tooltipLeft + "px";
+            // 决定提示框的纵向位置，即上边缘的位置
+            // 主元素上下两边，哪边空间更大，就往哪边放
+            let clickUpDistance = clickRect.top;
+            let clickDownDistance = window.innerHeight - clickRect.bottom;
+            // 上边空间大，往上边放
+            if (clickDownDistance < clickUpDistance) {
+                let tooltipTop = Math.max(clickRect.top, tooltip.offsetHeight) + window.scrollY-tooltip.offsetHeight;
+                tooltip.style.top = tooltipTop + "px";
+            } else {
+                // 下边空间大，往下边放
+                let tooltipTop = Math.min(clickRect.bottom, window.innerHeight - tooltip.offsetHeight) + window.scrollY;
+                tooltip.style.top = tooltipTop + "px";
             }
-
-            // 如果提示框右侧超出视口宽度
-            if (tooltipRect.right > window.innerWidth) {
-                left = rect.left + window.scrollX - tooltipRect.width;
-            }
-
-            // 再次检查顶部和左侧是否超出视口
-            if (top < window.scrollY) {
-                top = rect.bottom + window.scrollY;
-            }
-            if (left < window.scrollX) {
-                left = rect.left + window.scrollX;
-            }
-
-            tooltip.style.top = `${top}px`;
-            tooltip.style.left = `${left}px`;
-
+            // 显示提示框
+            tooltip.style.visibility = "visible";
             currentTooltip = tooltip;
             currentClickTip = clickTip as HTMLElement;
         });
