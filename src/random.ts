@@ -18,6 +18,9 @@ import {
 (window as any).toggleShinyDisplay = toggleShinyDisplay;
 (window as any).clearShinies = clearShinies;
 (window as any).processClickTipEvent = processClickTipEvent;
+(window as any).processMouseEnterTipEvent = processMouseEnterTipEvent;
+(window as any).processMouseLeaveTipEvent = processMouseLeaveTipEvent;
+(window as any).playAudioOnClick = playAudioOnClick;
 
 /** html页面表单的选项控件 */
 const regionDropdown = document.getElementById("region") as HTMLSelectElement;
@@ -667,8 +670,10 @@ function addNumrangeValidateListeners() {
 }
 
 // 全局变量，记录当前显示的提示框和点击提示框
-var currentTooltip: HTMLElement = null;
-var currentClickTip: HTMLElement = null;
+var currentClickTooltip: HTMLElement = null;
+var currentClickTipElement: HTMLElement = null;
+var currentHoverToolTip: HTMLElement = null;
+var currentHoverTipElement: HTMLElement = null;
 
 function addClickTipListeners() {
     document.querySelectorAll('.click-tip').forEach(clickTip => {
@@ -677,11 +682,11 @@ function addClickTipListeners() {
 
     // 点击提示框以外的地方时隐藏提示框
     document.addEventListener('click', (event) => {
-        if (currentTooltip && !currentTooltip.contains(event.target as HTMLElement)
-            && !currentClickTip.contains(event.target as HTMLElement)) {
-            currentTooltip.remove();
-            currentTooltip = null;
-            currentClickTip = null;
+        if (currentClickTooltip && !currentClickTooltip.contains(event.target as HTMLElement)
+            && !currentClickTipElement.contains(event.target as HTMLElement)) {
+            currentClickTooltip.remove();
+            currentClickTooltip = null;
+            currentClickTipElement = null;
         }
     });
 }
@@ -704,17 +709,23 @@ function getClickTipListener(clickElement: HTMLElement): (event: Event) => void 
  */
 function processClickTipEvent(clickElement: HTMLElement, event: Event) {
     const content = clickElement.getAttribute('data-click-tip');
-    // 如果是同一个提示框，则隐藏它
-    if (currentClickTip && currentClickTip == event.currentTarget) {
-        currentTooltip.remove();
-        currentTooltip = null;
-        currentClickTip = null;
+    // 如果该元素的悬浮提示框正在显示，则隐藏它
+    if (currentHoverToolTip && currentHoverTipElement == event.currentTarget) {
+        currentHoverToolTip.remove();
+        currentHoverToolTip = null;
+        currentHoverTipElement = null;
+    }
+    // 如果该元素的点击提示框正在显示，则这次事件负责隐藏它
+    if (currentClickTipElement && currentClickTipElement == event.currentTarget) {
+        currentClickTooltip.remove();
+        currentClickTooltip = null;
+        currentClickTipElement = null;
         return;
     }
     // 如果已经有一个提示框在显示，先隐藏它
-    if (currentTooltip) {
-        currentTooltip.remove();
-        currentTooltip = null;
+    if (currentClickTooltip) {
+        currentClickTooltip.remove();
+        currentClickTooltip = null;
     }
 
     // 创建提示框
@@ -750,8 +761,91 @@ function processClickTipEvent(clickElement: HTMLElement, event: Event) {
     }
     // 显示提示框
     tooltip.style.visibility = "visible";
-    currentTooltip = tooltip;
-    currentClickTip = clickElement;
+    currentClickTooltip = tooltip;
+    currentClickTipElement = clickElement;
+}
+
+/**
+ * 悬浮提示tip的事件监听函数
+ * @param hoverElement 
+ * @param event 
+ * @returns 
+ */
+function processMouseEnterTipEvent(hoverElement: HTMLElement, event: Event) {
+    const content = hoverElement.getAttribute('data-click-tip');
+    // 如果该元素的点击提示框,或悬浮提示框正在显示，则不做任何操作
+    if ((currentClickTooltip && currentClickTipElement == event.currentTarget) ||
+        (currentHoverToolTip && currentHoverTipElement == event.currentTarget)) {
+        return;
+    }
+
+    // 如果有其他元素的悬浮提示框正在显示，先隐藏它（这里做个保护，正常情况下不会出现这种情况）
+    if (currentHoverToolTip) {
+        currentHoverToolTip.remove();
+        currentHoverToolTip = null;
+    }
+
+    // 创建提示框
+    const tooltip = document.createElement('div');
+    tooltip.className = 'click-tip-tooltip';
+    if (hoverElement.hasAttribute("tool-tip-style")) {
+        tooltip.style.cssText = hoverElement.getAttribute("tool-tip-style");
+    }
+    tooltip.textContent = content || '';
+    tooltip.style.maxWidth = window.innerWidth + "px";
+    tooltip.style.display = 'block';
+    tooltip.style.visibility = 'hidden';
+    document.body.appendChild(tooltip);
+
+    // 设置提示框位置
+    const hoverEleRect = hoverElement.getBoundingClientRect();
+
+    // 首先决定提示框的横向位置，即左边缘的位置
+    let tooltipLeft = Math.min(hoverEleRect.right - 0.5 * hoverElement.offsetWidth, window.innerWidth - tooltip.offsetWidth) + window.scrollX;
+    tooltip.style.left = tooltipLeft + "px";
+    // 决定提示框的纵向位置，即上边缘的位置
+    // 主元素上下两边，哪边空间更大，就往哪边放
+    let hoverUpDistance = hoverEleRect.top;
+    let hoverDownDistance = window.innerHeight - hoverEleRect.bottom;
+    if (hoverDownDistance > hoverUpDistance) {
+        // 下边空间大，往下边放
+        let tooltipTop = Math.min(hoverEleRect.bottom, window.innerHeight - tooltip.offsetHeight) + window.scrollY;
+        tooltip.style.top = tooltipTop + "px";
+    } else {
+        // 上边空间大，往上边放
+        let tooltipTop = Math.max(hoverEleRect.top, tooltip.offsetHeight) + window.scrollY - tooltip.offsetHeight;
+        tooltip.style.top = tooltipTop + "px";
+    }
+    // 显示提示框
+    tooltip.style.visibility = "visible";
+    currentHoverToolTip = tooltip;
+    currentHoverTipElement = hoverElement;
+}
+
+/**
+ * 悬浮提示tip的mouseleave事件监听函数
+ * @param hoverElement 
+ * @param event 
+ * @returns 
+ */
+function processMouseLeaveTipEvent(hoverElement: HTMLElement, event: Event) {
+    if (currentHoverToolTip && currentHoverTipElement == event.currentTarget) {
+        currentHoverToolTip.remove();
+        currentHoverToolTip = null;
+        currentHoverTipElement = null;
+    }
+}
+
+/**
+ * 音频播放按钮的点击事件监听函数
+ * @param clickElement 音频播放元素
+ * @param event 
+ */
+function playAudioOnClick(clickElement: HTMLElement, event: Event) {
+    const audioSrc = clickElement.getAttribute("data-audio-src");
+    if (audioSrc) {
+        new Audio(audioSrc).play();
+    }
 }
 
 function updateDropdownTitle(dropdownContainer: HTMLElement) {

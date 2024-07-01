@@ -106,19 +106,19 @@ class DisplayPokemon {
 							${(this.showParams.showRarity && (this.getRarity() === "Mythical" || this.getRarity() === "Legendary")) ? `<div class="pokecard-header-rarity" style="background-color: ${this.getRarityColor()}">${this.getRarity()}</div>` : ""}	
 							${this.shiny ? `<div class="pokecard-header-shiny"><span class="star">&starf;</span>Shiny</div>` : ""}  
 							${this.showParams.showTypes ? `<div class="pokecard-types-container" style="background: ${this.getTypesArray().length > 1 ? `linear-gradient(105deg, ${this.getTypeBackColor(this.getTypesArray()[0])} 48%, ${this.getTypeBackColor(this.getTypesArray()[1])} calc(48% + 1px))` : this.getTypeBackColor(this.getTypesArray()[0])}">
-								<div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[0])}">
+								<div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[0])}">
 									<img src="./img/type-icons/40px-${this.getTypesArray()[0]}_icon.png"
 										alt="icon of type ${this.getTypesArray()[0]}">
 								</div>
 							${this.getTypesArray().length > 1 ? `
-							    <div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[1]}" onclick="processClickTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[1])}">
+							    <div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[1]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[1])}">
 									<img src="./img/type-icons/40px-${this.getTypesArray()[1]}_icon.png"
 										alt="icon of type ${this.getTypesArray()[1]}">
 								</div>`: ""}
 							</div>`: ""}
 							
 							${this.showParams.cries ? `
-								<button class="pokecard-cries"><svg width="24" height="24" viewBox="0 0 24 24"
+								<button class="pokecard-cries" onclick="playAudioOnClick(this,event)" data-audio-src="${this.getCriesAudioPath()}"><svg width="24" height="24" viewBox="0 0 24 24"
 									focusable="false" class=" NMm5M">
 									<path
 										d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z">
@@ -213,6 +213,10 @@ class DisplayPokemon {
 					</div>
 				</div>
 			</li>`;
+	}
+
+	getCriesAudioPath(): string {
+		return `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${this.id}.ogg`;
 	}
 
 	getBackgroudColorHex(): string {

@@ -59,8 +59,13 @@
 	</div>
 
 	<!-- <div class="container" id="options-panel"> -->
-	<h2 class="panel-label" for="controls" title="Filter Options for Random Pok&eacute;mon Generator.">Filter Options
-	</h2>
+	<div class="panel-top-bar-container">
+		<h2 class="panel-label" for="controls" title="Filter Options for Random Pok&eacute;mon Generator.">FilterOptions
+		</h2>
+		<!-- <div class="panel-top-tool-bar-container">
+			<button id="filter-options-reset">Reset</button>
+		</div> -->
+	</div>
 	<form action="?" method="get" id="controls" class="menu" onsubmit="generateRandom(); return false;">
 		<div id="main-options" class="options-panel">
 			<!-- regions -->
@@ -899,9 +904,14 @@
 	<!-- </div> -->
 
 	<!-- <div class="container" id="options-panel"> -->
-	<h2 class="panel-label dotted-underline" for="showing"
-		title="Showing options for configuring the showing content of the random Pokémon generator, such as whether to display Pokémon images and whether to generate random natures.">
-		Showing Options</h2>
+	<div id="show-option-panel-top-bar" class="panel-top-bar-container">
+		<h2 class="panel-label dotted-underline" for="showing"
+			title="Showing options for configuring the showing content of the random Pokémon generator, such as whether to display Pokémon images and whether to generate random natures.">
+			ShowOptions</h2>
+		<!-- <div class="panel-top-tool-bar-container">
+			<button id="show-options-reset">Reset</button>
+		</div> -->
+	</div>
 	<form action="?" method="get" id="showing" class="menu">
 		<div id="main-show-options" class="options-panel">
 			<!-- showGeneration -->
