@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", onPageLoad);
  * 页面加载完成后，初始化页面元素
  */
 function onPageLoad() {
+    wakeUpBackend();
     loadOptions();
     toggleHistoryVisibility();
     addFormChangeListeners();
@@ -58,6 +59,21 @@ function onPageLoad() {
     loadPokemonDetailsFromCache()
     displayYearsInFooter();
     clearOldCacheVersion();
+}
+
+async function wakeUpBackend() {
+    const reponse = await fetch(backEndDomain + "/api/queryConditions?wakeup");
+    if (reponse.ok) {
+        console.log("backend queryConditions wakeup success")
+    } else {
+        console.error("backend queryConditions wakeup failed")
+    }
+    const reponse2 = await fetch(backEndDomain + "/api/pokemon-details?wakeup");
+    if (reponse2.ok) {
+        console.log("backend pokemon-details wakeup success")
+    } else {
+        console.error("backend pokemon-details wakeup failed")
+    }
 }
 
 /** Called when the Generate button is clicked. */
