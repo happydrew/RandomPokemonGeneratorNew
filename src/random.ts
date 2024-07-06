@@ -119,16 +119,127 @@ async function generateRandom() {
     try {
         const eligiblePokemon = await getEligiblePokemon(options);
         const generatedPokemons = options.showParams.n == "all" ? eligiblePokemon : chooseRandom(eligiblePokemon, options);
-        // 拉取详情数据,TODO: 改成异步加载，拉取到详情数据之前，界面显示卡片的主要框架形状及已有内容，待详情数据加载完成后，更新卡片内容
-        await fetchPokemonDetails(generatedPokemons);
+        // 先发起详情数据请求
+        const needFecthIds: number[] = generatedPokemons.filter(p => !(p.id.toString() in pokemonDetailsMapCache)).map(p => p.id);
+        var response: Promise<Response> = null;
+        if (needFecthIds.length > 0) {
+            response = fetch(backEndDomain + "/api/pokemon-details?ids=" + needFecthIds.join(","));
+        }
+        // 先显示立即就能获取的内容，以及已有的数据
         const displayPokemons: DisplayPokemon[] = generatedPokemons.map(p => new DisplayPokemon(p, pokemonDetailsMapCache[p.id.toString()], options.showParams))
-        displayPokemon(displayPokemons);
+        const resultsHTML = displayPokemon(displayPokemons);
+        // 异步加载详情数据
+        if (null != response) {
+            renderPokemonDetails(response, resultsHTML, displayPokemons);
+        }
         addToHistory(displayPokemons);
     } catch (error) {
         console.error(error);
         displayPokemon(null);
     }
     markLoading(false);
+}
+
+async function renderPokemonDetails(fetchDetailResponse: Promise<Response>, resultsHTML: HTMLElement, displayPokemons: DisplayPokemon[]) {
+    fetchDetailResponse.then(response => {
+        if (response.ok) {
+            response.json().then((pokemonDetails: PokemonDetail[]) => {
+                console.log("拉取详情数据成功，具体数据为：" + JSON.stringify(pokemonDetails));
+                // 显示详情数据
+                const pokecardHTMLMap = new Map<string, HTMLElement>();
+                resultsHTML.querySelectorAll(".pokecard-containter").forEach((pokecardContainter: HTMLElement) => {
+                    pokecardHTMLMap.set(pokecardContainter.id, pokecardContainter)
+                });
+                const displayPokemonsMap = new Map<string, DisplayPokemon>();
+                displayPokemons.forEach(dp => displayPokemonsMap.set(dp.id.toString(), dp))
+                pokemonDetails.forEach(pokemonDetail => {
+                    const displayPokemon = displayPokemonsMap.get(pokemonDetail.id.toString());
+                    displayPokemon.pokemonDetail = pokemonDetail;
+                    const pokecardContainter = pokecardHTMLMap.get(pokemonDetail.id.toString());
+                    // 设置背景色
+                    pokecardContainter.style.cssText = `${displayPokemon.showParams.background_color ? `background-color:${displayPokemon.getBackgroudColorHex()};` : `background-color:transparent;border:none`}`;
+                    // 设置背景图
+                    if (displayPokemon.showParams.background_image) {
+                        const pokeImageBackHTML = pokecardContainter.querySelector(".pokecard-pokeimage-back") as HTMLImageElement;
+                        pokeImageBackHTML.src = displayPokemon.getBackgroundImage();
+                        pokeImageBackHTML.alt = `back image of pokemon type ${displayPokemon.getTypesArray()[0]}`;
+                    }
+                    const pokeImageContainerHTML = pokecardContainter.querySelector(".pokecard-pokeimage-container");
+                    // 显示稀有度
+                    if (displayPokemon.showParams.showRarity && (displayPokemon.getRarity() === "Mythical" || displayPokemon.getRarity() === "Legendary")) {
+                        const rarityHTML = document.createElement("div");
+                        rarityHTML.classList.add("pokecard-header-rarity");
+                        rarityHTML.style.cssText = `background-color: ${displayPokemon.getRarityColor()}`;
+                        rarityHTML.innerText = displayPokemon.getRarity();
+                        pokeImageContainerHTML.appendChild(rarityHTML);
+                    }
+                    // 显示type信息
+                    if (displayPokemon.showParams.showTypes) {
+                        const typeHTML = document.createElement("div");
+                        typeHTML.classList.add("pokecard-types-container");
+                        typeHTML.style.cssText = `background: ${displayPokemon.getTypesArray().length > 1 ? `linear-gradient(105deg, ${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])} 48%, ${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[1])} calc(48% + 1px))` : displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])}`;
+                        typeHTML.innerHTML = `<div class="pokecard-type click-tip" data-click-tip="${displayPokemon.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])}">
+									<img src="./img/type-icons/40px-${displayPokemon.getTypesArray()[0]}_icon.png"
+										alt="icon of type ${displayPokemon.getTypesArray()[0]}">
+								</div>
+							${displayPokemon.getTypesArray().length > 1 ? `
+							    <div class="pokecard-type click-tip" data-click-tip="${displayPokemon.getTypesArray()[1]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[1])}">
+									<img src="./img/type-icons/40px-${displayPokemon.getTypesArray()[1]}_icon.png"
+										alt="icon of type ${displayPokemon.getTypesArray()[1]}">
+								</div>`: ""}`;
+                        pokeImageContainerHTML.appendChild(typeHTML);
+                    }
+                    // 显示世代信息
+                    if (displayPokemon.showParams.showGeneration) {
+                        (pokecardContainter.querySelector("span.pokecard-generation-arabic") as HTMLElement).innerText = displayPokemon.getGenerationArabic();
+                    }
+                    // 显示region信息
+                    if (displayPokemon.showParams.showRegion) {
+                        pokecardContainter.querySelector(".pokecard-infobar-container-region").querySelector(".pokecard-infobar.light-scrollbar").innerHTML = displayPokemon.getRegionText();
+                    }
+                    // 显示ablilites信息
+                    if (displayPokemon.showParams.showAblilites) {
+                        pokecardContainter.querySelector(".pokecard-infobar-container-abilities").querySelector(".pokecard-abilities").innerHTML = displayPokemon.pokemonDetail.abilities.join(", ");
+                    }
+                    // 显示evs信息
+                    if (displayPokemon.showParams.evs) {
+                        const evsHTML = pokecardContainter.querySelector(".pokecard-stats .tr-evs");
+                        evsHTML.querySelector(".col-hp").innerHTML = displayPokemon.pokemonDetail.stats.hp.effort.toString();
+                        evsHTML.querySelector(".col-atk").innerHTML = displayPokemon.pokemonDetail.stats.attack.effort.toString();
+                        evsHTML.querySelector(".col-def").innerHTML = displayPokemon.pokemonDetail.stats.defense.effort.toString();
+                        evsHTML.querySelector(".col-spa").innerHTML = displayPokemon.pokemonDetail.stats["special-attack"].effort.toString();
+                        evsHTML.querySelector(".col-spd").innerHTML = displayPokemon.pokemonDetail.stats["special-defense"].effort.toString();
+                        evsHTML.querySelector(".col-spe").innerHTML = displayPokemon.pokemonDetail.stats.speed.effort.toString();
+                        evsHTML.querySelector(".col-totle:last-child").innerHTML = (displayPokemon.pokemonDetail.stats.hp.effort +
+                            displayPokemon.pokemonDetail.stats.attack.effort +
+                            displayPokemon.pokemonDetail.stats.defense.effort +
+                            displayPokemon.pokemonDetail.stats["special-attack"].effort +
+                            displayPokemon.pokemonDetail.stats["special-defense"].effort +
+                            displayPokemon.pokemonDetail.stats.speed.effort).toString();
+                    }
+                    // 显示stats信息
+                    if (displayPokemon.showParams.showStats) {
+                        const statsHTML = pokecardContainter.querySelector(".pokecard-stats .tr-stats");
+                        statsHTML.querySelector(".col-hp").innerHTML = displayPokemon.pokemonDetail.stats.hp.base_stat.toString();
+                        statsHTML.querySelector(".col-atk").innerHTML = displayPokemon.pokemonDetail.stats.attack.base_stat.toString();
+                        statsHTML.querySelector(".col-def").innerHTML = displayPokemon.pokemonDetail.stats.defense.base_stat.toString();
+                        statsHTML.querySelector(".col-spa").innerHTML = displayPokemon.pokemonDetail.stats["special-attack"].base_stat.toString();
+                        statsHTML.querySelector(".col-spd").innerHTML = displayPokemon.pokemonDetail.stats["special-defense"].base_stat.toString();
+                        statsHTML.querySelector(".col-spe").innerHTML = displayPokemon.pokemonDetail.stats.speed.base_stat.toString();
+                        statsHTML.querySelector(".col-totle:last-child").innerHTML = (displayPokemon.pokemonDetail.stats.hp.base_stat +
+                            displayPokemon.pokemonDetail.stats.attack.base_stat +
+                            displayPokemon.pokemonDetail.stats.defense.base_stat +
+                            displayPokemon.pokemonDetail.stats["special-attack"].base_stat +
+                            displayPokemon.pokemonDetail.stats["special-defense"].base_stat +
+                            displayPokemon.pokemonDetail.stats.speed.base_stat).toString();
+                    }
+                });
+                pokemonDetailsCache.push(...pokemonDetails)
+                pokemonDetails.forEach(p => pokemonDetailsMapCache[p.id.toString()] = p)
+                window.localStorage.setItem(POKEMON_DETAIL_STORAGE_KEY, JSON.stringify(pokemonDetailsCache));
+            });
+        }
+    })
 }
 
 /** Stores the current options in local storage and in the URL. */

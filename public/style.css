@@ -756,7 +756,7 @@ h2 {
 
 .pokecard {
 	width: 91%;
-	background-color: #ff8000;
+	background-color: transparent;
 	border: 1px solid #ddd;
 	border-radius: 0.5em;
 	margin: 4.5%;

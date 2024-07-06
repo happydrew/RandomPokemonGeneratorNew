@@ -95,17 +95,17 @@ class DisplayPokemon {
 	}
 
 	toHtml(): string {
-		return `<li class="">
-				<div class="pokecard-containter" id="pokemonCard" style="${this.showParams.background_color ? `background-color:${this.getBackgroudColorHex()};` : `background-color:transparent;border:none`}">
-					<div class="pokecard" style="background-color: ${this.showParams.background_color ? this.getBackgroudColorHex() : "transparent"}">
+		return `<li>
+				<div class="pokecard-containter" id="${this.id.toString()}" style="${this.showParams.background_color ? `background-color:${this.getBackgroudColorHex()};` : `background-color:transparent;border:none`}">
+					<div class="pokecard">
 						<div class="pokecard-pokeimage-container">
-						${this.showParams.background_image ? `<img class="pokecard-pokeimage-back" src="${this.getBackgroundImage()}" alt="background of type ${this.getTypesArray()[0]}">` : ""}
-						${this.showParams.sprites ? `
-							<img class="pokecard-pokeimage" src="${this.getSpritePath()}"
-								alt="image of ${this.name}">` : ""}
+						    ${this.showParams.background_image ? `<img class="pokecard-pokeimage-back" src="${this.getBackgroundImage()}" alt=${this.pokemonDetail ? `"back image of pokemon type ${this.getTypesArray()[0]}"` : `""`}>` : ""}
+						    ${this.showParams.sprites ? `
+							  <img class="pokecard-pokeimage" src="${this.getSpritePath()}"
+								alt="random generated pokemon ${this.name}">` : ""}
 							${(this.showParams.showRarity && (this.getRarity() === "Mythical" || this.getRarity() === "Legendary")) ? `<div class="pokecard-header-rarity" style="background-color: ${this.getRarityColor()}">${this.getRarity()}</div>` : ""}	
 							${this.shiny ? `<div class="pokecard-header-shiny"><span class="star">&starf;</span>Shiny</div>` : ""}  
-							${this.showParams.showTypes ? `<div class="pokecard-types-container" style="background: ${this.getTypesArray().length > 1 ? `linear-gradient(105deg, ${this.getTypeBackColor(this.getTypesArray()[0])} 48%, ${this.getTypeBackColor(this.getTypesArray()[1])} calc(48% + 1px))` : this.getTypeBackColor(this.getTypesArray()[0])}">
+							${(this.showParams.showTypes && this.pokemonDetail) ? `<div class="pokecard-types-container" style="background: ${this.getTypesArray().length > 1 ? `linear-gradient(105deg, ${this.getTypeBackColor(this.getTypesArray()[0])} 48%, ${this.getTypeBackColor(this.getTypesArray()[1])} calc(48% + 1px))` : this.getTypeBackColor(this.getTypesArray()[0])}">
 								<div class="pokecard-type click-tip" data-click-tip="${this.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${this.getTypeBackColor(this.getTypesArray()[0])}">
 									<img src="./img/type-icons/40px-${this.getTypesArray()[0]}_icon.png"
 										alt="icon of type ${this.getTypesArray()[0]}">
@@ -146,9 +146,9 @@ class DisplayPokemon {
 							  <div class="pokecard-infobar light-scrollbar">${this.getRegionText()}</div>
 							</div>` : ""}
 						</div>`: ""}
-						${this.showParams.showAblilites ? `
+						${(this.showParams.showAblilites) ? `
 							<div class="pokecard-infobar-container pokecard-infobar-container-abilities">
-							  <div class="pokecard-infobar pokecard-abilities light-scrollbar">${this.pokemonDetail.abilities.join(", ")}</div>
+							  <div class="pokecard-infobar pokecard-abilities light-scrollbar">${this.pokemonDetail ? this.pokemonDetail.abilities.join(", ") : "loading..."}</div>
 							</div>` : ""}
 						${(this.showParams.showStats || this.showParams.ivs || this.showParams.evs) ?
 				`<div class="pokecard-stats">
@@ -156,7 +156,7 @@ class DisplayPokemon {
 								<tbody>
 								${this.showParams.ivs ? `
 									<tr>
-										<td class="col-totle">IV</td>
+										<td class="col-totle stats-title">IV</td>
 										<td class="col-hp">${this.ivs.hp}</td>
 										<td class="col-atk">${this.ivs.attack}</td>
 										<td class="col-def">${this.ivs.defense}</td>
@@ -166,36 +166,36 @@ class DisplayPokemon {
 										<td class="col-totle">${this.ivs.total}</td>
 									</tr>` : ""}
 								${this.showParams.evs ? `
-									<tr>
-										<td class="col-totle">EV</td>
-										<td class="col-hp">${this.pokemonDetail.stats.hp.effort}</td>
-										<td class="col-atk">${this.pokemonDetail.stats.attack.effort}</td>
-										<td class="col-def">${this.pokemonDetail.stats.defense.effort}</td>
-										<td class="col-spa">${this.pokemonDetail.stats["special-attack"].effort}</td>
-										<td class="col-spd">${this.pokemonDetail.stats["special-defense"].effort}</td>
-										<td class="col-spe">${this.pokemonDetail.stats.speed.effort}</td>
-										<td class="col-totle">${this.pokemonDetail.stats.hp.effort +
-					this.pokemonDetail.stats.attack.effort +
-					this.pokemonDetail.stats.defense.effort +
-					this.pokemonDetail.stats["special-attack"].effort +
-					this.pokemonDetail.stats["special-defense"].effort +
-					this.pokemonDetail.stats.speed.effort}</td>
+									<tr class="tr-evs">
+										<td class="col-totle stats-title">EV</td>
+										<td class="col-hp">${this.pokemonDetail ? this.pokemonDetail.stats.hp.effort : "&nbsp;"}</td>
+										<td class="col-atk">${this.pokemonDetail ? this.pokemonDetail.stats.attack.effort : "&nbsp;"}</td>
+										<td class="col-def">${this.pokemonDetail ? this.pokemonDetail.stats.defense.effort : "&nbsp;"}</td>
+										<td class="col-spa">${this.pokemonDetail ? this.pokemonDetail.stats["special-attack"].effort : "&nbsp;"}</td>
+										<td class="col-spd">${this.pokemonDetail ? this.pokemonDetail.stats["special-defense"].effort : "&nbsp;"}</td>
+										<td class="col-spe">${this.pokemonDetail ? this.pokemonDetail.stats.speed.effort : "&nbsp;"}</td>
+										<td class="col-totle">${this.pokemonDetail ? this.pokemonDetail.stats.hp.effort +
+						this.pokemonDetail.stats.attack.effort +
+						this.pokemonDetail.stats.defense.effort +
+						this.pokemonDetail.stats["special-attack"].effort +
+						this.pokemonDetail.stats["special-defense"].effort +
+						this.pokemonDetail.stats.speed.effort : "&nbsp;"}</td>
 									</tr>`: ""}
 								${this.showParams.showStats ? `
-									<tr>
-										<td class="col-totle">BS</td>
-										<td class="col-hp">${this.pokemonDetail.stats.hp.base_stat}</td>
-										<td class="col-atk">${this.pokemonDetail.stats.attack.base_stat}</td>
-										<td class="col-def">${this.pokemonDetail.stats.defense.base_stat}</td>
-										<td class="col-spa">${this.pokemonDetail.stats["special-attack"].base_stat}</td>
-										<td class="col-spd">${this.pokemonDetail.stats["special-defense"].base_stat}</td>
-										<td class="col-spe">${this.pokemonDetail.stats.speed.base_stat}</td>
-										<td class="col-totle">${this.pokemonDetail.stats.hp.base_stat +
-					this.pokemonDetail.stats.attack.base_stat +
-					this.pokemonDetail.stats.defense.base_stat +
-					this.pokemonDetail.stats["special-attack"].base_stat +
-					this.pokemonDetail.stats["special-defense"].base_stat +
-					this.pokemonDetail.stats.speed.base_stat}</td>
+									<tr class="tr-stats">
+										<td class="col-totle stats-title">BS</td>
+										<td class="col-hp">${this.pokemonDetail ? this.pokemonDetail.stats.hp.base_stat : "&nbsp;"}</td>
+										<td class="col-atk">${this.pokemonDetail ? this.pokemonDetail.stats.attack.base_stat : "&nbsp;"}</td>
+										<td class="col-def">${this.pokemonDetail ? this.pokemonDetail.stats.defense.base_stat : "&nbsp;"}</td>
+										<td class="col-spa">${this.pokemonDetail ? this.pokemonDetail.stats["special-attack"].base_stat : "&nbsp;"}</td>
+										<td class="col-spd">${this.pokemonDetail ? this.pokemonDetail.stats["special-defense"].base_stat : "&nbsp;"}</td>
+										<td class="col-spe">${this.pokemonDetail ? this.pokemonDetail.stats.speed.base_stat : "&nbsp;"}</td>
+										<td class="col-totle">${this.pokemonDetail ? this.pokemonDetail.stats.hp.base_stat +
+						this.pokemonDetail.stats.attack.base_stat +
+						this.pokemonDetail.stats.defense.base_stat +
+						this.pokemonDetail.stats["special-attack"].base_stat +
+						this.pokemonDetail.stats["special-defense"].base_stat +
+						this.pokemonDetail.stats.speed.base_stat : "&nbsp;"}</td>
 									</tr>` : ""}
 									<tr>
 										<th class="col-totle"></th>
@@ -220,33 +220,40 @@ class DisplayPokemon {
 	}
 
 	getBackgroudColorHex(): string {
-		switch (this.pokemonDetail.speciesColor) {
-			case "black":
-				return "#000000";
-			case "blue":
-				return "#0000FF";
-			case "brown":
-				return "#A52A2A";
-			case "gray":
-				return "#808080";
-			case "green":
-				return "#008000";
-			case "pink":
-				return "#FFC0CB";
-			case "purple":
-				return "#800080";
-			case "red":
-				return "#FF0000";
-			case "white":
-				return "#FFFFFF";
-			case "yellow":
-				return "#FFFF00";
-			default:
-				return "transparent";
+		if (!this.pokemonDetail) {
+			return "transparent";
+		} else {
+			switch (this.pokemonDetail.speciesColor) {
+				case "black":
+					return "#000000";
+				case "blue":
+					return "#0000FF";
+				case "brown":
+					return "#A52A2A";
+				case "gray":
+					return "#808080";
+				case "green":
+					return "#008000";
+				case "pink":
+					return "#FFC0CB";
+				case "purple":
+					return "#800080";
+				case "red":
+					return "#FF0000";
+				case "white":
+					return "#FFFFFF";
+				case "yellow":
+					return "#FFFF00";
+				default:
+					return "transparent";
+			}
 		}
 	}
 
 	getBackgroundImage(): string {
+		if (!this.pokemonDetail) {
+			return "";
+		}
 		var firstType = "normal";
 		for (const type in this.pokemonDetail.types) {
 			if (this.pokemonDetail.types[type] == 1) {
@@ -261,6 +268,9 @@ class DisplayPokemon {
 	}
 
 	getRarity(): string {
+		if (!this.pokemonDetail) {
+			return "";
+		}
 		if (this.pokemonDetail.speciesIsLegendary != undefined && this.pokemonDetail.speciesIsLegendary == 1) {
 			return "Legendary";
 		} else if (this.pokemonDetail.speciesIsMythical != undefined && this.pokemonDetail.speciesIsMythical == 1) {
@@ -327,6 +337,9 @@ class DisplayPokemon {
 	}
 
 	getGenerationArabic(): string {
+		if (!this.pokemonDetail) {
+			return "&nbsp;";
+		}
 		switch (this.pokemonDetail.speciesGeneration) {
 			case "1":
 				return "I";
@@ -394,6 +407,9 @@ class DisplayPokemon {
 	}
 
 	getRegionText(): string {
+		if (!this.pokemonDetail) {
+			return "loading...";
+		}
 		if (!this.pokemonDetail.region) {
 			return "&nbsp;";
 		} else {
@@ -520,13 +536,19 @@ function generateNature(): string {
 	return getRandomElement(NATURES);
 }
 
-function displayPokemon(displayPokemons: DisplayPokemon[]) {
+/**
+ * 
+ * @param displayPokemons 
+ * @returns 返回结果区的HTML根元素
+ */
+function displayPokemon(displayPokemons: DisplayPokemon[]): HTMLElement {
 	const resultsContainer = document.getElementById("results");
 	if (!displayPokemons) {
 		resultsContainer.innerHTML = "An error occurred while generating Pok&eacute;mon.";
 	} else {
 		resultsContainer.innerHTML = toHtml(displayPokemons);
 	}
+	return resultsContainer;
 }
 
 /** Converts a JSON array of Pokémon into an HTML ordered list. */
