@@ -57,7 +57,7 @@ function onPageLoad() {
     addNumrangeValidateListeners();
     addClickTipListeners();
     loadPokemonDetailsFromCache()
-    displayYearsInFooter();
+    //displayYearsInFooter();
     clearOldCacheVersion();
 }
 

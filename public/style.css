@@ -462,7 +462,7 @@ abbr {
 .loading:after {
 	position: absolute;
 	top: 70%;
-	left: calc(50% + 7em);
+	left: calc(50% + 8em);
 	z-index: 1;
 	content: "";
 	width: 1em;
