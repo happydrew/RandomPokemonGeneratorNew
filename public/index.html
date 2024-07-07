@@ -3,14 +3,14 @@
 
 <head>
 	<!-- Google tag (gtag.js) -->
-	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7P1N0JZ42G"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-7P1N0JZ42G"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'G-7P1N0JZ42G');
-	</script> -->
+	</script>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,13 +48,14 @@
 
 	<!-- <div class="container" id="options-panel"> -->
 	<div class="panel-top-bar-container">
-		<h2 class="panel-label" for="controls" title="Filter Options for Random Pok&eacute;mon Generator.">FilterOptions
+		<h2 class="panel-label" for="filter-options-form" title="Filter Options for Random Pok&eacute;mon Generator.">
+			FilterOptions
 		</h2>
-		<!-- <div class="panel-top-tool-bar-container">
-			<button id="filter-options-reset">Reset</button>
-		</div> -->
+		<div class="panel-top-tool-bar-container">
+			<button type="reset" form="filter-options-form" id="filter-options-reset">Reset</button>
+		</div>
 	</div>
-	<form action="?" method="get" id="controls" class="menu" onsubmit="generateRandom(); return false;">
+	<form action="?" method="get" id="filter-options-form" class="menu" onsubmit="generateRandom(); return false;">
 		<div id="main-options" class="options-panel">
 			<!-- regions -->
 			<div class="option-unit">
@@ -65,8 +66,8 @@
 						Regions</button>
 					<div class="popup">
 						<ul>
-							<li><label><input type="checkbox" name="regions" value="all" data-select-all="true"
-										checked>All Regions</label></li>
+							<li><label><input type="checkbox" name="regions" value="all" data-select-all="true" checked
+										form="filter-options-form">All Regions</label></li>
 							<li><label><input type="checkbox" name="regions" value="kanto" data-short-name="Kan"
 										checked><span title="Generation 1 (Red, Blue, and Yellow)">Kanto</span></label>
 							</li>
@@ -893,14 +894,14 @@
 
 	<!-- <div class="container" id="options-panel"> -->
 	<div id="show-option-panel-top-bar" class="panel-top-bar-container">
-		<h2 class="panel-label dotted-underline" for="showing"
+		<h2 class="panel-label dotted-underline" for="show-options-form"
 			title="Showing options for configuring the showing content of the random Pokémon generator, such as whether to display Pokémon images and whether to generate random natures.">
 			ShowOptions</h2>
-		<!-- <div class="panel-top-tool-bar-container">
-			<button id="show-options-reset">Reset</button>
-		</div> -->
+		<div class="panel-top-tool-bar-container">
+			<button type="reset" id="show-options-reset" form="show-options-form">Reset</button>
+		</div>
 	</div>
-	<form action="?" method="get" id="showing" class="menu">
+	<form action="?" method="get" id="show-options-form" class="menu">
 		<div id="main-show-options" class="options-panel">
 			<!-- showGeneration -->
 			<div class="option-unit-small">
@@ -987,8 +988,8 @@
 		onclick="collapseMoreShowOptions()">&#x23EB;Collapse</button>
 
 	<div class="n_generator">
-		<label for="n" title="Number of Pokémon to generate.">Num:</label>
-		<select form="controls" name="n" id="n" required>
+		<label for="n" title="Number of Pokémons to generate randomly.">Num:</label>
+		<select form="show-options-form" name="n" id="n" required>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -999,7 +1000,7 @@
 			<option value="8">8</option>
 			<option value="9">9</option>
 		</select>
-		<input class="generate-button" form="controls" value="Generate" type="submit" />
+		<input class="generate-button" form="filter-options-form" value="Generate" type="submit" />
 	</div>
 
 	<nav id="history">
@@ -1007,7 +1008,7 @@
 		<button class="hidden text" id="next" onclick="displayNext()">Next &#x23E9;</button>
 	</nav>
 
-	<section id="results">
+	<section id="results" class="display-pokemon-container">
 	</section>
 
 	<button id="shiny-toggler" class="text is-hiding" onclick="toggleShinyDisplay()">
@@ -1016,7 +1017,7 @@
 		<span class="is-showing">&and;</span><span class="is-hiding">&or;</span>
 	</button>
 	<section id="shiny-container" class="menu invisible">
-		<div id="shinies"></div>
+		<div id="shinies" class="display-pokemon-container"></div>
 		<button class="text" onclick="clearShinies()">&#x274C; Clear your shiny Pokémon</button>
 	</section>
 
@@ -1024,7 +1025,7 @@
 		<p>
 			<a href="./rss.xml">RSS</a> |
 			<a href="https://github.com/happydrew/RandomPokemonGeneratorNew">GitHub</a> |
-			<a href="zhugetd@gmail.com">Contact</a> |
+			<a href="mailto:zhugetd@gmail.com">Contact</a> |
 			Pok&eacute;mon is &copy;1995-2024 Nintendo. Website is &copy;2022-2024 Drew Grant.
 		</p>
 	</footer>

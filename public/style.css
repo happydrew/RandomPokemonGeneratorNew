@@ -70,6 +70,16 @@ h2 {
 	margin: .25em 0 .5em
 }
 
+button {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+button:hover,
+button:active {
+	background-color: #ccf8fb;
+}
+
 .panel-top-bar-container {
 	display: flex;
 	flex-wrap: nowrap;
@@ -371,10 +381,10 @@ input[type="checkbox"] {
 button,
 input[type="button"],
 input[type="submit"] {
-	cursor: pointer
+	cursor: pointer;
 }
 
-#controls input[type="submit"] {
+#filter-options-form input[type="submit"] {
 	font-size: 1em;
 	padding: .125em .25em
 }
@@ -487,14 +497,14 @@ button.text {
 	padding: 0
 }
 
-#results ol {
+.display-pokemon-container ol {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
 }
 
-#results li {
+.display-pokemon-container li {
 	display: inline-flex;
 	justify-content: center;
 	flex-wrap: wrap;
@@ -509,7 +519,7 @@ button.text {
 	animation: 0.5s ease-out 0s 1 fadeIn
 }
 
-#results .nature {
+.display-pokemon-container .nature {
 	color: #888
 }
 
@@ -517,10 +527,10 @@ button.text {
 	color: #F4D04D
 }
 
-#results li.shiny:before,
-#results li.shiny:after,
-#results li.shiny .star:before,
-#results li.shiny .star:after {
+.display-pokemon-container li.shiny:before,
+.display-pokemon-container li.shiny:after,
+.display-pokemon-container li.shiny .star:before,
+.display-pokemon-container li.shiny .star:after {
 	content: "\2605";
 	position: absolute;
 	top: 64px;
@@ -531,24 +541,24 @@ button.text {
 	z-index: 100
 }
 
-#results li.shiny:before {
+.display-pokemon-container li.shiny:before {
 	animation: .6s steps(8) .075s 1 rotateStar, .075s alternate steps(2) infinite shine;
 	font-size: 1.5em
 }
 
-#results li.shiny:after {
+.display-pokemon-container li.shiny:after {
 	animation: .6s steps(8) .150s 1 rotateStar, .075s alternate steps(2) infinite shine
 }
 
-#results li.shiny .star:before {
+.display-pokemon-container li.shiny .star:before {
 	animation: .6s steps(8) .225s 1 rotateStar, .075s alternate steps(2) infinite shine
 }
 
-#results li.shiny .star:after {
+.display-pokemon-container li.shiny .star:after {
 	animation: .6s steps(8) .300s 1 rotateStar, .075s alternate steps(2) infinite shine
 }
 
-/* #results img {
+/* .display-pokemon-container img {
 	position: absolute;
 	bottom: 3em;
 	left: 50%;
@@ -557,7 +567,7 @@ button.text {
 	height: 10em;
 } */
 
-#results li.imageless {
+.display-pokemon-container li.imageless {
 	font-weight: 700;
 	margin: 2em 0;
 	height: auto;
@@ -678,7 +688,7 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-top: 1.5em;
+	margin-top: 1.8em;
 	position: relative;
 }
 
@@ -748,7 +758,7 @@ h2 {
 	margin: 0 0 1em 0;
 	padding: 0;
 	width: 18em;
-	/* height: auto; */
+	height: fit-content;
 	border: 1px solid #ddd;
 	border-radius: 8px;
 	background-color: rgb(255, 255, 0);
@@ -1082,6 +1092,60 @@ h2 {
 
 /* results styles */
 
+/* 弹窗背景遮罩 */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+/* 弹窗样式 */
+.modal {
+	width: 25em;
+	background: #fff;
+	padding: 1em;
+	border-radius: 0.5em;
+	font-size: 1.1em;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	z-index: 1001;
+}
+
+.modal .shiny-tip-highlight {
+	color: #ffa500;
+	font-size: 1.5em;
+}
+
+.modal>p {
+	text-align: center;
+	text-indent: 0;
+}
+
+.modal button {
+	height: 2em;
+	margin: 2em 0.8em 0 0.8em;
+	padding: 0 1em;
+	font-weight: bold;
+	font-size: 1em;
+	border-radius: 0.9em;
+}
+
+.modal>button:nth-of-type(1) {
+	color: white;
+	background-color: #1A73E8;
+}
+
+.modal button:hover {
+	background-color: #ccf8fb;
+	color: black;
+}
+
 @keyframes scroll_1 {
 	0% {
 		transform: translateY(0);
@@ -1116,7 +1180,7 @@ h2 {
 }
 
 @media screen and (max-width:839px) {
-	#results li {
+	.display-pokemon-container li {
 		width: 48%;
 		margin: .5em 1%;
 	}
@@ -1154,7 +1218,7 @@ h2 {
 }
 
 @media screen and (max-width:539px) {
-	#results li {
+	.display-pokemon-container li {
 		width: 98%;
 	}
 }

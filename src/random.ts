@@ -1,4 +1,7 @@
-import { addToHistory, toggleHistoryVisibility, displayPrevious, displayNext, toggleShinyDisplay, clearShinies } from "./history.js";
+import {
+    addToHistory, toggleHistoryVisibility, displayPrevious, displayNext, toggleShinyDisplay,
+    clearShinies, saveShinies, loadShinies
+} from "./history.js";
 import { convertSearchParamsToOptions, Options, convertOptionsToUrlParams, FilterParams, ShowParams } from "./options.js";
 import { Pokemon, DisplayPokemon, PokemonDetail, displayPokemon } from "./pokemon.js";
 import {
@@ -56,9 +59,130 @@ function onPageLoad() {
     addFormChangeListeners();
     addNumrangeValidateListeners();
     addClickTipListeners();
-    loadPokemonDetailsFromCache()
+    loadPokemonDetailsFromCache();
+    loadShinies();
     //displayYearsInFooter();
     clearOldCacheVersion();
+    // 添加reset按钮的点击事件
+    addResetButtonListener();
+}
+
+function addResetButtonListener() {
+    // 设置filter options form的reset按钮点击事件
+    // 标志位，防止reset事件被触发两次
+    let preventFilterOptionResetEvent = false;
+    document.getElementById("filter-options-form").addEventListener('reset', event => {
+        if (preventFilterOptionResetEvent) {
+            return;
+        }
+        event.preventDefault();
+        // 创建遮罩层
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+
+        // 创建弹窗
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <p>Are you sure you want to <strong>reset all filter options</strong>?<br>This will set all filter options to their default state.</p>
+            <button id="confirmBtn">Yeah, i'm sure!</button>
+            <button id="cancelBtn">No, thanks!</button>
+        `;
+
+        const filterFormHTML = event.currentTarget as HTMLFormElement;
+
+        // 点击确定按钮的事件
+        modal.querySelector('#confirmBtn').addEventListener('click', function (event: Event) {
+            event.stopPropagation();
+            preventFilterOptionResetEvent = true;
+            filterFormHTML.reset();
+            preventFilterOptionResetEvent = false;
+            // 触发所有data-select-all checkbox的change事件
+            filterFormHTML.querySelectorAll("input[type='checkbox'][data-select-all]").forEach(checkbox => {
+                checkbox.dispatchEvent(new Event('change'));
+            });
+            removeModal();
+        });
+
+        // 点击取消按钮的事件
+        modal.querySelector('#cancelBtn').addEventListener('click', function (event: Event) {
+            event.stopPropagation();
+            removeModal();
+        });
+
+        // 点击遮罩层的事件
+        overlay.addEventListener('click', function (event) {
+            if (event.target === overlay) {
+                removeModal();
+            }
+        });
+
+        // 将弹窗添加到遮罩层
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        function removeModal() {
+            document.body.removeChild(overlay);
+        }
+    });
+
+    // 设置show options form的reset按钮点击事件
+    // 标志位，防止reset事件被触发两次
+    let preventShowOptionResetEvent = false;
+    document.getElementById("show-options-form").addEventListener('reset', event => {
+        if (preventShowOptionResetEvent) {
+            return;
+        }
+        event.preventDefault();
+        // 创建遮罩层
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+
+        // 创建弹窗
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <p>Are you sure you want to <strong>reset all show options</strong>?<br>This will set all show options to their default state.</p>
+            <button id="confirmBtn">Yeah, i'm sure!</button>
+            <button id="cancelBtn">No, thanks!</button>
+        `;
+
+        const showFormHTML = event.currentTarget as HTMLFormElement;
+
+        // 点击确定按钮的事件
+        modal.querySelector('#confirmBtn').addEventListener('click', function (event: Event) {
+            event.stopPropagation();
+            preventShowOptionResetEvent = true;
+            showFormHTML.reset();
+            preventShowOptionResetEvent = false;
+            // 触发所有data-select-all checkbox的change事件
+            showFormHTML.querySelectorAll("input[type='checkbox'][data-select-all]").forEach(checkbox => {
+                checkbox.dispatchEvent(new Event('change'));
+            });
+            removeModal();
+        });
+
+        // 点击取消按钮的事件
+        modal.querySelector('#cancelBtn').addEventListener('click', function (event: Event) {
+            event.stopPropagation();
+            removeModal();
+        });
+
+        // 点击遮罩层的事件
+        overlay.addEventListener('click', function (event) {
+            if (event.target === overlay) {
+                removeModal();
+            }
+        });
+
+        // 将弹窗添加到遮罩层
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        function removeModal() {
+            document.body.removeChild(overlay);
+        }
+    });
 }
 
 async function wakeUpBackend() {
@@ -125,60 +249,119 @@ async function generateRandom() {
         if (needFecthIds.length > 0) {
             response = fetch(backEndDomain + "/api/pokemon-details?ids=" + needFecthIds.join(","));
         }
-        // 先显示立即就能获取的内容，以及已有的数据
-        const displayPokemons: DisplayPokemon[] = generatedPokemons.map(p => new DisplayPokemon(p, pokemonDetailsMapCache[p.id.toString()], options.showParams))
-        const resultsHTML = displayPokemon(displayPokemons);
+        // 先显示立即就能获取的内容，以及已有的详情数据
+        const displayPokemons: DisplayPokemon[] = generatedPokemons.map(p => new DisplayPokemon(null, p, pokemonDetailsMapCache[p.id.toString()], options.showParams))
+        const resultsHTML = displayPokemon(displayPokemons, document.getElementById("results"));
+        const displayPokemonMap = new Map<string, DisplayPokemon>();
+        displayPokemons.forEach(dp => displayPokemonMap.set(dp.id.toString(), dp));
+        const existIds: number[] = generatedPokemons.filter(p => p.id.toString() in pokemonDetailsMapCache).map(p => p.id);
         // 异步加载详情数据
         if (null != response) {
-            renderPokemonDetails(response, resultsHTML, displayPokemons);
+            renderAndSavePokemons(response, resultsHTML, displayPokemonMap);
         }
         addToHistory(displayPokemons);
+        // 保存已经有详情数据的shiny pokemons
+        // 需要从服务器拉去详情数据的shiny pokemons会在renderAndSavePokemons方法中被保存
+        saveShinies(existIds.map(id => displayPokemonMap.get(id.toString())));
+        const shinyCount = displayPokemons.filter(dp => dp.shiny).length;
+        if (shinyCount > 0) {
+            displayShinyTip(shinyCount);
+        }
     } catch (error) {
         console.error(error);
-        displayPokemon(null);
+        displayPokemon(null, null);
     }
     markLoading(false);
 }
 
-async function renderPokemonDetails(fetchDetailResponse: Promise<Response>, resultsHTML: HTMLElement, displayPokemons: DisplayPokemon[]) {
+function displayShinyTip(shinyCount: number) {
+    // 创建遮罩层
+    const overlay = document.createElement('div');
+    overlay.classList.add('modal-overlay');
+
+    // 创建弹窗
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <p><strong class="shiny-tip-highlight">Wow!</strong> You've encountered <strong class="shiny-tip-highlight">${shinyCount}</strong> shiny Pokémon${shinyCount > 1 ? "s" : ""}! Go take a look at it!</p>
+        <button id="confirmBtn">Sure, let's go!</button>
+        <button id="cancelBtn">Not now, thanks.</button>
+    `;
+
+    // 点击确定按钮的事件
+    modal.querySelector('#confirmBtn').addEventListener('click', function (event: Event) {
+        event.stopPropagation();
+        removeModal();
+        // 模拟点击shiny按钮，并将窗口滑动到shiny展示区域
+        const shinyTogglerHTML = document.getElementById("shiny-toggler");
+        toggleShinyDisplay(false);
+        shinyTogglerHTML.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // 点击取消按钮的事件
+    modal.querySelector('#cancelBtn').addEventListener('click', function (event: Event) {
+        event.stopPropagation();
+        removeModal();
+    });
+
+    // 点击遮罩层的事件
+    overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+            removeModal();
+        }
+    });
+
+    // 将弹窗添加到遮罩层
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    function removeModal() {
+        document.body.removeChild(overlay);
+    }
+}
+
+
+async function renderAndSavePokemons(fetchDetailResponse: Promise<Response>, resultsHTML: HTMLElement, displayPokemonsMap: Map<string, DisplayPokemon>) {
     fetchDetailResponse.then(response => {
         if (response.ok) {
             response.json().then((pokemonDetails: PokemonDetail[]) => {
                 console.log("拉取详情数据成功，具体数据为：" + JSON.stringify(pokemonDetails));
                 // 显示详情数据
-                const pokecardHTMLMap = new Map<string, HTMLElement>();
-                resultsHTML.querySelectorAll(".pokecard-containter").forEach((pokecardContainter: HTMLElement) => {
-                    pokecardHTMLMap.set(pokecardContainter.id, pokecardContainter)
-                });
-                const displayPokemonsMap = new Map<string, DisplayPokemon>();
-                displayPokemons.forEach(dp => displayPokemonsMap.set(dp.id.toString(), dp))
-                pokemonDetails.forEach(pokemonDetail => {
-                    const displayPokemon = displayPokemonsMap.get(pokemonDetail.id.toString());
-                    displayPokemon.pokemonDetail = pokemonDetail;
-                    const pokecardContainter = pokecardHTMLMap.get(pokemonDetail.id.toString());
-                    // 设置背景色
-                    pokecardContainter.style.cssText = `${displayPokemon.showParams.background_color ? `background-color:${displayPokemon.getBackgroudColorHex()};` : `background-color:transparent;border:none`}`;
-                    // 设置背景图
-                    if (displayPokemon.showParams.background_image) {
-                        const pokeImageBackHTML = pokecardContainter.querySelector(".pokecard-pokeimage-back") as HTMLImageElement;
-                        pokeImageBackHTML.src = displayPokemon.getBackgroundImage();
-                        pokeImageBackHTML.alt = `back image of pokemon type ${displayPokemon.getTypesArray()[0]}`;
-                    }
-                    const pokeImageContainerHTML = pokecardContainter.querySelector(".pokecard-pokeimage-container");
-                    // 显示稀有度
-                    if (displayPokemon.showParams.showRarity && (displayPokemon.getRarity() === "Mythical" || displayPokemon.getRarity() === "Legendary")) {
-                        const rarityHTML = document.createElement("div");
-                        rarityHTML.classList.add("pokecard-header-rarity");
-                        rarityHTML.style.cssText = `background-color: ${displayPokemon.getRarityColor()}`;
-                        rarityHTML.innerText = displayPokemon.getRarity();
-                        pokeImageContainerHTML.appendChild(rarityHTML);
-                    }
-                    // 显示type信息
-                    if (displayPokemon.showParams.showTypes) {
-                        const typeHTML = document.createElement("div");
-                        typeHTML.classList.add("pokecard-types-container");
-                        typeHTML.style.cssText = `background: ${displayPokemon.getTypesArray().length > 1 ? `linear-gradient(105deg, ${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])} 48%, ${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[1])} calc(48% + 1px))` : displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])}`;
-                        typeHTML.innerHTML = `<div class="pokecard-type click-tip" data-click-tip="${displayPokemon.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])}">
+                pokemonDetails.forEach(pd => displayPokemonsMap.get(pd.id.toString()).pokemonDetail = pd);
+                // 有可能接口返回较慢，而用户点击很快，此时已经又点了一次gengerate，
+                // 结果区域已经转到下一次的生成结果了，此时当前这次的显示结果的元素已经被移除，
+                // 导致后续的详情数据渲染失败，因此这里需要捕获异常并做处理
+                try {
+                    const pokecardHTMLMap = new Map<string, HTMLElement>();
+                    resultsHTML.querySelectorAll(".pokecard-containter").forEach((pokecardContainter: HTMLElement) => {
+                        pokecardHTMLMap.set(pokecardContainter.id, pokecardContainter)
+                    });
+                    pokemonDetails.forEach(pokemonDetail => {
+                        const displayPokemon = displayPokemonsMap.get(pokemonDetail.id.toString());
+                        const pokecardContainter = pokecardHTMLMap.get(pokemonDetail.id.toString());
+                        // 设置背景色
+                        pokecardContainter.style.cssText = `${displayPokemon.showParams.background_color ? `background-color:${displayPokemon.getBackgroudColorHex()};` : `background-color:transparent;border:none`}`;
+                        // 设置背景图
+                        if (displayPokemon.showParams.background_image) {
+                            const pokeImageBackHTML = pokecardContainter.querySelector(".pokecard-pokeimage-back") as HTMLImageElement;
+                            pokeImageBackHTML.src = displayPokemon.getBackgroundImage();
+                            pokeImageBackHTML.alt = `back image of pokemon type ${displayPokemon.getTypesArray()[0]}`;
+                        }
+                        const pokeImageContainerHTML = pokecardContainter.querySelector(".pokecard-pokeimage-container");
+                        // 显示稀有度
+                        if (displayPokemon.showParams.showRarity && (displayPokemon.getRarity() === "Mythical" || displayPokemon.getRarity() === "Legendary")) {
+                            const rarityHTML = document.createElement("div");
+                            rarityHTML.classList.add("pokecard-header-rarity");
+                            rarityHTML.style.cssText = `background-color: ${displayPokemon.getRarityColor()}`;
+                            rarityHTML.innerText = displayPokemon.getRarity();
+                            pokeImageContainerHTML.appendChild(rarityHTML);
+                        }
+                        // 显示type信息
+                        if (displayPokemon.showParams.showTypes) {
+                            const typeHTML = document.createElement("div");
+                            typeHTML.classList.add("pokecard-types-container");
+                            typeHTML.style.cssText = `background: ${displayPokemon.getTypesArray().length > 1 ? `linear-gradient(105deg, ${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])} 48%, ${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[1])} calc(48% + 1px))` : displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])}`;
+                            typeHTML.innerHTML = `<div class="pokecard-type click-tip" data-click-tip="${displayPokemon.getTypesArray()[0]}" onclick="processClickTipEvent(this,event)" onmouseenter="processMouseEnterTipEvent(this,event)" onmouseleave="processMouseLeaveTipEvent(this,event)" tool-tip-style="color:${displayPokemon.getTypeBackColor(displayPokemon.getTypesArray()[0])}">
 									<img src="./img/type-icons/40px-${displayPokemon.getTypesArray()[0]}_icon.png"
 										alt="icon of type ${displayPokemon.getTypesArray()[0]}">
 								</div>
@@ -187,56 +370,61 @@ async function renderPokemonDetails(fetchDetailResponse: Promise<Response>, resu
 									<img src="./img/type-icons/40px-${displayPokemon.getTypesArray()[1]}_icon.png"
 										alt="icon of type ${displayPokemon.getTypesArray()[1]}">
 								</div>`: ""}`;
-                        pokeImageContainerHTML.appendChild(typeHTML);
-                    }
-                    // 显示世代信息
-                    if (displayPokemon.showParams.showGeneration) {
-                        (pokecardContainter.querySelector("span.pokecard-generation-arabic") as HTMLElement).innerText = displayPokemon.getGenerationArabic();
-                    }
-                    // 显示region信息
-                    if (displayPokemon.showParams.showRegion) {
-                        pokecardContainter.querySelector(".pokecard-infobar-container-region").querySelector(".pokecard-infobar.light-scrollbar").innerHTML = displayPokemon.getRegionText();
-                    }
-                    // 显示ablilites信息
-                    if (displayPokemon.showParams.showAblilites) {
-                        pokecardContainter.querySelector(".pokecard-infobar-container-abilities").querySelector(".pokecard-abilities").innerHTML = displayPokemon.pokemonDetail.abilities.join(", ");
-                    }
-                    // 显示evs信息
-                    if (displayPokemon.showParams.evs) {
-                        const evsHTML = pokecardContainter.querySelector(".pokecard-stats .tr-evs");
-                        evsHTML.querySelector(".col-hp").innerHTML = displayPokemon.pokemonDetail.stats.hp.effort.toString();
-                        evsHTML.querySelector(".col-atk").innerHTML = displayPokemon.pokemonDetail.stats.attack.effort.toString();
-                        evsHTML.querySelector(".col-def").innerHTML = displayPokemon.pokemonDetail.stats.defense.effort.toString();
-                        evsHTML.querySelector(".col-spa").innerHTML = displayPokemon.pokemonDetail.stats["special-attack"].effort.toString();
-                        evsHTML.querySelector(".col-spd").innerHTML = displayPokemon.pokemonDetail.stats["special-defense"].effort.toString();
-                        evsHTML.querySelector(".col-spe").innerHTML = displayPokemon.pokemonDetail.stats.speed.effort.toString();
-                        evsHTML.querySelector(".col-totle:last-child").innerHTML = (displayPokemon.pokemonDetail.stats.hp.effort +
-                            displayPokemon.pokemonDetail.stats.attack.effort +
-                            displayPokemon.pokemonDetail.stats.defense.effort +
-                            displayPokemon.pokemonDetail.stats["special-attack"].effort +
-                            displayPokemon.pokemonDetail.stats["special-defense"].effort +
-                            displayPokemon.pokemonDetail.stats.speed.effort).toString();
-                    }
-                    // 显示stats信息
-                    if (displayPokemon.showParams.showStats) {
-                        const statsHTML = pokecardContainter.querySelector(".pokecard-stats .tr-stats");
-                        statsHTML.querySelector(".col-hp").innerHTML = displayPokemon.pokemonDetail.stats.hp.base_stat.toString();
-                        statsHTML.querySelector(".col-atk").innerHTML = displayPokemon.pokemonDetail.stats.attack.base_stat.toString();
-                        statsHTML.querySelector(".col-def").innerHTML = displayPokemon.pokemonDetail.stats.defense.base_stat.toString();
-                        statsHTML.querySelector(".col-spa").innerHTML = displayPokemon.pokemonDetail.stats["special-attack"].base_stat.toString();
-                        statsHTML.querySelector(".col-spd").innerHTML = displayPokemon.pokemonDetail.stats["special-defense"].base_stat.toString();
-                        statsHTML.querySelector(".col-spe").innerHTML = displayPokemon.pokemonDetail.stats.speed.base_stat.toString();
-                        statsHTML.querySelector(".col-totle:last-child").innerHTML = (displayPokemon.pokemonDetail.stats.hp.base_stat +
-                            displayPokemon.pokemonDetail.stats.attack.base_stat +
-                            displayPokemon.pokemonDetail.stats.defense.base_stat +
-                            displayPokemon.pokemonDetail.stats["special-attack"].base_stat +
-                            displayPokemon.pokemonDetail.stats["special-defense"].base_stat +
-                            displayPokemon.pokemonDetail.stats.speed.base_stat).toString();
-                    }
-                });
+                            pokeImageContainerHTML.appendChild(typeHTML);
+                        }
+                        // 显示世代信息
+                        if (displayPokemon.showParams.showGeneration) {
+                            (pokecardContainter.querySelector("span.pokecard-generation-arabic") as HTMLElement).innerText = displayPokemon.getGenerationArabic();
+                        }
+                        // 显示region信息
+                        if (displayPokemon.showParams.showRegion) {
+                            pokecardContainter.querySelector(".pokecard-infobar-container-region").querySelector(".pokecard-infobar.light-scrollbar").innerHTML = displayPokemon.getRegionText();
+                        }
+                        // 显示ablilites信息
+                        if (displayPokemon.showParams.showAblilites) {
+                            pokecardContainter.querySelector(".pokecard-infobar-container-abilities").querySelector(".pokecard-abilities").innerHTML = displayPokemon.pokemonDetail.abilities.join(", ");
+                        }
+                        // 显示evs信息
+                        if (displayPokemon.showParams.evs) {
+                            const evsHTML = pokecardContainter.querySelector(".pokecard-stats .tr-evs");
+                            evsHTML.querySelector(".col-hp").innerHTML = displayPokemon.pokemonDetail.stats.hp.effort.toString();
+                            evsHTML.querySelector(".col-atk").innerHTML = displayPokemon.pokemonDetail.stats.attack.effort.toString();
+                            evsHTML.querySelector(".col-def").innerHTML = displayPokemon.pokemonDetail.stats.defense.effort.toString();
+                            evsHTML.querySelector(".col-spa").innerHTML = displayPokemon.pokemonDetail.stats["special-attack"].effort.toString();
+                            evsHTML.querySelector(".col-spd").innerHTML = displayPokemon.pokemonDetail.stats["special-defense"].effort.toString();
+                            evsHTML.querySelector(".col-spe").innerHTML = displayPokemon.pokemonDetail.stats.speed.effort.toString();
+                            evsHTML.querySelector(".col-totle:last-child").innerHTML = (displayPokemon.pokemonDetail.stats.hp.effort +
+                                displayPokemon.pokemonDetail.stats.attack.effort +
+                                displayPokemon.pokemonDetail.stats.defense.effort +
+                                displayPokemon.pokemonDetail.stats["special-attack"].effort +
+                                displayPokemon.pokemonDetail.stats["special-defense"].effort +
+                                displayPokemon.pokemonDetail.stats.speed.effort).toString();
+                        }
+                        // 显示stats信息
+                        if (displayPokemon.showParams.showStats) {
+                            const statsHTML = pokecardContainter.querySelector(".pokecard-stats .tr-stats");
+                            statsHTML.querySelector(".col-hp").innerHTML = displayPokemon.pokemonDetail.stats.hp.base_stat.toString();
+                            statsHTML.querySelector(".col-atk").innerHTML = displayPokemon.pokemonDetail.stats.attack.base_stat.toString();
+                            statsHTML.querySelector(".col-def").innerHTML = displayPokemon.pokemonDetail.stats.defense.base_stat.toString();
+                            statsHTML.querySelector(".col-spa").innerHTML = displayPokemon.pokemonDetail.stats["special-attack"].base_stat.toString();
+                            statsHTML.querySelector(".col-spd").innerHTML = displayPokemon.pokemonDetail.stats["special-defense"].base_stat.toString();
+                            statsHTML.querySelector(".col-spe").innerHTML = displayPokemon.pokemonDetail.stats.speed.base_stat.toString();
+                            statsHTML.querySelector(".col-totle:last-child").innerHTML = (displayPokemon.pokemonDetail.stats.hp.base_stat +
+                                displayPokemon.pokemonDetail.stats.attack.base_stat +
+                                displayPokemon.pokemonDetail.stats.defense.base_stat +
+                                displayPokemon.pokemonDetail.stats["special-attack"].base_stat +
+                                displayPokemon.pokemonDetail.stats["special-defense"].base_stat +
+                                displayPokemon.pokemonDetail.stats.speed.base_stat).toString();
+                        }
+                    });
+                } catch (error) {
+                    console.warn("本次渲染失败", error);
+                }
                 pokemonDetailsCache.push(...pokemonDetails)
                 pokemonDetails.forEach(p => pokemonDetailsMapCache[p.id.toString()] = p)
                 window.localStorage.setItem(POKEMON_DETAIL_STORAGE_KEY, JSON.stringify(pokemonDetailsCache));
+                // 保存本次请求数据的shiny pokemon
+                saveShinies(pokemonDetails.map(pd => displayPokemonsMap.get(pd.id.toString())));
             });
         }
     })

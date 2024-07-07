@@ -77,10 +77,16 @@ function expandMoreOptions(event: Event) {
 }
 
 function collapseMoreOptions(event: Event) {
-    document.getElementById("more-options").style.display = "none";
+    const moreOptions = document.getElementById("more-options");
+    const moreOptionsHeight = moreOptions.scrollHeight;
+    moreOptions.style.display = "none";
     document.getElementById("collapse-more-button").style.display = "none";
     document.getElementById("more-button").style.display = "block";
     document.getElementById("option-panel-hr").style.display = "none";
+    window.scrollBy({
+        top: -moreOptionsHeight,
+        behavior: "smooth"
+    });
 }
 
 function expandMoreShowOptions(event: Event) {
@@ -91,10 +97,16 @@ function expandMoreShowOptions(event: Event) {
 }
 
 function collapseMoreShowOptions(event: Event) {
-    document.getElementById("more-show-options").style.display = "none";
+    const moreShowOptions = document.getElementById("more-show-options");
+    const moreShowOptionsHeight = moreShowOptions.scrollHeight;
+    moreShowOptions.style.display = "none";
     document.getElementById("collapse-more-show-button").style.display = "none";
     document.getElementById("more-show-button").style.display = "block";
     document.getElementById("show-option-panel-hr").style.display = "none";
+    window.scrollBy({
+        top: -moreShowOptionsHeight,
+        behavior: "smooth"
+    });
 }
 
 function imgOnerror(event: Event) {
@@ -103,7 +115,7 @@ function imgOnerror(event: Event) {
 }
 
 function displayYearsInFooter() {
-        document.querySelectorAll("span[data-since]").forEach((span: HTMLSpanElement) => {
+    document.querySelectorAll("span[data-since]").forEach((span: HTMLSpanElement) => {
         span.innerText = span.dataset.since + "-" + new Date().getFullYear();
     });
 }

@@ -69,8 +69,14 @@ class DisplayPokemon {
 		// speed?: number
 	};
 	shiny: boolean;
+	// 生成时间（毫秒时间戳）
+	generateTime: number;
 
-	constructor(pokemon: Pokemon, pokemonDetail: PokemonDetail, showParams: ShowParams) {
+	constructor(displayPokemon: DisplayPokemon, pokemon: Pokemon, pokemonDetail: PokemonDetail, showParams: ShowParams) {
+		if (displayPokemon) {
+			Object.assign(this, displayPokemon);
+			return;
+		}
 		this.id = pokemon.id;
 		this.name = pokemon.name;
 		this.pokemonDetail = pokemonDetail;
@@ -92,6 +98,7 @@ class DisplayPokemon {
 		// 以一定的概率生成shiny的pokemon
 		// 概率让用户设置？
 		this.shiny = getTrueByProbability(showParams.shinyProb ? showParams.shinyProb / 100 : 0.01);
+		this.generateTime = Date.now();
 	}
 
 	toHtml(): string {
@@ -541,11 +548,10 @@ function generateNature(): string {
  * @param displayPokemons 
  * @returns 返回结果区的HTML根元素
  */
-function displayPokemon(displayPokemons: DisplayPokemon[]): HTMLElement {
-	const resultsContainer = document.getElementById("results");
+function displayPokemon(displayPokemons: DisplayPokemon[], resultsContainer: HTMLElement): HTMLElement {
 	if (!displayPokemons) {
 		resultsContainer.innerHTML = "An error occurred while generating Pok&eacute;mon.";
-	} else {
+	} else if (displayPokemons.length > 0) {
 		resultsContainer.innerHTML = toHtml(displayPokemons);
 	}
 	return resultsContainer;
