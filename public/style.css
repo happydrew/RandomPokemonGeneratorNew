@@ -582,7 +582,7 @@ button.text {
 	margin-top: 1em
 }
 
-#shiny-container button {
+#shiny-container button.text {
 	margin-bottom: 1em
 }
 
