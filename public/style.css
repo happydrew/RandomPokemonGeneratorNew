@@ -1117,6 +1117,34 @@ h2 {
 	z-index: 1001;
 }
 
+.modal .modal-title {
+	margin: auto;
+    margin-top: 0.5em;
+    display: flex;
+    justify-content: end;
+}
+
+.modal-title-text {
+	margin: 0 auto;
+}
+
+.not-show-shinyTip-btn {
+    margin-left: auto !important;
+    margin: 0 !important;
+    background: lightgrey;
+}
+
+.modal .modal-content {
+	margin: 1em auto;
+	text-align: center;
+}
+
+.modal .modal-buttons {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
 .modal .shiny-tip-highlight {
 	color: #ffa500;
 	font-size: 1.5em;
@@ -1136,7 +1164,7 @@ h2 {
 	border-radius: 0.9em;
 }
 
-.modal>button:nth-of-type(1) {
+.modal #confirmBtn {
 	color: white;
 	background-color: #1A73E8;
 }

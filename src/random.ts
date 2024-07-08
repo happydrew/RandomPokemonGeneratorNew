@@ -264,8 +264,10 @@ async function generateRandom() {
         // 需要从服务器拉去详情数据的shiny pokemons会在renderAndSavePokemons方法中被保存
         saveShinies(existIds.map(id => displayPokemonMap.get(id.toString())));
         const shinyCount = displayPokemons.filter(dp => dp.shiny).length;
-        if (shinyCount > 0) {
-            displayShinyTip(shinyCount);
+        if (options.showParams.shinyTip) {
+            if (shinyCount > 0) {
+                displayShinyTip(shinyCount);
+            }
         }
     } catch (error) {
         console.error(error);
@@ -283,10 +285,23 @@ function displayShinyTip(shinyCount: number) {
     const modal = document.createElement('div');
     modal.classList.add('modal');
     modal.innerHTML = `
-        <p><strong class="shiny-tip-highlight">Wow!</strong> You've encountered <strong class="shiny-tip-highlight">${shinyCount}</strong> shiny Pokémon${shinyCount > 1 ? "s" : ""}! Go take a look at it!</p>
-        <button id="confirmBtn">Sure, let's go!</button>
-        <button id="cancelBtn">Not now, thanks.</button>
+        <div class="modal-title">
+            <button id="not-show-btn" class="not-show-shinyTip-btn">Not show again</button>
+        </div>
+        <div class="modal-content">
+            <strong class="shiny-tip-highlight">Wow!</strong> You've encountered <strong class="shiny-tip-highlight">${shinyCount}</strong> shiny Pokémon${shinyCount > 1 ? "s" : ""}! Go take a look at it!
+        </div>
+        <div class="modal-buttons">
+            <button id="confirmBtn">Sure, let's go!</button>
+            <button id="cancelBtn">Not now, thanks.</button>
+        </div> 
     `;
+
+    // 点击不再显示按钮的事件
+    modal.querySelector('#not-show-btn').addEventListener('click', (event: Event) => {
+        (document.getElementById("shinyTip") as HTMLInputElement).checked = false;
+        removeModal();
+    });
 
     // 点击确定按钮的事件
     modal.querySelector('#confirmBtn').addEventListener('click', function (event: Event) {
@@ -627,6 +642,7 @@ function getOptionsFromForm(): Options {
     showParams.showAblilites = getCheckboxValueById("showAblilites");
     showParams.cries = getCheckboxValueById("cries");
     showParams.shinyProb = parseFloat((document.getElementById("shinyProb") as HTMLInputElement).value);
+    showParams.shinyTip = getCheckboxValueById("shinyTip")
 
     return {
         filterParams: filterParams,
