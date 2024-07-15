@@ -408,7 +408,7 @@ abbr {
 	text-align: center;
 	transition: all 0.1s ease-in-out;
 	width: 8rem;
-	height: 1.8rem;
+	height: 2rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -485,7 +485,7 @@ abbr {
 }
 
 #history {
-	margin: 1em 0 0;
+	margin: 0;
 	display: flex;
 	justify-content: space-between
 }
@@ -690,6 +690,18 @@ footer {
 	justify-content: center;
 	margin-top: 1.8em;
 	position: relative;
+}
+
+a.feedback-link {
+	display: block;
+	margin: 1em 0 0 0;
+    font-size: smaller;
+    text-decoration: none;
+    color: grey;
+}
+
+a.feedback-link:hover {
+    color: #3e3d3d;
 }
 
 /* 数字范围输入控件组 */
@@ -1119,9 +1131,9 @@ h2 {
 
 .modal .modal-title {
 	margin: auto;
-    margin-top: 0.5em;
-    display: flex;
-    justify-content: end;
+	margin-top: 0.5em;
+	display: flex;
+	justify-content: end;
 }
 
 .modal-title-text {
@@ -1129,9 +1141,9 @@ h2 {
 }
 
 .not-show-shinyTip-btn {
-    margin-left: auto !important;
-    margin: 0 !important;
-    background: lightgrey;
+	margin-left: auto !important;
+	margin: 0 !important;
+	background: lightgrey;
 }
 
 .modal .modal-content {
