@@ -50,11 +50,17 @@ html {
 	text-align: center
 }
 
-body {
+.generator-tool {
 	max-width: 63em;
 	margin: 0 auto;
 	padding: .5em
 }
+
+/* body {
+	max-width: 63em;
+	margin: 0 auto;
+	padding: .5em
+} */
 
 h1 {
 	font-weight: 700;
@@ -315,6 +321,7 @@ ol {
 
 p {
 	text-indent: 1em;
+	text-align: start;
 }
 
 /* ul,
@@ -465,8 +472,8 @@ abbr {
 }
 
 .sub-title {
-	margin: 0;
-	font-size: 0.5em;
+	margin: 0 0 .7em 0;
+	font-size: 1em;
 }
 
 .loading:after {
@@ -695,13 +702,13 @@ footer {
 a.feedback-link {
 	display: block;
 	margin: 1em 0 0 0;
-    font-size: smaller;
-    text-decoration: none;
-    color: grey;
+	font-size: smaller;
+	text-decoration: none;
+	color: grey;
 }
 
 a.feedback-link:hover {
-    color: #3e3d3d;
+	color: #3e3d3d;
 }
 
 /* 数字范围输入控件组 */
@@ -1186,6 +1193,91 @@ h2 {
 	color: black;
 }
 
+#features-container {
+	width: 100%;
+}
+
+#features-container h2 {
+	max-width: 40em;
+	font-size: 2em !important;
+	font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-weight: 700;
+	text-align: center;
+	cursor: default;
+	padding: 1em;
+	box-sizing: border-box;
+	margin: auto;
+	margin-top: 2em;
+}
+
+#why-choose-us {
+	padding: 0 1em;
+}
+
+#why-choose-us p {
+	font-size: 1.5em;
+}
+
+#features-container h3 {
+	margin-left: 1em;
+	text-align: start;
+	font-size: 1.5em;
+}
+
+.feature-card {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 2em;
+	box-sizing: border-box;
+	margin: 1em;
+}
+
+#features-container>.feature-card:nth-child(even) {
+	flex-direction: row-reverse;
+}
+
+.feature-background {
+	background-color: rgb(255, 250, 251);
+}
+
+.feature-block {
+	width: 50%;
+	margin: auto;
+}
+
+.feature-card img {
+	min-width: 20em;
+	opacity: 0.8;
+	object-fit: contain;
+	max-width: 45em;
+	margin: auto;
+}
+
+.feature-desc-title {
+	font-size: 2em;
+}
+
+.feature-desc-content {
+	font-size: 1.5em;
+	padding: 0 0.5em;
+}
+
+#features-container #conclusion {
+	font-size: 1.5em;
+	padding: 1em;
+}
+
+#features-container #conclusion img {
+	width: 5em;
+	margin: 0 0 -0.3em 0;
+}
+
+#footer p {
+	text-align: center;
+}
+
 @keyframes scroll_1 {
 	0% {
 		transform: translateY(0);
@@ -1199,6 +1291,17 @@ h2 {
 /* 页面内容 */
 
 /* 适配不同屏幕大小 */
+
+@media screen and (max-width:63em) {
+	.feature-block {
+		width: 100%;
+	}
+
+	.feature-card {
+		flex-direction: column !important;
+	}
+}
+
 @media screen and (max-width:27em) {
 	header {
 		font-size: .75em

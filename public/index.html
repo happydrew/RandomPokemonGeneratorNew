@@ -14,8 +14,9 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Random Pokemon Generator | Generate a Random Pokemon | Pokemon Randomizer</title>
-	<meta name="description" content="Discover the ultimate Random Pokemon Generator! Easily generate a random Pokemon with our versatile Pokemon randomizer. Customize your search with various filters and explore thousands of Pokemon, including different types, forms, and rarities etc. Perfect for creating random Pokemon teams and enhancing your Pokemon experience.">
+	<title>Random Pokemon Generator | Discover the Ultimate Pokemon Randomizer for fun!</title>
+	<meta name="description"
+		content="Discover the ultimate Random Pokemon Generator! Easily generate a random Pokemon with our versatile Pokemon randomizer. Customize your search with various filters and explore thousands of Pokemon, including different types, forms, and rarities etc. Perfect for creating random Pokemon teams and enhancing your Pokemon experience.">
 	<meta name="keywords"
 		content="random pokemon generator,pokemon randomizer,random pokemon type generator,random pokemon team generator,pokemon forms,pokemon rarities">
 	<meta name="author" content="DrewGrant">
@@ -36,811 +37,828 @@
 </head>
 
 <body>
-	<header>
-		<h1 class="pokemon-title">Random Pok&eacute;mon Generator</h1>
-	</header>
+	<div class="generator-tool">
+		<header>
+			<h1 class="pokemon-title">Random Pok&eacute;mon Generator</h1>
+		</header>
 
-	<div class="sub-title">
-		<span class="star">&starf;</span>
-		1400+ Pok&eacute;mons
-	</div>
-
-	<!-- <div class="container" id="options-panel"> -->
-	<div class="panel-top-bar-container">
-		<h2 class="panel-label" for="filter-options-form" title="Filter Options for Random Pok&eacute;mon Generator.">
-			FilterOptions
-		</h2>
-		<div class="panel-top-tool-bar-container">
-			<button type="reset" form="filter-options-form" id="filter-options-reset">Reset</button>
+		<div class="sub-title">
+			<span class="star">&starf;</span>
+			Discover the Ultimate Random Pokémon Generator!
 		</div>
-	</div>
-	<form action="?" method="get" id="filter-options-form" class="menu" onsubmit="generateRandom(); return false;">
-		<div id="main-options" class="options-panel">
-			<!-- regions -->
-			<div class="option-unit">
-				<label for="regions" class="dotted-underline click-tip"
-					data-click-tip="Choose the region where the Pokémon might appear.">Regions:</label>
-				<div class="dropdown" id="regions">
-					<button type="button" data-plural-name="Regions" data-allow-showing-two="true">All
-						Regions</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="regions" value="all" data-select-all="true" checked
-										form="filter-options-form">All Regions</label></li>
-							<li><label><input type="checkbox" name="regions" value="kanto" data-short-name="Kan"
-										checked><span title="Generation 1 (Red, Blue, and Yellow)">Kanto</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="johto" data-short-name="Joh"
-										checked><span
-										title="Generation 2 (Gold, Silver, and Crystal)">Johto</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="hoenn" data-short-name="Hoe"
-										checked><span
-										title="Generation 3 (Ruby, Sapphire, and Emerald)">Hoenn</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="sinnoh" data-short-name="Sin"
-										checked><span title="Generation 4 (Diamond, Pearl)">Sinnoh</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="sinnoh_pt" data-short-name="Sin_Pl"
-										checked><span title="Generation 4 (Platinum)">Sinnoh
-										(Platinum)</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="unova" data-short-name="Uno"
-										checked><span title="Generation 5 (Black and White)">Unova</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="unova_b2w2" data-short-name="Uno_B2"
-										checked> <span title="Generation 5 (Black 2 and White 2)">Unova
-										(B2W2)</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="kalos" data-short-name="Kal"
-										checked><span title="Generation 6 (X and Y)">Kalos</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="alola" data-short-name="Alo"
-										checked><span title="Generation 7 (Sun and Moon)">Alola</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="alola_usum" data-short-name="Alo_US"
-										checked><span title="Generation 7 (Ultra Sun and Ultra Moon)">Alola
-										(USUM)</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="galar" data-short-name="Gal"
-										checked><span title="Generation 8 (Sword and Shield)">Galar</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="hisui" data-short-name="His"
-										checked><span title="Generation 8 (Legends: Arceus)">Hisui</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="paldea" data-short-name="Pal"
-										checked><span title="Generation 9 (Scarlet and Violet)">Paldea</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="kitakami" data-short-name="Kit"
-										checked><span
-										title="Generation 9 (Scarlet and Violet: Teal Mask)">Kitakami</span></label>
-							</li>
-							<li><label><input type="checkbox" name="regions" value="blueberry" data-short-name="Blu_Ac"
-										checked><span title="Generation 9 (Scarlet and Violet: Indigo Disk)">
-										Blueberry Academy</span></label></li>
-							<li><label><input type="checkbox" name="regions" value="notSpecified" data-short-name="NoSp"
-										checked><span title="Generation is not specified in PokeApi data.">
-										Data Not Specified</span></label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<!-- types -->
-			<div class="option-unit">
-				<label for="types" class="dotted-underline click-tip"
-					data-click-tip="Select the type(s) that the Pokémon can have. It only needs to match one of the selected types."
-					data-label-tip="">Types:</label>
-				<div class="dropdown" id="types">
-					<button type="button" data-plural-name="Types" data-allow-showing-two="true">All Types</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="types" value="all" data-select-all="true"
-										checked>All
-									Types</label></li>
-							<li><label><input type="checkbox" name="types" value="bug" checked>Bug</label></li>
-							<li><label><input type="checkbox" name="types" value="dark" checked>Dark</label></li>
-							<li><label><input type="checkbox" name="types" value="dragon" checked>Dragon</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="electric" checked>Electric</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="fairy" checked>Fairy</label></li>
-							<li><label><input type="checkbox" name="types" value="fighting" checked>Fighting</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="fire" checked>Fire</label></li>
-							<li><label><input type="checkbox" name="types" value="flying" checked>Flying</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="ghost" checked>Ghost</label></li>
-							<li><label><input type="checkbox" name="types" value="grass" checked>Grass</label></li>
-							<li><label><input type="checkbox" name="types" value="ground" checked>Ground</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="ice" checked>Ice</label></li>
-							<li><label><input type="checkbox" name="types" value="normal" checked>normal</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="poison" checked>Poison</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="psychic" checked>Psychic</label>
-							</li>
-							<li><label><input type="checkbox" name="types" value="rock" checked>Rock</label></li>
-							<li><label><input type="checkbox" name="types" value="steel" checked>Steel</label></li>
-							<li><label><input type="checkbox" name="types" value="water" checked>Water</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!-- forms -->
-			<div class="option-unit">
-				<label for="forms" class="dotted-underline click-tip"
-					data-click-tip="Specify the form of the Pokémon, like Mega Evolutions or Gigantamax."
-					data-label-tip="">Forms:</label>
-				<div class="dropdown" id="forms">
-					<button type="button" data-plural-name="Forms" data-allow-showing-two="true">All Forms</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="forms" value="all" data-select-all="true"
-										checked>All Forms</label></li>
-							<li><label><input type="checkbox" name="forms" value="normal" data-short-name="norm"
-										checked><span
-										title="The standard, base forms of Pokémon as they appear in most of the games.">
-										Normal Forms</span></label></li>
-							<li><label><input type="checkbox" name="forms" value="mega" data-short-name="Mega" checked>
-									<span title="A temporary evolution that some Pokémon can undergo in battle.">
-										Mega Evolutions</span></label></li>
-							<li><label><input type="checkbox" name="forms" value="gmax" data-short-name="Gmax"
-										checked><span
-										title="A special transformation exclusive to Galar region Pokémon, making them gigantic and granting them unique Gigantamax moves.">
-										Gigantamax Forms</span></label></li>
-							<li><label><input type="checkbox" name="forms" value="other" data-short-name="Alte"
-										checked><span title="Other alternate forms, such as regional forms, etc.">
-										Alternate Forms</span></label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!-- rarity -->
-			<div class="option-unit">
-				<label for="rarity" class="dotted-underline click-tip"
-					data-click-tip="Set the rarity level for the Pokémon, such as Normal, Legendary, or Mythical."
-					data-label-tip="">Rarity:</label>
-				<div class="dropdown" id="rarity">
-					<button type="button" data-plural-name="Rarity" data-allow-showing-two="true">All Types</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="rarity" value="all" data-select-all="true"
-										checked>All
-									Rarity</label></li>
-							<li><label><input type="checkbox" name="rarity" value="normal" data-short-name="Norm"
-										checked>Normal</label></li>
-							<li><label><input type="checkbox" name="rarity" value="legendary" data-short-name="Legd"
-										checked>Legendary</label></li>
-							<li><label><input type="checkbox" name="rarity" value="mythical" data-short-name="Myth"
-										checked>Mythical</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!-- Height -->
-			<div class="option-unit">
-				<label for="height" class="dotted-underline click-tip"
-					data-click-tip="Set the height range in meters for the Pokémon."
-					data-label-tip="The height of the pok&eacute;mon in meters.">Height:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="height">
-						<input type="number" range-min name="height_min" id="height_min" min="0" max="100" value="0"
-							step="0.1">
-						<label>-</label>
-						<input type="number" range-max name="height_max" id="height_max" min="0" max="100" value="100"
-							step="0.1">
-					</div>
-				</div>
-			</div>
-
-			<!-- Weight -->
-			<div class="option-unit">
-				<label for="weight" class="dotted-underline click-tip"
-					data-click-tip="Set the weight range in kilograms for Pokémon."
-					data-label-tip="The weight of the pok&eacute;mon in kilograms.">Weight:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="weight">
-						<input type="number" range-min name="weight_min" id="weight_min" min="0" max="1000" value="0">
-						<label>-</label>
-						<input type="number" range-max name="weight_max" id="weight_max" min="0" max="1000"
-							value="1000">
-					</div>
-				</div>
+		<!-- <div class="container" id="options-panel"> -->
+		<div class="panel-top-bar-container">
+			<h2 class="panel-label" for="filter-options-form"
+				title="Filter Options for Random Pok&eacute;mon Generator.">
+				FilterOptions
+			</h2>
+			<div class="panel-top-tool-bar-container">
+				<button type="reset" form="filter-options-form" id="filter-options-reset">Reset</button>
 			</div>
 		</div>
-		<hr id="option-panel-hr" class="default-hidden option-panel-hr" />
-		<div id="more-options" class="default-hidden options-panel">
+		<form action="?" method="get" id="filter-options-form" class="menu" onsubmit="generateRandom(); return false;">
+			<div id="main-options" class="options-panel">
+				<!-- regions -->
+				<div class="option-unit">
+					<label for="regions" class="dotted-underline click-tip"
+						data-click-tip="Choose the region where the Pokémon might appear.">Regions:</label>
+					<div class="dropdown" id="regions">
+						<button type="button" data-plural-name="Regions" data-allow-showing-two="true">All
+							Regions</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="regions" value="all" data-select-all="true"
+											checked form="filter-options-form">All Regions</label></li>
+								<li><label><input type="checkbox" name="regions" value="kanto" data-short-name="Kan"
+											checked><span
+											title="Generation 1 (Red, Blue, and Yellow)">Kanto</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="johto" data-short-name="Joh"
+											checked><span
+											title="Generation 2 (Gold, Silver, and Crystal)">Johto</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="hoenn" data-short-name="Hoe"
+											checked><span
+											title="Generation 3 (Ruby, Sapphire, and Emerald)">Hoenn</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="sinnoh" data-short-name="Sin"
+											checked><span title="Generation 4 (Diamond, Pearl)">Sinnoh</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="sinnoh_pt"
+											data-short-name="Sin_Pl" checked><span
+											title="Generation 4 (Platinum)">Sinnoh
+											(Platinum)</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="unova" data-short-name="Uno"
+											checked><span title="Generation 5 (Black and White)">Unova</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="unova_b2w2"
+											data-short-name="Uno_B2" checked> <span
+											title="Generation 5 (Black 2 and White 2)">Unova
+											(B2W2)</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="kalos" data-short-name="Kal"
+											checked><span title="Generation 6 (X and Y)">Kalos</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="alola" data-short-name="Alo"
+											checked><span title="Generation 7 (Sun and Moon)">Alola</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="alola_usum"
+											data-short-name="Alo_US" checked><span
+											title="Generation 7 (Ultra Sun and Ultra Moon)">Alola
+											(USUM)</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="galar" data-short-name="Gal"
+											checked><span title="Generation 8 (Sword and Shield)">Galar</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="hisui" data-short-name="His"
+											checked><span title="Generation 8 (Legends: Arceus)">Hisui</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="paldea" data-short-name="Pal"
+											checked><span
+											title="Generation 9 (Scarlet and Violet)">Paldea</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="kitakami" data-short-name="Kit"
+											checked><span
+											title="Generation 9 (Scarlet and Violet: Teal Mask)">Kitakami</span></label>
+								</li>
+								<li><label><input type="checkbox" name="regions" value="blueberry"
+											data-short-name="Blu_Ac" checked><span
+											title="Generation 9 (Scarlet and Violet: Indigo Disk)">
+											Blueberry Academy</span></label></li>
+								<li><label><input type="checkbox" name="regions" value="notSpecified"
+											data-short-name="NoSp" checked><span
+											title="Generation is not specified in PokeApi data.">
+											Data Not Specified</span></label></li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-			<!-- generation -->
-			<div class="option-unit">
-				<label for="generations" class="dotted-underline click-tip"
-					data-click-tip="Pick the game generations the Pokémon was introduced in.."
-					data-label-tip="">Generation:</label>
-				<div class="dropdown" id="generations">
-					<button type="button" data-plural-name="Generations" data-allow-showing-two="true">All
-						Generations</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="generations" value="all" data-select-all="true"
-										checked>All Generations</label></li>
-							<li><label><input type="checkbox" name="generations" value="1" data-short-name="Gen1"
-										checked><span title="Generation 1 (Red, Blue, and Yellow)">
-										Generation-i</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="2" data-short-name="Gen2"
-										checked><span title="Generation 2 (Gold, Silver, and Crystal)">
-										Generation-ii</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="3" data-short-name="Gen3"
-										checked><span title="Generation 3 (Ruby, Sapphire, and Emerald)">
-										Generation-iii</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="4" data-short-name="Gen4"
-										checked><span title="Generation 4 (Diamond, Pearl, Platinum)">
-										Generation-iv</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="5" data-short-name="Gen5"
-										checked><span title="Generation 5 (Black and White, Black 2 and White 2)">
-										Generation-v</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="6" data-short-name="Gen6"
-										checked><span title="Generation 6 (X and Y)">
-										Generation-vi</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="7" data-short-name="Gen7"
-										checked><span title="Generation 7 (Sun and Moon, Ultra Sun and Ultra Moon)">
-										Generation-vii</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="8" data-short-name="Gen8"
-										checked><span title="Generation 8 (Sword and Shield, Legends: Arceus)">
-										Generation-viii</span></label></li>
-							<li><label><input type="checkbox" name="generations" value="9" data-short-name="Gen9"
-										checked><span
-										title="Generation 9 (Scarlet and Violet, Scarlet and Violet: Teal Mask, Scarlet and Violet: Indigo Disk)">
-										Generation-ix</span></label></li>
-						</ul>
+				<!-- types -->
+				<div class="option-unit">
+					<label for="types" class="dotted-underline click-tip"
+						data-click-tip="Select the type(s) that the Pokémon can have. It only needs to match one of the selected types."
+						data-label-tip="">Types:</label>
+					<div class="dropdown" id="types">
+						<button type="button" data-plural-name="Types" data-allow-showing-two="true">All Types</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="types" value="all" data-select-all="true"
+											checked>All
+										Types</label></li>
+								<li><label><input type="checkbox" name="types" value="bug" checked>Bug</label></li>
+								<li><label><input type="checkbox" name="types" value="dark" checked>Dark</label></li>
+								<li><label><input type="checkbox" name="types" value="dragon" checked>Dragon</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="electric" checked>Electric</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="fairy" checked>Fairy</label></li>
+								<li><label><input type="checkbox" name="types" value="fighting" checked>Fighting</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="fire" checked>Fire</label></li>
+								<li><label><input type="checkbox" name="types" value="flying" checked>Flying</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="ghost" checked>Ghost</label></li>
+								<li><label><input type="checkbox" name="types" value="grass" checked>Grass</label></li>
+								<li><label><input type="checkbox" name="types" value="ground" checked>Ground</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="ice" checked>Ice</label></li>
+								<li><label><input type="checkbox" name="types" value="normal" checked>normal</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="poison" checked>Poison</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="psychic" checked>Psychic</label>
+								</li>
+								<li><label><input type="checkbox" name="types" value="rock" checked>Rock</label></li>
+								<li><label><input type="checkbox" name="types" value="steel" checked>Steel</label></li>
+								<li><label><input type="checkbox" name="types" value="water" checked>Water</label></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- forms -->
+				<div class="option-unit">
+					<label for="forms" class="dotted-underline click-tip"
+						data-click-tip="Specify the form of the Pokémon, like Mega Evolutions or Gigantamax."
+						data-label-tip="">Forms:</label>
+					<div class="dropdown" id="forms">
+						<button type="button" data-plural-name="Forms" data-allow-showing-two="true">All Forms</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="forms" value="all" data-select-all="true"
+											checked>All Forms</label></li>
+								<li><label><input type="checkbox" name="forms" value="normal" data-short-name="norm"
+											checked><span
+											title="The standard, base forms of Pokémon as they appear in most of the games.">
+											Normal Forms</span></label></li>
+								<li><label><input type="checkbox" name="forms" value="mega" data-short-name="Mega"
+											checked>
+										<span title="A temporary evolution that some Pokémon can undergo in battle.">
+											Mega Evolutions</span></label></li>
+								<li><label><input type="checkbox" name="forms" value="gmax" data-short-name="Gmax"
+											checked><span
+											title="A special transformation exclusive to Galar region Pokémon, making them gigantic and granting them unique Gigantamax moves.">
+											Gigantamax Forms</span></label></li>
+								<li><label><input type="checkbox" name="forms" value="other" data-short-name="Alte"
+											checked><span title="Other alternate forms, such as regional forms, etc.">
+											Alternate Forms</span></label></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- rarity -->
+				<div class="option-unit">
+					<label for="rarity" class="dotted-underline click-tip"
+						data-click-tip="Set the rarity level for the Pokémon, such as Normal, Legendary, or Mythical."
+						data-label-tip="">Rarity:</label>
+					<div class="dropdown" id="rarity">
+						<button type="button" data-plural-name="Rarity" data-allow-showing-two="true">All Types</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="rarity" value="all" data-select-all="true"
+											checked>All
+										Rarity</label></li>
+								<li><label><input type="checkbox" name="rarity" value="normal" data-short-name="Norm"
+											checked>Normal</label></li>
+								<li><label><input type="checkbox" name="rarity" value="legendary" data-short-name="Legd"
+											checked>Legendary</label></li>
+								<li><label><input type="checkbox" name="rarity" value="mythical" data-short-name="Myth"
+											checked>Mythical</label></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Height -->
+				<div class="option-unit">
+					<label for="height" class="dotted-underline click-tip"
+						data-click-tip="Set the height range in meters for the Pokémon."
+						data-label-tip="The height of the pok&eacute;mon in meters.">Height:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="height">
+							<input type="number" range-min name="height_min" id="height_min" min="0" max="100" value="0"
+								step="0.1">
+							<label>-</label>
+							<input type="number" range-max name="height_max" id="height_max" min="0" max="100"
+								value="100" step="0.1">
+						</div>
+					</div>
+				</div>
+
+				<!-- Weight -->
+				<div class="option-unit">
+					<label for="weight" class="dotted-underline click-tip"
+						data-click-tip="Set the weight range in kilograms for Pokémon."
+						data-label-tip="The weight of the pok&eacute;mon in kilograms.">Weight:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="weight">
+							<input type="number" range-min name="weight_min" id="weight_min" min="0" max="1000"
+								value="0">
+							<label>-</label>
+							<input type="number" range-max name="weight_max" id="weight_max" min="0" max="1000"
+								value="1000">
+						</div>
 					</div>
 				</div>
 			</div>
+			<hr id="option-panel-hr" class="default-hidden option-panel-hr" />
+			<div id="more-options" class="default-hidden options-panel">
 
-			<!-- colors -->
-			<div class="option-unit">
-				<label for="colors" class="dotted-underline click-tip"
-					data-click-tip="Choose the colors of the Pokémon." data-label-tip="">Colors:</label>
-				<div class="dropdown" id="colors">
-					<button type="button" data-plural-name="Colors" data-allow-showing-two="true">All Types</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="colors" value="all" data-select-all="true"
-										checked>All
-									Colors</label></li>
-							<li><label><input type="checkbox" name="colors" value="black" checked>Black</label></li>
-							<li><label><input type="checkbox" name="colors" value="blue" checked>Blue</label></li>
-							<li><label><input type="checkbox" name="colors" value="brown" checked>Brown</label></li>
-							<li><label><input type="checkbox" name="colors" value="gray" checked>Gray</label></li>
-							<li><label><input type="checkbox" name="colors" value="green" checked>Green</label></li>
-							<li><label><input type="checkbox" name="colors" value="pink" checked>Pink</label></li>
-							<li><label><input type="checkbox" name="colors" value="purple" checked>Purple</label>
-							</li>
-							<li><label><input type="checkbox" name="colors" value="red" checked>Red</label></li>
-							<li><label><input type="checkbox" name="colors" value="white" checked>White</label></li>
-							<li><label><input type="checkbox" name="colors" value="yellow" checked>Yellow</label>
-							</li>
-						</ul>
+				<!-- generation -->
+				<div class="option-unit">
+					<label for="generations" class="dotted-underline click-tip"
+						data-click-tip="Pick the game generations the Pokémon was introduced in.."
+						data-label-tip="">Generation:</label>
+					<div class="dropdown" id="generations">
+						<button type="button" data-plural-name="Generations" data-allow-showing-two="true">All
+							Generations</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="generations" value="all" data-select-all="true"
+											checked>All Generations</label></li>
+								<li><label><input type="checkbox" name="generations" value="1" data-short-name="Gen1"
+											checked><span title="Generation 1 (Red, Blue, and Yellow)">
+											Generation-i</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="2" data-short-name="Gen2"
+											checked><span title="Generation 2 (Gold, Silver, and Crystal)">
+											Generation-ii</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="3" data-short-name="Gen3"
+											checked><span title="Generation 3 (Ruby, Sapphire, and Emerald)">
+											Generation-iii</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="4" data-short-name="Gen4"
+											checked><span title="Generation 4 (Diamond, Pearl, Platinum)">
+											Generation-iv</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="5" data-short-name="Gen5"
+											checked><span title="Generation 5 (Black and White, Black 2 and White 2)">
+											Generation-v</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="6" data-short-name="Gen6"
+											checked><span title="Generation 6 (X and Y)">
+											Generation-vi</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="7" data-short-name="Gen7"
+											checked><span title="Generation 7 (Sun and Moon, Ultra Sun and Ultra Moon)">
+											Generation-vii</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="8" data-short-name="Gen8"
+											checked><span title="Generation 8 (Sword and Shield, Legends: Arceus)">
+											Generation-viii</span></label></li>
+								<li><label><input type="checkbox" name="generations" value="9" data-short-name="Gen9"
+											checked><span
+											title="Generation 9 (Scarlet and Violet, Scarlet and Violet: Teal Mask, Scarlet and Violet: Indigo Disk)">
+											Generation-ix</span></label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- envolves -->
-			<div class="option-unit">
-				<label for="envolves" class="dotted-underline click-tip"
-					data-click-tip="Set the evolution stage of the Pokémon." data-label-tip="">Envolves:</label>
-				<div class="dropdown" id="envolves">
-					<button type="button" data-plural-name="Envolves" data-allow-showing-two="true">All
-						Types</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="envolves" value="all" data-select-all="true"
-										checked>All
-									Envolves</label></li>
-							<li><label><input type="checkbox" name="envolves" value="0" data-short-name="Zero"
-										checked>Unevolved</label></li>
-							<li><label><input type="checkbox" name="envolves" value="1" data-short-name="Once"
-										checked>Envolved
-									Once</label></li>
-							<li><label><input type="checkbox" name="envolves" value="2" data-short-name="Twice"
-										checked>Envolved
-									Twice</label></li>
-						</ul>
+				<!-- colors -->
+				<div class="option-unit">
+					<label for="colors" class="dotted-underline click-tip"
+						data-click-tip="Choose the colors of the Pokémon." data-label-tip="">Colors:</label>
+					<div class="dropdown" id="colors">
+						<button type="button" data-plural-name="Colors" data-allow-showing-two="true">All Types</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="colors" value="all" data-select-all="true"
+											checked>All
+										Colors</label></li>
+								<li><label><input type="checkbox" name="colors" value="black" checked>Black</label></li>
+								<li><label><input type="checkbox" name="colors" value="blue" checked>Blue</label></li>
+								<li><label><input type="checkbox" name="colors" value="brown" checked>Brown</label></li>
+								<li><label><input type="checkbox" name="colors" value="gray" checked>Gray</label></li>
+								<li><label><input type="checkbox" name="colors" value="green" checked>Green</label></li>
+								<li><label><input type="checkbox" name="colors" value="pink" checked>Pink</label></li>
+								<li><label><input type="checkbox" name="colors" value="purple" checked>Purple</label>
+								</li>
+								<li><label><input type="checkbox" name="colors" value="red" checked>Red</label></li>
+								<li><label><input type="checkbox" name="colors" value="white" checked>White</label></li>
+								<li><label><input type="checkbox" name="colors" value="yellow" checked>Yellow</label>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- baby -->
-			<div class="option-unit">
-				<label for="baby" class="dotted-underline click-tip"
-					data-click-tip="Specify whether the generated Pokémon is a baby Pokémon."
-					data-label-tip="">Baby:</label>
-				<div class="dropdown" id="baby">
-					<button type="button" data-plural-name="" data-allow-showing-two="false">
-						All BabyOrNot</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="baby" value="all" data-select-all="true" checked>
-									All BabyOrNot</label></li>
-							<li><label><input type="checkbox" name="baby" value="yes" data-short-name="Yes"
-										checked>Baby</label>
-							</li>
-							<li><label><input type="checkbox" name="baby" value="no" data-short-name="No" checked>
-									Not Baby</label></li>
-						</ul>
+				<!-- envolves -->
+				<div class="option-unit">
+					<label for="envolves" class="dotted-underline click-tip"
+						data-click-tip="Set the evolution stage of the Pokémon." data-label-tip="">Envolves:</label>
+					<div class="dropdown" id="envolves">
+						<button type="button" data-plural-name="Envolves" data-allow-showing-two="true">All
+							Types</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="envolves" value="all" data-select-all="true"
+											checked>All
+										Envolves</label></li>
+								<li><label><input type="checkbox" name="envolves" value="0" data-short-name="Zero"
+											checked>Unevolved</label></li>
+								<li><label><input type="checkbox" name="envolves" value="1" data-short-name="Once"
+											checked>Envolved
+										Once</label></li>
+								<li><label><input type="checkbox" name="envolves" value="2" data-short-name="Twice"
+											checked>Envolved
+										Twice</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- growthRate -->
-			<div class="option-unit">
-				<label for="growthRate" class="dotted-underline click-tip"
-					data-click-tip="Select the growth rate category for the Pokémon."
-					data-label-tip="">GrowRate:</label>
-				<div class="dropdown" id="growthRate">
-					<button type="button" data-plural-name="Growth" data-allow-showing-two="true">All
-						Growth</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="growthRate" value="all" data-select-all="true"
-										checked>All GrowthRate</label></li>
-							<li><label><input type="checkbox" name="growthRate" value="slow" checked>Slow</label>
-							</li>
-							<li><label><input type="checkbox" name="growthRate" value="medium" data-short-name="Med"
-										checked>Medium</label></li>
-							<li><label><input type="checkbox" name="growthRate" value="fast" checked>Fast</label>
-							</li>
-							<li><label><input type="checkbox" name="growthRate" value="medium-slow"
-										data-short-name="Med_S" checked>Medium Slow</label></li>
-							<li><label><input type="checkbox" name="growthRate" value="slow-then-very-fast"
-										data-short-name="Slow_F" checked>Slow Then Very Fast</label></li>
-							<li><label><input type="checkbox" name="growthRate" value="fast-then-very-slow"
-										data-short-name="Fast_S" checked>Fast Then Very Slow</label></li>
-						</ul>
+				<!-- baby -->
+				<div class="option-unit">
+					<label for="baby" class="dotted-underline click-tip"
+						data-click-tip="Specify whether the generated Pokémon is a baby Pokémon."
+						data-label-tip="">Baby:</label>
+					<div class="dropdown" id="baby">
+						<button type="button" data-plural-name="" data-allow-showing-two="false">
+							All BabyOrNot</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="baby" value="all" data-select-all="true"
+											checked>
+										All BabyOrNot</label></li>
+								<li><label><input type="checkbox" name="baby" value="yes" data-short-name="Yes"
+											checked>Baby</label>
+								</li>
+								<li><label><input type="checkbox" name="baby" value="no" data-short-name="No" checked>
+										Not Baby</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- habitats -->
-			<div class="option-unit">
-				<label for="habitats" class="dotted-underline click-tip"
-					data-click-tip="Choose the habitats of generated Pokémons." data-label-tip="">Habitats:</label>
-				<div class="dropdown" id="habitats">
-					<button type="button" data-plural-name="Habitats" data-allow-showing-two="true">
-						All Habitats</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="habitats" value="all" data-select-all="true"
-										checked>All Habitats</label></li>
-							<li><label><input type="checkbox" name="habitats" value="cave" data-short-name="Cave"
-										checked>Cave</label></li>
-							<li><label><input type="checkbox" name="habitats" value="forest" data-short-name="Fore"
-										checked>Forest</label></li>
-							<li><label><input type="checkbox" name="habitats" value="grassland" data-short-name="Gras"
-										checked>Grassland</label></li>
-							<li><label><input type="checkbox" name="habitats" value="mountain" data-short-name="Moun"
-										checked>Mountain</label></li>
-							<li><label><input type="checkbox" name="habitats" value="rare" data-short-name="Rare"
-										checked>Rare</label></li>
-							<li><label><input type="checkbox" name="habitats" value="rough-terrain"
-										data-short-name="RougT" checked>Rough Terrain</label></li>
-							<li><label><input type="checkbox" name="habitats" value="sea" data-short-name="Sea"
-										checked>Sea</label></li>
-							<li><label><input type="checkbox" name="habitats" value="urban" data-short-name="Urba"
-										checked>Urban</label></li>
-							<li><label><input type="checkbox" name="habitats" value="waters-edge"
-										data-short-name="WateE" checked>Waters Edge</label></li>
-							<li><label><input type="checkbox" name="habitats" value="notSpecified"
-										data-short-name="NoSp" checked>Data not specified</label></li>
-						</ul>
+				<!-- growthRate -->
+				<div class="option-unit">
+					<label for="growthRate" class="dotted-underline click-tip"
+						data-click-tip="Select the growth rate category for the Pokémon."
+						data-label-tip="">GrowRate:</label>
+					<div class="dropdown" id="growthRate">
+						<button type="button" data-plural-name="Growth" data-allow-showing-two="true">All
+							Growth</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="growthRate" value="all" data-select-all="true"
+											checked>All GrowthRate</label></li>
+								<li><label><input type="checkbox" name="growthRate" value="slow" checked>Slow</label>
+								</li>
+								<li><label><input type="checkbox" name="growthRate" value="medium" data-short-name="Med"
+											checked>Medium</label></li>
+								<li><label><input type="checkbox" name="growthRate" value="fast" checked>Fast</label>
+								</li>
+								<li><label><input type="checkbox" name="growthRate" value="medium-slow"
+											data-short-name="Med_S" checked>Medium Slow</label></li>
+								<li><label><input type="checkbox" name="growthRate" value="slow-then-very-fast"
+											data-short-name="Slow_F" checked>Slow Then Very Fast</label></li>
+								<li><label><input type="checkbox" name="growthRate" value="fast-then-very-slow"
+											data-short-name="Fast_S" checked>Fast Then Very Slow</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- eggGroup -->
-			<div class="option-unit">
-				<label for="eggGroup" class="dotted-underline click-tip"
-					data-click-tip="Specify the egg group for breeding compatibility."
-					data-label-tip="">EggGroup:</label>
-				<div class="dropdown" id="eggGroups">
-					<button type="button" data-plural-name="EggGroup" data-allow-showing-two="true">
-						All EggGroups</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="eggGroups" value="all" data-select-all="true"
-										checked>All EggGroups</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="monster" data-short-name="Mons"
-										checked>Monster</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="water1" data-short-name="Wat1"
-										checked>Water1</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="water2" data-short-name="Wat2"
-										checked>Water2</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="water3" data-short-name="Wat3"
-										checked>Water3</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="bug" data-short-name="Bug"
-										checked>Bug</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="flying" data-short-name="Flyi"
-										checked>Flying</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="ground" data-short-name="Grou"
-										checked>Ground</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="fairy" data-short-name="Fair"
-										checked>Fairy</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="plant" data-short-name="Plan"
-										checked>Plant</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="humanshape" data-short-name="Huma"
-										checked>Humanshape</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="mineral" data-short-name="Mine"
-										checked>Mineral</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="indeterminate"
-										data-short-name="Inde" checked>Indeterminate</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="ditto" data-short-name="Ditt"
-										checked>Ditto</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="dragon" data-short-name="Drag"
-										checked>Dragon</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="no-eggs" data-short-name="No-E"
-										checked>No-Eggs</label></li>
-							<li><label><input type="checkbox" name="eggGroups" value="notSpecified"
-										data-short-name="NoSp" checked>Data not specified</label></li>
-						</ul>
+				<!-- habitats -->
+				<div class="option-unit">
+					<label for="habitats" class="dotted-underline click-tip"
+						data-click-tip="Choose the habitats of generated Pokémons." data-label-tip="">Habitats:</label>
+					<div class="dropdown" id="habitats">
+						<button type="button" data-plural-name="Habitats" data-allow-showing-two="true">
+							All Habitats</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="habitats" value="all" data-select-all="true"
+											checked>All Habitats</label></li>
+								<li><label><input type="checkbox" name="habitats" value="cave" data-short-name="Cave"
+											checked>Cave</label></li>
+								<li><label><input type="checkbox" name="habitats" value="forest" data-short-name="Fore"
+											checked>Forest</label></li>
+								<li><label><input type="checkbox" name="habitats" value="grassland"
+											data-short-name="Gras" checked>Grassland</label></li>
+								<li><label><input type="checkbox" name="habitats" value="mountain"
+											data-short-name="Moun" checked>Mountain</label></li>
+								<li><label><input type="checkbox" name="habitats" value="rare" data-short-name="Rare"
+											checked>Rare</label></li>
+								<li><label><input type="checkbox" name="habitats" value="rough-terrain"
+											data-short-name="RougT" checked>Rough Terrain</label></li>
+								<li><label><input type="checkbox" name="habitats" value="sea" data-short-name="Sea"
+											checked>Sea</label></li>
+								<li><label><input type="checkbox" name="habitats" value="urban" data-short-name="Urba"
+											checked>Urban</label></li>
+								<li><label><input type="checkbox" name="habitats" value="waters-edge"
+											data-short-name="WateE" checked>Waters Edge</label></li>
+								<li><label><input type="checkbox" name="habitats" value="notSpecified"
+											data-short-name="NoSp" checked>Data not specified</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- genderRate -->
-			<div class="option-unit">
-				<label for="genderRate" class="dotted-underline click-tip"
-					data-click-tip="Specify the gender rate of generated Pokémons." data-label-tip="">GendRate:</label>
-				<div class="dropdown" id="genderRate">
-					<button type="button" data-plural-name="GenderRate" data-allow-showing-two="true">
-						All GenderRate</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="genderRate" value="all" data-select-all="true"
-										checked>All GenderRate</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="0" data-short-name="100%M"
-										checked>100%Male 0%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="1" data-short-name="87.5%M"
-										checked>87.5%Male 12.5%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="2" data-short-name="75%M"
-										checked>75%Male 25%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="4" data-short-name="50%M"
-										checked>50%Male 50%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="6" data-short-name="25%M"
-										checked>25%Male 75%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="7" data-short-name="12.5%M"
-										checked>12.5%Male 87.5%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="8" data-short-name="0%M"
-										checked>0%Male 100%Female</label></li>
-							<li><label><input type="checkbox" name="genderRate" value="-1" data-short-name="Genl"
-										checked>Genderless</label></li>
-						</ul>
+				<!-- eggGroup -->
+				<div class="option-unit">
+					<label for="eggGroup" class="dotted-underline click-tip"
+						data-click-tip="Specify the egg group for breeding compatibility."
+						data-label-tip="">EggGroup:</label>
+					<div class="dropdown" id="eggGroups">
+						<button type="button" data-plural-name="EggGroup" data-allow-showing-two="true">
+							All EggGroups</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="eggGroups" value="all" data-select-all="true"
+											checked>All EggGroups</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="monster"
+											data-short-name="Mons" checked>Monster</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="water1" data-short-name="Wat1"
+											checked>Water1</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="water2" data-short-name="Wat2"
+											checked>Water2</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="water3" data-short-name="Wat3"
+											checked>Water3</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="bug" data-short-name="Bug"
+											checked>Bug</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="flying" data-short-name="Flyi"
+											checked>Flying</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="ground" data-short-name="Grou"
+											checked>Ground</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="fairy" data-short-name="Fair"
+											checked>Fairy</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="plant" data-short-name="Plan"
+											checked>Plant</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="humanshape"
+											data-short-name="Huma" checked>Humanshape</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="mineral"
+											data-short-name="Mine" checked>Mineral</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="indeterminate"
+											data-short-name="Inde" checked>Indeterminate</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="ditto" data-short-name="Ditt"
+											checked>Ditto</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="dragon" data-short-name="Drag"
+											checked>Dragon</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="no-eggs"
+											data-short-name="No-E" checked>No-Eggs</label></li>
+								<li><label><input type="checkbox" name="eggGroups" value="notSpecified"
+											data-short-name="NoSp" checked>Data not specified</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- shape -->
-			<div class="option-unit">
-				<label for="shape" class="dotted-underline click-tip"
-					data-click-tip="Pick the body shape category of the Pokémon." data-label-tip="">Shape:</label>
-				<div class="dropdown" id="shape">
-					<button type="button" data-plural-name="Shapes" data-allow-showing-two="true">
-						All Shapes</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="shape" value="all" data-select-all="true"
-										checked>All Shapes</label></li>
-							<li><label><input type="checkbox" name="shape" value="ball" data-short-name="Ball"
-										checked>Ball</label></li>
-							<li><label><input type="checkbox" name="shape" value="squiggle" data-short-name="Squi"
-										checked>Squiggle</label></li>
-							<li><label><input type="checkbox" name="shape" value="fish" data-short-name="Fish"
-										checked>Fish</label></li>
-							<li><label><input type="checkbox" name="shape" value="arms" data-short-name="Arms"
-										checked>Arms</label></li>
-							<li><label><input type="checkbox" name="shape" value="blob" data-short-name="Blob"
-										checked>Blob</label></li>
-							<li><label><input type="checkbox" name="shape" value="upright" data-short-name="Upri"
-										checked>Upright</label></li>
-							<li><label><input type="checkbox" name="shape" value="legs" data-short-name="Legs"
-										checked>Legs</label></li>
-							<li><label><input type="checkbox" name="shape" value="quadruped" data-short-name="Quad"
-										checked>Quadruped</label></li>
-							<li><label><input type="checkbox" name="shape" value="wings" data-short-name="Wing"
-										checked>Wings</label></li>
-							<li><label><input type="checkbox" name="shape" value="tentacles" data-short-name="Tent"
-										checked>Tentacles</label></li>
-							<li><label><input type="checkbox" name="shape" value="heads" data-short-name="Head"
-										checked>Heads</label></li>
-							<li><label><input type="checkbox" name="shape" value="humanoid" data-short-name="Huma"
-										checked>Humanoid</label></li>
-							<li><label><input type="checkbox" name="shape" value="bug-wings" data-short-name="BugW"
-										checked>Bug Wings</label></li>
-							<li><label><input type="checkbox" name="shape" value="armor" data-short-name="Armo"
-										checked>Armor</label></li>
-							<li><label><input type="checkbox" name="shape" value="notSpecified" data-short-name="NoSp"
-										checked>Data not specified</label></li>
-						</ul>
+				<!-- genderRate -->
+				<div class="option-unit">
+					<label for="genderRate" class="dotted-underline click-tip"
+						data-click-tip="Specify the gender rate of generated Pokémons."
+						data-label-tip="">GendRate:</label>
+					<div class="dropdown" id="genderRate">
+						<button type="button" data-plural-name="GenderRate" data-allow-showing-two="true">
+							All GenderRate</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="genderRate" value="all" data-select-all="true"
+											checked>All GenderRate</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="0" data-short-name="100%M"
+											checked>100%Male 0%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="1" data-short-name="87.5%M"
+											checked>87.5%Male 12.5%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="2" data-short-name="75%M"
+											checked>75%Male 25%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="4" data-short-name="50%M"
+											checked>50%Male 50%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="6" data-short-name="25%M"
+											checked>25%Male 75%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="7" data-short-name="12.5%M"
+											checked>12.5%Male 87.5%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="8" data-short-name="0%M"
+											checked>0%Male 100%Female</label></li>
+								<li><label><input type="checkbox" name="genderRate" value="-1" data-short-name="Genl"
+											checked>Genderless</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- DefaultForm -->
-			<!-- DefaultForm is The standard or original form of a Pokémon, representing its most common or base form. -->
-			<div class="option-unit">
-				<label for="defaultForm" class="dotted-underline click-tip"
-					data-click-tip="Whether the generated Pokémons are in their default forms.">DefaultForm:</label>
-				<div class="dropdown" id="defaultForm">
-					<button type="button" data-plural-name="" data-allow-showing-two="false">
-						All DefOrNot</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="defaultForm" value="all" data-select-all="true"
-										checked>All DefaultFormOrNot</label></li>
-							<li><label><input type="checkbox" name="defaultForm" value="yes" data-short-name="Yes"
-										checked>DefaultForm</label></li>
-							<li><label><input type="checkbox" name="defaultForm" value="no" data-short-name="No"
-										checked>Not DefaultForm</label></li>
-						</ul>
+				<!-- shape -->
+				<div class="option-unit">
+					<label for="shape" class="dotted-underline click-tip"
+						data-click-tip="Pick the body shape category of the Pokémon." data-label-tip="">Shape:</label>
+					<div class="dropdown" id="shape">
+						<button type="button" data-plural-name="Shapes" data-allow-showing-two="true">
+							All Shapes</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="shape" value="all" data-select-all="true"
+											checked>All Shapes</label></li>
+								<li><label><input type="checkbox" name="shape" value="ball" data-short-name="Ball"
+											checked>Ball</label></li>
+								<li><label><input type="checkbox" name="shape" value="squiggle" data-short-name="Squi"
+											checked>Squiggle</label></li>
+								<li><label><input type="checkbox" name="shape" value="fish" data-short-name="Fish"
+											checked>Fish</label></li>
+								<li><label><input type="checkbox" name="shape" value="arms" data-short-name="Arms"
+											checked>Arms</label></li>
+								<li><label><input type="checkbox" name="shape" value="blob" data-short-name="Blob"
+											checked>Blob</label></li>
+								<li><label><input type="checkbox" name="shape" value="upright" data-short-name="Upri"
+											checked>Upright</label></li>
+								<li><label><input type="checkbox" name="shape" value="legs" data-short-name="Legs"
+											checked>Legs</label></li>
+								<li><label><input type="checkbox" name="shape" value="quadruped" data-short-name="Quad"
+											checked>Quadruped</label></li>
+								<li><label><input type="checkbox" name="shape" value="wings" data-short-name="Wing"
+											checked>Wings</label></li>
+								<li><label><input type="checkbox" name="shape" value="tentacles" data-short-name="Tent"
+											checked>Tentacles</label></li>
+								<li><label><input type="checkbox" name="shape" value="heads" data-short-name="Head"
+											checked>Heads</label></li>
+								<li><label><input type="checkbox" name="shape" value="humanoid" data-short-name="Huma"
+											checked>Humanoid</label></li>
+								<li><label><input type="checkbox" name="shape" value="bug-wings" data-short-name="BugW"
+											checked>Bug Wings</label></li>
+								<li><label><input type="checkbox" name="shape" value="armor" data-short-name="Armo"
+											checked>Armor</label></li>
+								<li><label><input type="checkbox" name="shape" value="notSpecified"
+											data-short-name="NoSp" checked>Data not specified</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- FormSwitchable -->
-			<!-- Whether or Not this Pokémon has multiple forms and can switch between them. -->
-			<div class="option-unit">
-				<label for="formSwitchable" class="dotted-underline click-tip"
-					data-click-tip="Whether or Not the Pokémon has multiple forms and can switch between them.">FormSwitch:</label>
-				<div class="dropdown" id="formSwitchable">
-					<button type="button" data-plural-name="" data-allow-showing-two="false">
-						All SwitchableOrNot</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="formSwitchable" value="all" data-select-all="true"
-										checked>All SwitchableOrNot</label></li>
-							<li><label><input type="checkbox" name="formSwitchable" value="yes" data-short-name="Yes"
-										checked>FormSwitchable</label></li>
-							<li><label><input type="checkbox" name="formSwitchable" value="no" data-short-name="No"
-										checked>Not FormSwitchable</label></li>
-						</ul>
+				<!-- DefaultForm -->
+				<!-- DefaultForm is The standard or original form of a Pokémon, representing its most common or base form. -->
+				<div class="option-unit">
+					<label for="defaultForm" class="dotted-underline click-tip"
+						data-click-tip="Whether the generated Pokémons are in their default forms.">DefaultForm:</label>
+					<div class="dropdown" id="defaultForm">
+						<button type="button" data-plural-name="" data-allow-showing-two="false">
+							All DefOrNot</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="defaultForm" value="all" data-select-all="true"
+											checked>All DefaultFormOrNot</label></li>
+								<li><label><input type="checkbox" name="defaultForm" value="yes" data-short-name="Yes"
+											checked>DefaultForm</label></li>
+								<li><label><input type="checkbox" name="defaultForm" value="no" data-short-name="No"
+											checked>Not DefaultForm</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- HasGenderDifferences -->
-			<!-- Whether or Not the Pokémon has visual gender differences. -->
-			<div class="option-unit">
-				<label for="hasGenderDiff" class="dotted-underline click-tip"
-					data-click-tip="Whether or Not the Pokémon has visual gender differences.">GenderDiff:</label>
-				<div class="dropdown" id="hasGenderDiff">
-					<button type="button" data-plural-name="" data-allow-showing-two="false">
-						All HasGenderDiffOrNot</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="hasGenderDiff" value="all" data-select-all="true"
-										checked>All HasGenderDiffOrNot</label></li>
-							<li><label><input type="checkbox" name="hasGenderDiff" value="yes" data-short-name="Yes"
-										checked>HasGenderDifferences</label></li>
-							<li><label><input type="checkbox" name="hasGenderDiff" value="no" data-short-name="No"
-										checked>Not HasGenderDifferences</label></li>
-						</ul>
+				<!-- FormSwitchable -->
+				<!-- Whether or Not this Pokémon has multiple forms and can switch between them. -->
+				<div class="option-unit">
+					<label for="formSwitchable" class="dotted-underline click-tip"
+						data-click-tip="Whether or Not the Pokémon has multiple forms and can switch between them.">FormSwitch:</label>
+					<div class="dropdown" id="formSwitchable">
+						<button type="button" data-plural-name="" data-allow-showing-two="false">
+							All SwitchableOrNot</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="formSwitchable" value="all"
+											data-select-all="true" checked>All SwitchableOrNot</label></li>
+								<li><label><input type="checkbox" name="formSwitchable" value="yes"
+											data-short-name="Yes" checked>FormSwitchable</label></li>
+								<li><label><input type="checkbox" name="formSwitchable" value="no" data-short-name="No"
+											checked>Not FormSwitchable</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- base stats hp -->
-			<div class="option-unit-medium" id="baseStats_hp">
-				<label for="hp" class="dotted-underline click-tip"
-					data-click-tip="Set the range for the base HP stat, and the effort value."
-					data-label-tip="">Hp:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="hp_range">
-						<input type="number" range-min name="hp_min" id="hp_min" min="0" max="255" value="0">
-						<label>-</label>
-						<input type="number" range-max name="hp_max" id="hp_max" min="0" max="255" value="255">
+				<!-- HasGenderDifferences -->
+				<!-- Whether or Not the Pokémon has visual gender differences. -->
+				<div class="option-unit">
+					<label for="hasGenderDiff" class="dotted-underline click-tip"
+						data-click-tip="Whether or Not the Pokémon has visual gender differences.">GenderDiff:</label>
+					<div class="dropdown" id="hasGenderDiff">
+						<button type="button" data-plural-name="" data-allow-showing-two="false">
+							All HasGenderDiffOrNot</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="hasGenderDiff" value="all"
+											data-select-all="true" checked>All HasGenderDiffOrNot</label></li>
+								<li><label><input type="checkbox" name="hasGenderDiff" value="yes" data-short-name="Yes"
+											checked>HasGenderDifferences</label></li>
+								<li><label><input type="checkbox" name="hasGenderDiff" value="no" data-short-name="No"
+											checked>Not HasGenderDifferences</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="dropdown" id="hp_effort">
-					<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
-						All Efforts</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="hp_effort" value="all" data-select-all="true"
-										checked>All Efforts</label></li>
-							<li><label><input type="checkbox" name="hp_effort" value="0" data-short-name="0"
-										checked>0</label></li>
-							<li><label><input type="checkbox" name="hp_effort" value="1" data-short-name="1"
-										checked>1</label></li>
-							<li><label><input type="checkbox" name="hp_effort" value="2" data-short-name="2"
-										checked>2</label></li>
-							<li><label><input type="checkbox" name="hp_effort" value="3" data-short-name="3"
-										checked>3</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<!-- base stats attack -->
-			<div class="option-unit-medium" id="baseStats_attack">
-				<label for="attack" class="dotted-underline click-tip"
-					data-click-tip="Set the range for the base Attack stat, and the effort value."
-					data-label-tip="">Attack:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="attack_range">
-						<input type="number" range-min name="attack_min" id="attack_min" min="0" max="255" value="0">
-						<label>-</label>
-						<input type="number" range-max name="attack_max" id="attack_max" min="0" max="255" value="255">
+				<!-- base stats hp -->
+				<div class="option-unit-medium" id="baseStats_hp">
+					<label for="hp" class="dotted-underline click-tip"
+						data-click-tip="Set the range for the base HP stat, and the effort value."
+						data-label-tip="">Hp:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="hp_range">
+							<input type="number" range-min name="hp_min" id="hp_min" min="0" max="255" value="0">
+							<label>-</label>
+							<input type="number" range-max name="hp_max" id="hp_max" min="0" max="255" value="255">
+						</div>
+					</div>
+					<div class="dropdown" id="hp_effort">
+						<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
+							All Efforts</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="hp_effort" value="all" data-select-all="true"
+											checked>All Efforts</label></li>
+								<li><label><input type="checkbox" name="hp_effort" value="0" data-short-name="0"
+											checked>0</label></li>
+								<li><label><input type="checkbox" name="hp_effort" value="1" data-short-name="1"
+											checked>1</label></li>
+								<li><label><input type="checkbox" name="hp_effort" value="2" data-short-name="2"
+											checked>2</label></li>
+								<li><label><input type="checkbox" name="hp_effort" value="3" data-short-name="3"
+											checked>3</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="dropdown" id="attack_effort">
-					<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
-						All Efforts</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="attack_effort" value="all" data-select-all="true"
-										checked>All Efforts</label></li>
-							<li><label><input type="checkbox" name="attack_effort" value="0" data-short-name="0"
-										checked>0</label></li>
-							<li><label><input type="checkbox" name="attack_effort" value="1" data-short-name="1"
-										checked>1</label></li>
-							<li><label><input type="checkbox" name="attack_effort" value="2" data-short-name="2"
-										checked>2</label></li>
-							<li><label><input type="checkbox" name="attack_effort" value="3" data-short-name="3"
-										checked>3</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<!-- base stats defense -->
-			<div class="option-unit-medium" id="baseStats_defense">
-				<label for="defense" class="dotted-underline click-tip"
-					data-click-tip="Set the range for the base Defense stat, and the effort value."
-					data-label-tip="">Defense:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="defense_range">
-						<input type="number" range-min name="defense_min" id="defense_min" min="0" max="255" value="0">
-						<label>-</label>
-						<input type="number" range-max name="defense_max" id="defense_max" min="0" max="255"
-							value="255">
+				<!-- base stats attack -->
+				<div class="option-unit-medium" id="baseStats_attack">
+					<label for="attack" class="dotted-underline click-tip"
+						data-click-tip="Set the range for the base Attack stat, and the effort value."
+						data-label-tip="">Attack:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="attack_range">
+							<input type="number" range-min name="attack_min" id="attack_min" min="0" max="255"
+								value="0">
+							<label>-</label>
+							<input type="number" range-max name="attack_max" id="attack_max" min="0" max="255"
+								value="255">
+						</div>
+					</div>
+					<div class="dropdown" id="attack_effort">
+						<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
+							All Efforts</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="attack_effort" value="all"
+											data-select-all="true" checked>All Efforts</label></li>
+								<li><label><input type="checkbox" name="attack_effort" value="0" data-short-name="0"
+											checked>0</label></li>
+								<li><label><input type="checkbox" name="attack_effort" value="1" data-short-name="1"
+											checked>1</label></li>
+								<li><label><input type="checkbox" name="attack_effort" value="2" data-short-name="2"
+											checked>2</label></li>
+								<li><label><input type="checkbox" name="attack_effort" value="3" data-short-name="3"
+											checked>3</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="dropdown" id="defense_effort">
-					<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
-						All Efforts</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="defense_effort" value="all" data-select-all="true"
-										checked>All Efforts</label></li>
-							<li><label><input type="checkbox" name="defense_effort" value="0" data-short-name="0"
-										checked>0</label></li>
-							<li><label><input type="checkbox" name="defense_effort" value="1" data-short-name="1"
-										checked>1</label></li>
-							<li><label><input type="checkbox" name="defense_effort" value="2" data-short-name="2"
-										checked>2</label></li>
-							<li><label><input type="checkbox" name="defense_effort" value="3" data-short-name="3"
-										checked>3</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<!-- base stats spAttack -->
-			<div class="option-unit-medium" id="baseStats_spAtk">
-				<label for="spAttack" class="dotted-underline click-tip"
-					data-click-tip="Set the range for the base Special Attack stat, and the effort value."
-					data-label-tip="">SpAtk:</label>
+				<!-- base stats defense -->
+				<div class="option-unit-medium" id="baseStats_defense">
+					<label for="defense" class="dotted-underline click-tip"
+						data-click-tip="Set the range for the base Defense stat, and the effort value."
+						data-label-tip="">Defense:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="defense_range">
+							<input type="number" range-min name="defense_min" id="defense_min" min="0" max="255"
+								value="0">
+							<label>-</label>
+							<input type="number" range-max name="defense_max" id="defense_max" min="0" max="255"
+								value="255">
+						</div>
+					</div>
+					<div class="dropdown" id="defense_effort">
+						<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
+							All Efforts</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="defense_effort" value="all"
+											data-select-all="true" checked>All Efforts</label></li>
+								<li><label><input type="checkbox" name="defense_effort" value="0" data-short-name="0"
+											checked>0</label></li>
+								<li><label><input type="checkbox" name="defense_effort" value="1" data-short-name="1"
+											checked>1</label></li>
+								<li><label><input type="checkbox" name="defense_effort" value="2" data-short-name="2"
+											checked>2</label></li>
+								<li><label><input type="checkbox" name="defense_effort" value="3" data-short-name="3"
+											checked>3</label></li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-				<div class="num_rangecontainer">
-					<div class="num_range" id="spAttack_range">
-						<input type="number" range-min name="spAttack_min" id="spAttack_min" min="0" max="255"
-							value="0">
-						<label>-</label>
-						<input type="number" range-max name="spAttack_max" id="spAttack_max" min="0" max="255"
-							value="255">
-					</div>
-				</div>
-				<div class="dropdown" id="spAttack_effort">
-					<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
-						All Efforts</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="spAttack_effort" value="all" data-select-all="true"
-										checked>All Efforts</label></li>
-							<li><label><input type="checkbox" name="spAttack_effort" value="0" data-short-name="0"
-										checked>0</label></li>
-							<li><label><input type="checkbox" name="spAttack_effort" value="1" data-short-name="1"
-										checked>1</label></li>
-							<li><label><input type="checkbox" name="spAttack_effort" value="2" data-short-name="2"
-										checked>2</label></li>
-							<li><label><input type="checkbox" name="spAttack_effort" value="3" data-short-name="3"
-										checked>3</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+				<!-- base stats spAttack -->
+				<div class="option-unit-medium" id="baseStats_spAtk">
+					<label for="spAttack" class="dotted-underline click-tip"
+						data-click-tip="Set the range for the base Special Attack stat, and the effort value."
+						data-label-tip="">SpAtk:</label>
 
-			<!-- base stats spDefense -->
-			<div class="option-unit-medium" id="baseStats_spDef">
-				<label for="spDefense" class="dotted-underline click-tip"
-					data-click-tip="Set the range for the base Special Defense stat, and the effort value."
-					data-label-tip="">SpDef:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="spDefense_range">
-						<input type="number" range-min name="spDefense_min" id="spDefense_min" min="0" max="255"
-							value="0">
-						<label>-</label>
-						<input type="number" range-max name="spDefense_max" id="spDefense_max" min="0" max="255"
-							value="255">
+					<div class="num_rangecontainer">
+						<div class="num_range" id="spAttack_range">
+							<input type="number" range-min name="spAttack_min" id="spAttack_min" min="0" max="255"
+								value="0">
+							<label>-</label>
+							<input type="number" range-max name="spAttack_max" id="spAttack_max" min="0" max="255"
+								value="255">
+						</div>
+					</div>
+					<div class="dropdown" id="spAttack_effort">
+						<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
+							All Efforts</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="spAttack_effort" value="all"
+											data-select-all="true" checked>All Efforts</label></li>
+								<li><label><input type="checkbox" name="spAttack_effort" value="0" data-short-name="0"
+											checked>0</label></li>
+								<li><label><input type="checkbox" name="spAttack_effort" value="1" data-short-name="1"
+											checked>1</label></li>
+								<li><label><input type="checkbox" name="spAttack_effort" value="2" data-short-name="2"
+											checked>2</label></li>
+								<li><label><input type="checkbox" name="spAttack_effort" value="3" data-short-name="3"
+											checked>3</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="dropdown" id="spDefense_effort">
-					<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
-						All Efforts</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="spDefense_effort" value="all" data-select-all="true"
-										checked>All Efforts</label></li>
-							<li><label><input type="checkbox" name="spDefense_effort" value="0" data-short-name="0"
-										checked>0</label></li>
-							<li><label><input type="checkbox" name="spDefense_effort" value="1" data-short-name="1"
-										checked>1</label></li>
-							<li><label><input type="checkbox" name="spDefense_effort" value="2" data-short-name="2"
-										checked>2</label></li>
-							<li><label><input type="checkbox" name="spDefense_effort" value="3" data-short-name="3"
-										checked>3</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<!-- base stats speed -->
-			<div class="option-unit-medium" id="baseStats_speed">
-				<label for="speed" class="dotted-underline click-tip"
-					data-click-tip="Set the range for the base Speed stat, and the effort value."
-					data-label-tip="">Speed:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="speed_range">
-						<input type="number" range-min name="speed_min" id="speed_min" min="0" max="255" value="0">
-						<label>-</label>
-						<input type="number" range-max name="speed_max" id="speed_max" min="0" max="255" value="255">
+				<!-- base stats spDefense -->
+				<div class="option-unit-medium" id="baseStats_spDef">
+					<label for="spDefense" class="dotted-underline click-tip"
+						data-click-tip="Set the range for the base Special Defense stat, and the effort value."
+						data-label-tip="">SpDef:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="spDefense_range">
+							<input type="number" range-min name="spDefense_min" id="spDefense_min" min="0" max="255"
+								value="0">
+							<label>-</label>
+							<input type="number" range-max name="spDefense_max" id="spDefense_max" min="0" max="255"
+								value="255">
+						</div>
+					</div>
+					<div class="dropdown" id="spDefense_effort">
+						<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
+							All Efforts</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="spDefense_effort" value="all"
+											data-select-all="true" checked>All Efforts</label></li>
+								<li><label><input type="checkbox" name="spDefense_effort" value="0" data-short-name="0"
+											checked>0</label></li>
+								<li><label><input type="checkbox" name="spDefense_effort" value="1" data-short-name="1"
+											checked>1</label></li>
+								<li><label><input type="checkbox" name="spDefense_effort" value="2" data-short-name="2"
+											checked>2</label></li>
+								<li><label><input type="checkbox" name="spDefense_effort" value="3" data-short-name="3"
+											checked>3</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="dropdown" id="speed_effort">
-					<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
-						All Efforts</button>
-					<div class="popup">
-						<ul>
-							<li><label><input type="checkbox" name="speed_effort" value="all" data-select-all="true"
-										checked>All Efforts</label></li>
-							<li><label><input type="checkbox" name="speed_effort" value="0" data-short-name="0"
-										checked>0</label></li>
-							<li><label><input type="checkbox" name="speed_effort" value="1" data-short-name="1"
-										checked>1</label></li>
-							<li><label><input type="checkbox" name="speed_effort" value="2" data-short-name="2"
-										checked>2</label></li>
-							<li><label><input type="checkbox" name="speed_effort" value="3" data-short-name="3"
-										checked>3</label></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<!-- BaseHappiness -->
-			<div class="option-unit">
-				<label for="baseHappiness" class="dotted-underline click-tip"
-					data-click-tip="Set the base happiness range of generated Pokémons."
-					data-label-tip="">BaseHappy:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="baseHappiness">
-						<input type="number" range-min name="baseHappiness_min" id="baseHappiness_min" min="0" max="140"
-							value="0">
-						<label>-</label>
-						<input type="number" range-max name="baseHappiness_max" id="baseHappiness_max" min="0" max="140"
-							value="140">
+				<!-- base stats speed -->
+				<div class="option-unit-medium" id="baseStats_speed">
+					<label for="speed" class="dotted-underline click-tip"
+						data-click-tip="Set the range for the base Speed stat, and the effort value."
+						data-label-tip="">Speed:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="speed_range">
+							<input type="number" range-min name="speed_min" id="speed_min" min="0" max="255" value="0">
+							<label>-</label>
+							<input type="number" range-max name="speed_max" id="speed_max" min="0" max="255"
+								value="255">
+						</div>
+					</div>
+					<div class="dropdown" id="speed_effort">
+						<button type="button" data-plural-name="Efforts" data-allow-showing-two="true">
+							All Efforts</button>
+						<div class="popup">
+							<ul>
+								<li><label><input type="checkbox" name="speed_effort" value="all" data-select-all="true"
+											checked>All Efforts</label></li>
+								<li><label><input type="checkbox" name="speed_effort" value="0" data-short-name="0"
+											checked>0</label></li>
+								<li><label><input type="checkbox" name="speed_effort" value="1" data-short-name="1"
+											checked>1</label></li>
+								<li><label><input type="checkbox" name="speed_effort" value="2" data-short-name="2"
+											checked>2</label></li>
+								<li><label><input type="checkbox" name="speed_effort" value="3" data-short-name="3"
+											checked>3</label></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- BaseExperience -->
-			<!-- <div class="option-unit">
+				<!-- BaseHappiness -->
+				<div class="option-unit">
+					<label for="baseHappiness" class="dotted-underline click-tip"
+						data-click-tip="Set the base happiness range of generated Pokémons."
+						data-label-tip="">BaseHappy:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="baseHappiness">
+							<input type="number" range-min name="baseHappiness_min" id="baseHappiness_min" min="0"
+								max="140" value="0">
+							<label>-</label>
+							<input type="number" range-max name="baseHappiness_max" id="baseHappiness_max" min="0"
+								max="140" value="140">
+						</div>
+					</div>
+				</div>
+
+				<!-- BaseExperience -->
+				<!-- <div class="option-unit">
 				<label for="baseHappiness" class="dotted-underline" data-label-tip="">BaseExp:</label>
 				<div class="num_rangecontainer">
 					<div class="num_range" id="baseHappiness">
@@ -853,181 +871,281 @@
 				</div>
 			</div> -->
 
-			<!-- CaptureRate -->
-			<div class="option-unit">
-				<label for="captureRate" class="dotted-underline click-tip"
-					data-click-tip="Set the base capture rate range of the Pokémon, up to 255. The higher the number, the easier the catch."
-					data-label-tip="">CatchRate:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="captureRate">
-						<input type="number" range-min name="captureRate_min" id="captureRate_min" min="0" max="255"
-							value="0">
-						<label>-</label>
-						<input type="number" range-max name="captureRate_max" id="captureRate_max" min="0" max="255"
-							value="255">
+				<!-- CaptureRate -->
+				<div class="option-unit">
+					<label for="captureRate" class="dotted-underline click-tip"
+						data-click-tip="Set the base capture rate range of the Pokémon, up to 255. The higher the number, the easier the catch."
+						data-label-tip="">CatchRate:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="captureRate">
+							<input type="number" range-min name="captureRate_min" id="captureRate_min" min="0" max="255"
+								value="0">
+							<label>-</label>
+							<input type="number" range-max name="captureRate_max" id="captureRate_max" min="0" max="255"
+								value="255">
+						</div>
+					</div>
+				</div>
+
+				<!-- HatchCounter -->
+				<div class="option-unit">
+					<label for="hatchCounter" class="dotted-underline click-tip"
+						data-click-tip="Set the number of cycles needed for the Pokémon to hatch."
+						data-label-tip="">HatchCount:</label>
+					<div class="num_rangecontainer">
+						<div class="num_range" id="hatchCounter">
+							<input type="number" range-min name="hatchCounter_min" id="hatchCounter_min" min="0"
+								max="120" value="0">
+							<label>-</label>
+							<input type="number" range-max name="hatchCounter_max" id="hatchCounter_max" min="0"
+								max="120" value="120">
+						</div>
 					</div>
 				</div>
 			</div>
+		</form>
+		<button id="more-button" class="more-button" onclick="expandMoreOptions()">&#x23EC; More Options</button>
+		<button id="collapse-more-button" class="more-button default-hidden"
+			onclick="collapseMoreOptions()">&#x23EB;Collapse</button>
+		<!-- </div> -->
 
-			<!-- HatchCounter -->
-			<div class="option-unit">
-				<label for="hatchCounter" class="dotted-underline click-tip"
-					data-click-tip="Set the number of cycles needed for the Pokémon to hatch."
-					data-label-tip="">HatchCount:</label>
-				<div class="num_rangecontainer">
-					<div class="num_range" id="hatchCounter">
-						<input type="number" range-min name="hatchCounter_min" id="hatchCounter_min" min="0" max="120"
-							value="0">
-						<label>-</label>
-						<input type="number" range-max name="hatchCounter_max" id="hatchCounter_max" min="0" max="120"
-							value="120">
-					</div>
+		<!-- <div class="container" id="options-panel"> -->
+		<div id="show-option-panel-top-bar" class="panel-top-bar-container">
+			<h2 class="panel-label dotted-underline" for="show-options-form"
+				title="Showing options for configuring the showing content of the random Pokémon generator, such as whether to display Pokémon images and whether to generate random natures.">
+				ShowOptions</h2>
+			<div class="panel-top-tool-bar-container">
+				<button type="reset" id="show-options-reset" form="show-options-form">Reset</button>
+			</div>
+		</div>
+		<form action="?" method="get" id="show-options-form" class="menu">
+			<div id="main-show-options" class="options-panel">
+				<!-- showGeneration -->
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip=" Whether to display the generation of the Pokémon."
+						data-label-tip="">Generation:</label>
+					<input type="checkbox" id="showGeneration" checked />
+				</div>
+				<!-- showRegion -->
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to show the region where the Pokémon maybe found.">Region:</label>
+					<input type="checkbox" id="showRegion" checked />
+				</div>
+				<!-- natures -->
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to randomly assign a nature to each generated Pokémon.">Natures:</label>
+					<input type="checkbox" id="natures" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Background image is based on the type of Pokemon's first slot, to enhance the visual appeal.">BackImg:</label>
+					<input type="checkbox" id="backImg" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to display the background color for the Pokémon, based on pokemon's color.">BackColor:</label>
+					<input type="checkbox" id="backColor" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to display the Pokémon's abilities."
+						data-label-tip="">Ablilites:</label>
+					<input type="checkbox" id="showAblilites" checked />
 				</div>
 			</div>
-		</div>
-	</form>
-	<button id="more-button" class="more-button" onclick="expandMoreOptions()">&#x23EC; More Options</button>
-	<button id="collapse-more-button" class="more-button default-hidden"
-		onclick="collapseMoreOptions()">&#x23EB;Collapse</button>
-	<!-- </div> -->
+			<hr id="show-option-panel-hr" class="option-panel-hr default-hidden" />
+			<div id="more-show-options" class="options-panel default-hidden">
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to show the imgae of the Pokémon.">Sprites:</label>
+					<input type="checkbox" id="sprites" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to display the rarity level of the Pokémon.">Rarity:</label>
+					<input type="checkbox" id="showRarity" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to show the type(s) of the Pokémon.">Types:</label>
+					<input type="checkbox" id="showTypes" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to display the base stats of the Pokémon.">BaseStats:</label>
+					<input type="checkbox" id="showStats" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to show the effort values for the Pokémon.">Evs:</label>
+					<input type="checkbox" id="evs" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Whether to show the individual values for the Pokémon.">Ivs:</label>
+					<input type="checkbox" id="ivs" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Toggle to show or hide the play button for the Pokémon's cry sound.">Cries:</label>
+					<input type="checkbox" id="cries" checked />
+				</div>
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Set the probability of generating a Shiny Pokémon, expressed as a percentage.">Shiny:</label>
+					<input type="number" id="shinyProb" min="0" max="100" value="1" />
+					<span class="percent-sign">&nbsp;%</span>
+				</div>
+				<!-- shiny tip -->
+				<div class="option-unit-small">
+					<label class="dotted-underline click-tip"
+						data-click-tip="Display a pop-up notification when encountering a shiny Pokémon, allowing for quick access to a list of previously acquired shiny Pokémon.">ShinyTip:</label>
+					<input type="checkbox" id="shinyTip" checked />
+				</div>
+			</div>
+		</form>
+		<button id="more-show-button" class="more-button" onclick="expandMoreShowOptions()">&#x23EC; More
+			Options</button>
+		<button id="collapse-more-show-button" class="more-button default-hidden"
+			onclick="collapseMoreShowOptions()">&#x23EB;Collapse</button>
 
-	<!-- <div class="container" id="options-panel"> -->
-	<div id="show-option-panel-top-bar" class="panel-top-bar-container">
-		<h2 class="panel-label dotted-underline" for="show-options-form"
-			title="Showing options for configuring the showing content of the random Pokémon generator, such as whether to display Pokémon images and whether to generate random natures.">
-			ShowOptions</h2>
-		<div class="panel-top-tool-bar-container">
-			<button type="reset" id="show-options-reset" form="show-options-form">Reset</button>
+		<div class="n_generator" id="n_generator">
+			<label for="n" title="Number of Pokémons to generate randomly.">Num:</label>
+			<select form="show-options-form" name="n" id="n" required>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6" selected>6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+			</select>
+			<input class="generate-button" form="filter-options-form" value="Generate" type="submit" />
 		</div>
+		<a class="feedback-link" target="_blank" rel="noopener"
+			href="https://github.com/happydrew/RandomPokemonGeneratorNew/issues/new?title=Feedback&labels=feedback">Question?
+			Give us feedback →</a>
+
+		<nav id="history">
+			<button class="hidden text" id="previous" onclick="displayPrevious()">&#x23EA; Previous</button>
+			<button class="hidden text" id="next" onclick="displayNext()">Next &#x23E9;</button>
+		</nav>
+
+		<section id="results" class="display-pokemon-container">
+		</section>
+
+		<button id="shiny-toggler" class="text is-hiding" onclick="toggleShinyDisplay()">
+			<span class="star">&starf;</span>
+			<span id="shiny-count">0</span> shiny Pokémon
+			<span class="is-showing">&and;</span><span class="is-hiding">&or;</span>
+		</button>
+		<section id="shiny-container" class="menu invisible">
+			<div id="shinies" class="display-pokemon-container"></div>
+			<button class="text" onclick="clearShinies()">&#x274C; Clear your shiny Pokémon</button>
+		</section>
 	</div>
-	<form action="?" method="get" id="show-options-form" class="menu">
-		<div id="main-show-options" class="options-panel">
-			<!-- showGeneration -->
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip=" Whether to display the generation of the Pokémon."
-					data-label-tip="">Generation:</label>
-				<input type="checkbox" id="showGeneration" checked />
-			</div>
-			<!-- showRegion -->
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to show the region where the Pokémon maybe found.">Region:</label>
-				<input type="checkbox" id="showRegion" checked />
-			</div>
-			<!-- natures -->
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to randomly assign a nature to each generated Pokémon.">Natures:</label>
-				<input type="checkbox" id="natures" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Background image is based on the type of Pokemon's first slot, to enhance the visual appeal.">BackImg:</label>
-				<input type="checkbox" id="backImg" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to display the background color for the Pokémon, based on pokemon's color.">BackColor:</label>
-				<input type="checkbox" id="backColor" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip" data-click-tip="Whether to display the Pokémon's abilities."
-					data-label-tip="">Ablilites:</label>
-				<input type="checkbox" id="showAblilites" checked />
-			</div>
+
+	<section id="features-container">
+		<h2 id="features-title">Looking for a fun way to discover new Pokémon? Try our Random Pokémon Generator and
+			start building your dream team today!</h2>
+		<div id="why-choose-us" class="feature-background">
+			<h3 class="feature-background">Why Choose Our Pokémon Generator?</h3>
+			<p class="feature-background">Our random Pokémon generator combines a comprehensive library 📚, extensive
+				customization options ⚙️, beautiful displays 🌟, and intelligent randomization 🎲 to deliver an
+				unmatched Pokémon generation experience. Ideal for creating unique teams, discovering new Pokémon 🕵️,
+				and enjoying a fresh experience every time 🎉, our Pokémon randomizer is your ultimate companion in the
+				world of Pokémon.</p>
 		</div>
-		<hr id="show-option-panel-hr" class="option-panel-hr default-hidden" />
-		<div id="more-show-options" class="options-panel default-hidden">
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to show the imgae of the Pokémon.">Sprites:</label>
-				<input type="checkbox" id="sprites" checked />
+		<div class="feature-card" id="diverse-pokemon-library">
+			<div class="feature-desc feature-block">
+				<h3 class="feature-desc-title">Diverse Pokémon Library📚</h3>
+				<p class="feature-desc-content">Our random Pokémon generator includes nearly 1400 Pokémon from all
+					generations and game versions. Whether you're looking for a classic Pikachu ⚡ or a newer addition
+					like Dracovish 🦖, we've got you covered. This extensive library ensures that our Pokémon randomizer
+					can provide endless possibilities, making it the perfect tool for any Pokémon enthusiast 🏆.
+					<a href="https://www.smogon.com/dex/sm/pokemon">Lean More</a>
+				</p>
 			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to display the rarity level of the Pokémon.">Rarity:</label>
-				<input type="checkbox" id="showRarity" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to show the type(s) of the Pokémon.">Types:</label>
-				<input type="checkbox" id="showTypes" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to display the base stats of the Pokémon.">BaseStats:</label>
-				<input type="checkbox" id="showStats" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to show the effort values for the Pokémon.">Evs:</label>
-				<input type="checkbox" id="evs" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Whether to show the individual values for the Pokémon.">Ivs:</label>
-				<input type="checkbox" id="ivs" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Toggle to show or hide the play button for the Pokémon's cry sound.">Cries:</label>
-				<input type="checkbox" id="cries" checked />
-			</div>
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Set the probability of generating a Shiny Pokémon, expressed as a percentage.">Shiny:</label>
-				<input type="number" id="shinyProb" min="0" max="100" value="1" />
-				<span class="percent-sign">&nbsp;%</span>
-			</div>
-			<!-- shiny tip -->
-			<div class="option-unit-small">
-				<label class="dotted-underline click-tip"
-					data-click-tip="Display a pop-up notification when encountering a shiny Pokémon, allowing for quick access to a list of previously acquired shiny Pokémon.">ShinyTip:</label>
-				<input type="checkbox" id="shinyTip" checked />
-			</div>
+			<img class="feature-block" src="./img/features/diverse-pokemon-library.png" alt="diverse pokemon library">
 		</div>
-	</form>
-	<button id="more-show-button" class="more-button" onclick="expandMoreShowOptions()">&#x23EC; More Options</button>
-	<button id="collapse-more-show-button" class="more-button default-hidden"
-		onclick="collapseMoreShowOptions()">&#x23EB;Collapse</button>
 
-	<div class="n_generator">
-		<label for="n" title="Number of Pokémons to generate randomly.">Num:</label>
-		<select form="show-options-form" name="n" id="n" required>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6" selected>6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-		</select>
-		<input class="generate-button" form="filter-options-form" value="Generate" type="submit" />
-	</div>
-	<a class="feedback-link" target="_blank" rel="noopener" href="https://github.com/happydrew/RandomPokemonGeneratorNew/issues/new?title=Feedback&labels=feedback" >Question? Give us feedback →</a>
+		<div class="feature-card feature-background" id="customizable-generation">
+			<div class="feature-desc feature-block">
+				<h3 class="feature-desc-title">Customizable Generation⚙️</h3>
+				<p class="feature-desc-content">Tailor your Pokémon randomizer experience with extensive filter options.
+					Choose from generation, region, type, form, rarity, and more. It's never been easier to generate a
+					random Pokémon that fits your exact criteria 🎯. Our random Pokémon picker allows you to refine your
+					search to match your preferences, ensuring you always find the perfect Pokémon 🌟.
+					<a href="https://www.smogon.com/dex/sm/pokemon">Lean More</a>
+				</p>
+			</div>
+			<img class="feature-block" src="./img/features/fully-customize.png" alt="customizable generation">
+		</div>
 
-	<nav id="history">
-		<button class="hidden text" id="previous" onclick="displayPrevious()">&#x23EA; Previous</button>
-		<button class="hidden text" id="next" onclick="displayNext()">Next &#x23E9;</button>
-	</nav>
+		<div class="feature-card" id="beautiful-card-display">
+			<div class="feature-desc feature-block">
+				<h3 class="feature-desc-title">Beautiful Card Display🌟</h3>
+				<p class="feature-desc-content">The generated Pokémon are displayed in stunning card formats 🃏,
+					showcasing detailed information like name, generation, region, abilities, and more. Our high-quality
+					images enhance the visual appeal and make each card a joy to view 😍. This visually appealing
+					Pokémon generator is designed to provide an engaging user experience 🖼️.<a
+						href="https://www.smogon.com/dex/sm/pokemon">Lean More</a></p>
+			</div>
+			<img class="feature-block" src="./img/features/beautiful-display.png" alt="beautiful pokemon display">
+		</div>
 
-	<section id="results" class="display-pokemon-container">
+		<div class="feature-card feature-background" id="randomized-attributes">
+			<div class="feature-desc feature-block">
+				<h3 class="feature-desc-title">Randomized Attributes🎲</h3>
+				<p class="feature-desc-content">Add an element of surprise with randomly generated IVs and natures 🎲.
+					This random Pokémon team generator feature ensures that each Pokémon is unique and adds to the fun
+					and challenge of building your team 🛡️. The random attributes make every Pokémon encounter exciting
+					and unpredictable 🎉.<a href="https://www.smogon.com/dex/sm/pokemon" target="_blank">Learn More</a>
+				</p>
+			</div>
+			<img class="feature-block" src="./img/features/randomized-attributes.png" alt="randomized-attributes">
+		</div>
+
+		<div class="feature-card" id="history-view-shiny">
+			<div class="feature-desc feature-block">
+				<h3 class="feature-desc-title">History View & Shiny Pokémon🌈</h3>
+				<p class="feature-desc-content">Keep track of up to 64 generations with our history viewing feature 📜.
+					Plus, our dedicated Shiny Pokémon display stores all the shiny Pokémon you encounter locally, making
+					it easy to revisit your rare finds ✨. This feature allows you to build a collection of your favorite
+					Pokémon and track your progress over time 🕰️.<a href="https://www.smogon.com/dex/sm/pokemon"
+						target="_blank">Learn More</a></p>
+			</div>
+			<img class="feature-block" src="./img/features/history-viewing-and-shiny.png"
+				alt="history view and shiny pokemon">
+		</div>
+
+		<div class="feature-card feature-background" id="user-friendly-interface">
+			<div class="feature-desc feature-block">
+				<h3 class="feature-desc-title">User-Friendly Interface📱</h3>
+				<p class="feature-desc-content">Our random Pokémon generator boasts an elegant interface with clear
+					layouts and smooth interactions 🌟. The design is mobile-optimized 📱, ensuring a seamless
+					experience on phones and tablets. The intuitive interface makes it easy for users of all ages to
+					navigate and enjoy the Pokémon randomizer 🌟.<a href="https://www.smogon.com/dex/sm/pokemon"
+						target="_blank">Learn
+						More</a></p>
+			</div>
+			<img class="feature-block" src="./img/features/user-friendly-interface.png" alt="user friendly interface">
+		</div>
+		<p id="conclusion">These features make our random Pokémon generator the ultimate tool for Pokémon fans looking
+			to explore and enjoy the world of Pokémon in a new and exciting way. Whether you're using it as a random
+			Pokémon type generator or a random Pokémon team generator, our tool provides endless entertainment and
+			customization options.<strong>Try our random Pokémon generator now 👉 <a href="#n_generator"><img
+						src="./img/generate_button.png" alt="generate button of random pokemon generator"></a> and
+				discover the endless possibilities
+				for your next Pokémon journey! 🎉</strong></p>
 	</section>
 
-	<button id="shiny-toggler" class="text is-hiding" onclick="toggleShinyDisplay()">
-		<span class="star">&starf;</span>
-		<span id="shiny-count">0</span> shiny Pokémon
-		<span class="is-showing">&and;</span><span class="is-hiding">&or;</span>
-	</button>
-	<section id="shiny-container" class="menu invisible">
-		<div id="shinies" class="display-pokemon-container"></div>
-		<button class="text" onclick="clearShinies()">&#x274C; Clear your shiny Pokémon</button>
-	</section>
-
-	<footer>
+	<footer id="footer">
 		<p>
 			<a href="./rss.xml">RSS</a> |
 			<a href="https://github.com/happydrew/RandomPokemonGeneratorNew">GitHub</a> |
