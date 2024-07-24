@@ -1,6 +1,6 @@
 export { convertOptionsToUrlParams, convertSearchParamsToOptions };
 export type { FilterParams, Options, ShowParams };
-import { parseBoolean } from "./utils.js";
+import { parseBoolean } from "./utils_v2.js";
 
 type FilterParams = {
 	regions?: string;

@@ -1,15 +1,15 @@
 import {
     addToHistory, toggleHistoryVisibility, displayPrevious, displayNext, toggleShinyDisplay,
     clearShinies, saveShinies, loadShinies
-} from "./history.js";
-import { convertSearchParamsToOptions, Options, convertOptionsToUrlParams, FilterParams, ShowParams } from "./options.js";
-import { Pokemon, DisplayPokemon, PokemonDetail, displayPokemon } from "./pokemon.js";
+} from "./history_v2.js";
+import { convertSearchParamsToOptions, Options, convertOptionsToUrlParams, FilterParams, ShowParams } from "./options_v2.js";
+import { Pokemon, DisplayPokemon, PokemonDetail, displayPokemon } from "./pokemon_v2.js";
 import {
     toggleDropdownsOnButtonClick, markLoading, deepClone, removeRandomElement, shuffle, expandMoreOptions,
     collapseMoreOptions, setDropdownIfValid, displayYearsInFooter, getDropdownOptions,
     setSelectIfValid, getNumrangeOptions, setNumrangeIfValid, getCheckboxValueById, setCheckbox,
     expandMoreShowOptions, collapseMoreShowOptions
-} from "./utils.js";
+} from "./utils_v2.js";
 
 (window as any).generateRandom = generateRandom;
 (window as any).expandMoreOptions = expandMoreOptions;
@@ -241,6 +241,7 @@ async function generateRandom() {
     //     //genders?: boolean
     // }
     persistOptions(options);
+    const resultContainer = document.getElementById("results");
     try {
         const eligiblePokemon = await getEligiblePokemon(options);
         const generatedPokemons = options.showParams.n == "all" ? eligiblePokemon : chooseRandom(eligiblePokemon, options);
@@ -252,7 +253,7 @@ async function generateRandom() {
         }
         // 先显示立即就能获取的内容，以及已有的详情数据
         const displayPokemons: DisplayPokemon[] = generatedPokemons.map(p => new DisplayPokemon(null, p, pokemonDetailsMapCache[p.id.toString()], options.showParams))
-        const resultsHTML = displayPokemon(displayPokemons, document.getElementById("results"));
+        const resultsHTML = displayPokemon(displayPokemons, resultContainer);
         const displayPokemonMap = new Map<string, DisplayPokemon>();
         displayPokemons.forEach(dp => displayPokemonMap.set(dp.id.toString(), dp));
         const existIds: number[] = generatedPokemons.filter(p => p.id.toString() in pokemonDetailsMapCache).map(p => p.id);
@@ -271,10 +272,96 @@ async function generateRandom() {
             }
         }
     } catch (error) {
-        console.error(error);
-        displayPokemon(null, null);
+        console.error("Oops, something went wrong!", error);
+        displayPokemon(null, resultContainer);
+        sendErrorReport(error);
     }
     markLoading(false);
+}
+
+interface ErrorInfo {
+    time: string;
+    location?: string;
+    message?: string;
+    userAgent?: string;
+    host?: string;
+}
+
+/**
+ * 发送错误信息
+ * @param error 异常对象
+ */
+async function sendErrorReport(error: Error) {
+    const userLocation: string = await getUserLocation();
+    console.log("用户位置: ", userLocation);
+    const errorInfo: ErrorInfo = {
+        time: new Date().toLocaleString(),
+        location: userLocation,
+        message: `errorName:${error.name},
+        errorMessage:${error.message},
+        errorStack:${error.stack}`,
+        userAgent: navigator.userAgent,
+        host: window.location.host
+    };
+    console.log("错误信息: ", JSON.stringify(errorInfo));
+    const response = await fetch(backEndDomain + "/api/error-report", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(errorInfo)
+    });
+    if (response.ok) {
+        console.log("发送错误信息成功", response);
+    } else {
+        console.error("发送错误信息失败", error);
+    }
+}
+
+/**
+ * 将json对象转换为url参数字符串
+ * @param obj 
+ * @returns 
+ */
+function jsonObjToUrlParams(obj: any): string {
+    return Object.entries(obj).map(([key, value]) => key.toString() + "=" + value.toString())
+        .join("&");
+}
+
+// 获取用户的地理位置
+async function getUserLocation(): Promise<string> {
+    const geolocation: GeolocationPosition = await new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => resolve(position),
+                (error: GeolocationPositionError) => reject(error)
+            );
+        } else {
+            reject(new Error('Geolocation is not supported by this browser.'));
+        }
+    });
+    return geolocation.coords.latitude.toString() + "," + geolocation.coords.longitude.toString();
+}
+
+function getLocation(): string {
+    var geolocation: string = null;
+    if ("geolocation" in navigator) {
+        // 浏览器支持 Geolocation API
+        navigator.geolocation.getCurrentPosition(function (position) {
+            // 成功获取位置
+            console.log("Latitude: " + position.coords.latitude);
+            console.log("Longitude: " + position.coords.longitude);
+            // 可以根据需要使用更多位置信息
+            geolocation = position.coords.latitude + "," + position.coords.longitude;
+        }, function (error) {
+            // 获取位置失败
+            console.error("Error Code = " + error.code + " - " + error.message);
+        });
+    } else {
+        // 浏览器不支持 Geolocation API
+        console.log("Geolocation is not supported by this browser.");
+    }
+    return geolocation;
 }
 
 function displayShinyTip(shinyCount: number) {

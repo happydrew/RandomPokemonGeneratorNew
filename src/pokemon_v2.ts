@@ -1,8 +1,8 @@
 export type { Pokemon, PokemonDetail };
 export { displayPokemon, DisplayPokemon };
 
-import { getRandomElement, randomInteger, getTrueByProbability } from './utils.js';
-import { ShowParams } from './options.js';
+import { getRandomElement, randomInteger, getTrueByProbability } from './utils_v2.js';
+import { ShowParams } from './options_v2.js';
 
 interface Stats {
 	hp: {
